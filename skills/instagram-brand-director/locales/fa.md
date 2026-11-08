@@ -1,0 +1,3 @@
+# Persian (fa)
+
+Status: supported. Use natural professional Persian and right-to-left text order. Preserve exact brand/product SKUs, URLs, usernames, currency and product names. Use Persian digits when helpful for prose but never corrupt numeric JSON/CSV fields. Persian and English may be mixed in brand names. Avoid generic AI-sounding claims, invented numbers and forced rhymes. Never apply copied English hookscore.py numerical scores to Persian. `creative_quality.py` is a conservative editorial lint only. If a Persian caption is requested, output the actual caption first, not a long explanation. Date and money conventions must be supplied by the brand profile; never assume the sales market from language.

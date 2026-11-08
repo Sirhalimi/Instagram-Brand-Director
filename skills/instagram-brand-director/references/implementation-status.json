@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "release": "0.6.0-dev",
+  "updated_on": "2026-11-09",
+  "status_values": [
+    "implemented",
+    "partial",
+    "not-implemented",
+    "optional-disabled"
+  ],
+  "modules": {
+    "01-onboarding": "partial",
+    "02-account-audit": "partial",
+    "03-competitive-intelligence": "partial",
+    "04-strategy-calendar": "partial",
+    "05-reels": "partial",
+    "06-trial-decisions": "partial",
+    "07-content-writing": "partial",
+    "08-media-optional": "optional-disabled",
+    "09-organic-seo": "partial",
+    "10-community": "partial",
+    "11-commerce-funnel": "partial",
+    "12-ads-optional": "optional-disabled",
+    "13-publishing": "partial",
+    "14-analytics": "partial",
+    "15-governance": "partial"
+  },
+  "capabilities": {
+    "skill_router": "implemented",
+    "fa_en_locale_guidance": "implemented",
+    "additional_languages": "not-implemented",
+    "schema_validation": "not-implemented",
+    "live_instagram_oauth": "not-implemented",
+    "live_insights_sync": "not-implemented",
+    "supplier_stock_sync": "not-implemented",
+    "instagram_publish": "not-implemented",
+    "dm_comment_sending": "not-implemented",
+    "trial_reel_api_toggle": "not-implemented",
+    "ai_media_generation_adapter": "optional-disabled",
+    "paid_ads_execution": "optional-disabled",
+    "offline_commercial_gate": "implemented",
+    "offline_trial_review": "implemented",
+    "upstream_source_audit": "implemented",
+    "agent_runtime_eval": "not-implemented",
+    "cross_language_perf_calibration": "not-implemented",
+    "automated_weekly_meta_knowledge_update": "not-implemented",
+    "versioned_behavior_fixtures": "not-implemented"
+  }
+}
