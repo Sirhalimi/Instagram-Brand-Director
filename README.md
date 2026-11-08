@@ -39,6 +39,24 @@ Brand onboarding; audience research; profile and performance audits; competitor 
 
 Derived from independent analysis of [Social Media Skills](https://github.com/social-media-skills/skills), [Instagram Agent Skill](https://github.com/Jakeschincariol/instagram-agent-skill), [Instagram Skills](https://github.com/sergebulaev/instagram-skills), [Marketing Skills](https://github.com/coreyhaines31/marketingskills), [Digital Marketing Skills](https://github.com/vidual-labs/digital-marketing-skills) and [Apify Awesome Skills](https://github.com/apify/awesome-skills). No third-party source files are bundled in the GitHub bootstrap.
 
+## Executable components currently in GitHub
+
+- `scripts/catalog_guard.py`: commercial preflight for product stock, fulfillment, price freshness and campaign margin policy.
+- `scripts/trial_review.py`: offline post-Trial comparison against the account's configured baseline.
+- `scripts/campaign_decision.py`: decisive format and campaign recommendation combining brand production constraints, creative rights, account Trial availability and catalog checks.
+- `tests/`: 29 regression tests for these three GitHub components; GitHub Actions runs the suite on pushes and pull requests.
+- `examples/`: synthetic JSON inputs. No real account, customer data or API tokens are included.
+
+Try the campaign decision engine:
+
+```bash
+python3 -m scripts.campaign_decision examples/campaign-brief.sample.json
+python3 -m scripts.trial_review examples/trial-review.sample.json
+python3 -m unittest discover -s tests -v
+```
+
+These scripts **do not** connect accounts, publish posts, run paid advertisements or access live inventories. They choose auditable actions from the data supplied to them. The full original local v0.4 bundle has not yet been mirrored to GitHub.
+
 ## Development priorities
 
 1. Mirror the complete original v0.4 source bundle and local tests into GitHub.
