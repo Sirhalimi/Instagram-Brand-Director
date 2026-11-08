@@ -12,14 +12,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check required files
+      - name: Require isolated installable skill
         run: |
-          test -s SKILL.md
-          test -s README.md
-          test -s docs/FEATURE_SCOPE_FA.md
-      - name: Python compile
+          test -s skills/instagram-brand-director/SKILL.md
+          test ! -e SKILL.md
+          test -s skills/instagram-brand-director/knowledge/instagram-rules.md
+          test -s skills/instagram-brand-director/references/implementation-status.json
+      - name: Compile Python
         run: |
-          if [ -d scripts ]; then python -m compileall -q scripts; fi
-      - name: Unit tests, when transferred
+          python3 -m compileall -q scripts skills/instagram-brand-director/scripts
+      - name: Unit and deterministic behavior contract tests
         run: |
-          if [ -d tests ]; then python -m unittest discover -s tests -v; else echo 'No unit tests in repository yet'; fi
+          python3 -m unittest discover -s tests -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Actual Skills CLI isolated install smoke test
+        env:
+          DISABLE_TELEMETRY: "1"
+        run: |
+          mkdir -p "$RUNNER_TEMP/igbd-consumer"
+          cd "$RUNNER_TEMP/igbd-consumer"
+          npx --yes skills@latest add "$GITHUB_WORKSPACE" --skill instagram-brand-director --agent codex --yes
+          TARGET=".agents/skills/instagram-brand-director"
+          test -s "$TARGET/SKILL.md"
+          test -s "$TARGET/scripts/trial_review.py"
+          test -s "$TARGET/knowledge/instagram-rules.md"
+          test ! -e "$TARGET/.github"
+          test ! -e "$TARGET/tests"
+          test ! -e "$TARGET/evals"
+          test "$(find "$TARGET/modules" -name '*.md' | wc -l | tr -d ' ')" = "15"
+          echo "Skill installed in isolation and does not include repository CI/tests/fixtures"
