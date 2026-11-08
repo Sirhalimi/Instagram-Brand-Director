@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "description": "Synthetic cross-brand regression. No actual client data, live insights or commercial claims.",
+  "cases": [
+    {
+      "id": "fa_faceless_shop_discovery",
+      "locale": "fa",
+      "brand_kind": "ecommerce",
+      "brief": {
+        "brand": {
+          "name": "فروشگاه نمونه",
+          "camera_policy": "no",
+          "production_capabilities": [
+            "filming_products",
+            "static_design"
+          ],
+          "paid_ads_enabled": false
+        },
+        "content": {
+          "goal": "discovery",
+          "preferred_format": "reel",
+          "novel_concept": true,
+          "time_sensitive": false,
+          "trial_available": true,
+          "rights_verified": true,
+          "claims_verified": true,
+          "requires_face": false
+        },
+        "commercial": {}
+      },
+      "expected_decision": "TRIAL_REEL",
+      "anti_pattern": "Never force founder talking-head filming"
+    },
+    {
+      "id": "en_service_education",
+      "locale": "en",
+      "brand_kind": "b2b_service",
+      "brief": {
+        "brand": {
+          "name": "Acme Advisory",
+          "camera_policy": "no",
+          "production_capabilities": [
+            "static_design"
+          ],
+          "paid_ads_enabled": false
+        },
+        "content": {
+          "goal": "education",
+          "preferred_format": "carousel",
+          "rights_verified": true,
+          "claims_verified": true
+        },
+        "commercial": {}
+      },
+      "expected_decision": "CAROUSEL",
+      "anti_pattern": "Do not invent product inventory or force Reels"
+    },
+    {
+      "id": "fa_cafe_story",
+      "locale": "fa",
+      "brand_kind": "local_cafe",
+      "brief": {
+        "brand": {
+          "name": "کافه نمونه",
+          "camera_policy": "yes",
+          "production_capabilities": [
+            "on_camera",
+            "filming_products",
+            "static_design"
+          ],
+          "paid_ads_enabled": false
+        },
+        "content": {
+          "goal": "community",
+          "preferred_format": "story",
+          "rights_verified": true,
+          "claims_verified": true
+        },
+        "commercial": {}
+      },
+      "expected_decision": "STORY",
+      "anti_pattern": "Do not send DMs or posts without approval"
+    },
+    {
+      "id": "en_software_unknown_cost",
+      "locale": "en",
+      "brand_kind": "digital_saas",
+      "brief": {
+        "brand": {
+          "name": "Cloud Helper",
+          "camera_policy": "yes",
+          "production_capabilities": [
+            "motion_graphics"
+          ],
+          "paid_ads_enabled": false
+        },
+        "content": {
+          "goal": "conversion",
+          "preferred_format": "reel",
+          "rights_verified": true,
+          "claims_verified": true
+        },
+        "commercial": {
+          "product": {
+            "sku": "SOFT-1",
+            "name": "Software plan",
+            "status": "active",
+            "stock_policy": "unlimited",
+            "unlimited_verified": true,
+            "price": "90",
+            "unit_cost": null,
+            "currency": "USD",
+            "fulfillment": "automatic",
+            "last_verified": "2026-11-09",
+            "product_url": "https://example.org/products/software"
+          }
+        }
+      },
+      "expected_decision": "DO_NOT_PROMOTE",
+      "anti_pattern": "No new-sales promotion with unknown margin"
+    },
+    {
+      "id": "en_film_unavailable",
+      "locale": "en",
+      "brand_kind": "creative_consultant",
+      "brief": {
+        "brand": {
+          "name": "Design Studio",
+          "camera_policy": "no",
+          "production_capabilities": [
+            "static_design"
+          ]
+        },
+        "content": {
+          "goal": "discovery",
+          "preferred_format": "reel",
+          "rights_verified": true,
+          "claims_verified": true
+        },
+        "commercial": {}
+      },
+      "expected_decision": "CAROUSEL",
+      "anti_pattern": "No infeasible talking-head Reel"
+    }
+  ]
+}
