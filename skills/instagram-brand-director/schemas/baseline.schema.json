@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "required": [
+    "schema_version",
+    "brand_id",
+    "as_of",
+    "window_start",
+    "format",
+    "primary_goal",
+    "n_comparable_posts",
+    "total_reach",
+    "comparable",
+    "source",
+    "shares_per_reach"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "brand_id": {
+      "type": "string"
+    },
+    "as_of": {
+      "type": "string",
+      "format": "date"
+    },
+    "window_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "format": {
+      "enum": [
+        "reel",
+        "carousel",
+        "story",
+        "image"
+      ]
+    },
+    "primary_goal": {
+      "enum": [
+        "discovery",
+        "community",
+        "conversion",
+        "education"
+      ]
+    },
+    "n_comparable_posts": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "total_reach": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "comparable": {
+      "type": "boolean"
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shares_per_reach": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

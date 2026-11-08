@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "required": [
+    "schema_version",
+    "brand_id",
+    "name",
+    "primary_locale",
+    "camera_policy",
+    "production_capabilities",
+    "target_audience",
+    "primary_goal"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "brand_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "primary_locale": {
+      "enum": [
+        "fa",
+        "en"
+      ]
+    },
+    "camera_policy": {
+      "enum": [
+        "yes",
+        "no",
+        "unknown"
+      ]
+    },
+    "production_capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "on_camera",
+          "filming_products",
+          "motion_graphics",
+          "static_design",
+          "voiceover"
+        ]
+      }
+    },
+    "target_audience": {
+      "type": "string",
+      "minLength": 1
+    },
+    "primary_goal": {
+      "enum": [
+        "discovery",
+        "community",
+        "conversion",
+        "education"
+      ]
+    },
+    "catalog_source": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "catalog_last_verified": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    }
+  }
+}

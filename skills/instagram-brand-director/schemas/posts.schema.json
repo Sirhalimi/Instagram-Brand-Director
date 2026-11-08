@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "format": "csv",
+  "required_columns": [
+    "post_id",
+    "published_at",
+    "format",
+    "reach",
+    "likes",
+    "shares",
+    "saves",
+    "follows"
+  ],
+  "optional_columns": [
+    "trial",
+    "sku",
+    "source"
+  ],
+  "rules": [
+    "unique post_id",
+    "timezone-aware ISO 8601 timestamp",
+    "nonnegative integer reach and engagement",
+    "no implied conclusion from one or two posts"
+  ]
+}
