@@ -1,0 +1,4 @@
+interface:
+  display_name: "Instagram Brand Director"
+  short_description: "Bilingual Instagram strategy and content director"
+  default_prompt: "Use $instagram-brand-director to review my Instagram brand context and recommend the next measurable action, or write the requested content directly."
