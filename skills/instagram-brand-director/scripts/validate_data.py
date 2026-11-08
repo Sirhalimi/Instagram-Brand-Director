@@ -2,6 +2,7 @@
 """Validate private brand.md, baseline.md and posts.csv; no network, no writes."""
 import argparse, csv, io, json, re, sys
 from datetime import date, datetime
+from math import isfinite
 from pathlib import Path
 
 FORMATS = {"reel","carousel","story","image"}
@@ -85,7 +86,7 @@ def validate_baseline(d):
     if type(d.get("comparable")) is not bool: errors.append("explicit comparable boolean required")
     if type(d.get("source")) is not str or not d["source"].strip(): errors.append("source required")
     for k in ("shares_per_reach","likes_per_reach","saves_per_reach","follows_per_reach"):
-        if k in d and (type(d[k]) not in (int,float) or not (0<=d[k]<=1)):
+        if k in d and (type(d[k]) not in (int,float) or not isfinite(d[k]) or d[k]<0):
             errors.append("invalid rate "+k)
     if d.get("n_comparable_posts")==0 and d.get("total_reach",0)>0:
         errors.append("zero baseline posts with positive reach")
