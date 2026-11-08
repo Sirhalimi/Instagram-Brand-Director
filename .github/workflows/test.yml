@@ -1,0 +1,25 @@
+name: Skill checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check required files
+        run: |
+          test -s SKILL.md
+          test -s README.md
+          test -s docs/FEATURE_SCOPE_FA.md
+      - name: Python compile
+        run: |
+          if [ -d scripts ]; then python -m compileall -q scripts; fi
+      - name: Unit tests, when transferred
+        run: |
+          if [ -d tests ]; then python -m unittest discover -s tests -v; else echo 'No unit tests in repository yet'; fi
