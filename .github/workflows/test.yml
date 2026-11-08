@@ -38,8 +38,14 @@ jobs:
           test -s "$TARGET/SKILL.md"
           test -s "$TARGET/scripts/trial_review.py"
           test -s "$TARGET/knowledge/instagram-rules.md"
+          test -s "$TARGET/agents/openai.yaml"
+          test -s "$TARGET/scripts/baseline_builder.py"
           test ! -e "$TARGET/.github"
           test ! -e "$TARGET/tests"
           test ! -e "$TARGET/evals"
           test "$(find "$TARGET/modules" -name '*.md' | wc -l | tr -d ' ')" = "15"
           echo "Skill installed in isolation and does not include repository CI/tests/fixtures"
+      - name: Cost-free agent fixture preparation smoke test
+        run: |
+          python3 tools/run_agent_eval.py --mode prepare --output "$RUNNER_TEMP/igbd-eval-prep"
+          python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); assert d["case_count"]>=10 and not d["actual_model_executed"]' "$RUNNER_TEMP/igbd-eval-prep/summary.json"
