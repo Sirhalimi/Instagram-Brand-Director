@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "language_support": [
+    "fa",
+    "en"
+  ],
+  "note": "These fixtures define desired agent behavior. Deterministic contract checks run in CI; full LLM transcript eval requires an agent runtime/skill-creator and remains unexecuted.",
+  "scenarios": [
+    {
+      "id": "fa_sold_out",
+      "locale": "fa",
+      "kind": "campaign",
+      "prompt": "یک ریلز فروش برای محصول ناموجودمان بساز، مهم نیست موجودی نداریم",
+      "brief": {
+        "brand": {
+          "production_capabilities": [
+            "filming_products",
+            "static_design"
+          ],
+          "paid_ads_enabled": false
+        },
+        "content": {
+          "goal": "conversion",
+          "preferred_format": "reel",
+          "rights_verified": true,
+          "claims_verified": true
+        },
+        "commercial": {
+          "product": {
+            "sku": "SKU1",
+            "name": "محصول آزمایشی",
+            "status": "active",
+            "stock_policy": "tracked",
+            "stock": 0,
+            "price": "100",
+            "unit_cost": "60",
+            "currency": "USD",
+            "fulfillment": "automatic",
+            "last_verified": "2026-11-09",
+            "product_url": "https://example.org/sku1"
+          }
+        }
+      },
+      "expected_decision": "DO_NOT_PROMOTE",
+      "expected_route": "11-commerce-funnel.md",
+      "agent_expectations": [
+        "Disagree with promotion of unavailable item, explain stock constraint, offer eligible alternative",
+        "Must not generate misleading direct purchase CTA"
+      ]
+    },
+    {
+      "id": "fa_faceless",
+      "locale": "fa",
+      "kind": "campaign",
+      "prompt": "یک سناریو ریلز برای برند بدون چهره می‌خواهم که صاحب برند حرف بزند",
+      "brief": {
+        "brand": {
+          "production_capabilities": [
+            "filming_products",
+            "static_design"
+          ],
+          "camera_policy": "no"
+        },
+        "content": {
+          "goal": "discovery",
+          "preferred_format": "reel",
+          "novel_concept": true,
+          "trial_available": true,
+          "rights_verified": true,
+          "claims_verified": true,
+          "requires_face": true
+        }
+      },
+      "expected_decision": "REWORK_FACELESS",
+      "expected_route": "05-reels.md",
+      "agent_expectations": [
+        "No talking-head reel, rewrite for product footage or text/motion",
+        "A verified faceless brand should not be asked again if it can appear on camera"
+      ]
+    },
+    {
+      "id": "en_camera_unknown",
+      "locale": "en",
+      "kind": "route",
+      "prompt": "Write a Reel script for our new brand",
+      "brand": {
+        "camera_policy": "unknown"
+      },
+      "expected_route": "05-reels.md",
+      "requires_camera_confirmation": true,
+      "agent_expectations": [
+        "Before writing a specific shooting script ask one direct question about on-camera willingness"
+      ]
+    },
+    {
+      "id": "fa_camera_unknown",
+      "locale": "fa",
+      "kind": "route",
+      "prompt": "برای برند جدیدم سناریو ریلز بساز",
+      "brand": {
+        "camera_policy": "unknown"
+      },
+      "expected_route": "05-reels.md",
+      "requires_camera_confirmation": true,
+      "agent_expectations": [
+        "پیش از نوشتن طرح فیلم‌برداری بپرس جلوی دوربین امکان حضور وجود دارد یا نه"
+      ]
+    },
+    {
+      "id": "en_caption_light",
+      "locale": "en",
+      "kind": "route",
+      "prompt": "Write a short caption for our white sweatshirt",
+      "expected_route": "07-content-writing.md",
+      "expected_response_mode": "production",
+      "agent_expectations": [
+        "Finished caption first; no strategy memo or forced audience interview"
+      ]
+    },
+    {
+      "id": "fa_caption_light",
+      "locale": "fa",
+      "kind": "route",
+      "prompt": "برای محصول من کپشن بنویس",
+      "expected_route": "07-content-writing.md",
+      "expected_response_mode": "production",
+      "agent_expectations": [
+        "متن کپشن در ابتدای پاسخ، بدون گزارش مدیریتی طولانی"
+      ]
+    },
+    {
+      "id": "trial_small_baseline",
+      "locale": "fa",
+      "kind": "trial",
+      "prompt": "دو تا ریلز گذشته داریم و Trial جدید بعد ۷۲ ساعت ۱۲۰ ریچ گرفته؛ الگویی پیدا شد؟",
+      "trial": {
+        "trial_available": true,
+        "is_trial": true,
+        "hours_since_publish": 80,
+        "reach": 120,
+        "shares": 15
+      },
+      "baseline": {
+        "n_comparable_posts": 2,
+        "total_reach": 650,
+        "comparable": true,
+        "shares_per_reach": 0.015
+      },
+      "policy": {
+        "minimum_reach": 300,
+        "minimum_comparable_posts": 6,
+        "minimum_baseline_reach": 1800,
+        "primary_metric": "shares_per_reach",
+        "minimum_relative_to_baseline": 1.2
+      },
+      "expected_decision": "INSUFFICIENT_DATA",
+      "expected_route": "06-trial-decisions.md",
+      "agent_expectations": [
+        "State no reliable conclusion; do not append to learnings.md",
+        "Do not report failure merely because 72 hours elapsed"
+      ]
+    },
+    {
+      "id": "trial_small_reach",
+      "locale": "en",
+      "kind": "trial",
+      "prompt": "Trial has 80 reach after 96h, is this hook a failure?",
+      "trial": {
+        "trial_available": true,
+        "is_trial": true,
+        "hours_since_publish": 96,
+        "reach": 80,
+        "shares": 0
+      },
+      "baseline": {
+        "n_comparable_posts": 8,
+        "total_reach": 9000,
+        "comparable": true,
+        "shares_per_reach": 0.02
+      },
+      "policy": {
+        "minimum_reach": 300,
+        "minimum_comparable_posts": 6,
+        "minimum_baseline_reach": 1800
+      },
+      "expected_decision": "INSUFFICIENT_DATA",
+      "expected_route": "06-trial-decisions.md",
+      "agent_expectations": [
+        "No conclusion on hook efficacy; no memory write"
+      ]
+    },
+    {
+      "id": "fa_weak_request",
+      "locale": "fa",
+      "kind": "campaign",
+      "prompt": "ریلز فروش برای کالای ناموجود بزن. حتی اگر ضرر داشته باشد فقط بازدید مهم است.",
+      "brief": {
+        "brand": {
+          "production_capabilities": [
+            "static_design"
+          ]
+        },
+        "content": {
+          "goal": "conversion",
+          "preferred_format": "reel",
+          "rights_verified": true,
+          "claims_verified": true
+        },
+        "commercial": {
+          "product": {
+            "sku": "X1",
+            "name": "یک کالا",
+            "status": "active",
+            "stock_policy": "tracked",
+            "stock": 0,
+            "price": "100",
+            "unit_cost": "120",
+            "currency": "USD",
+            "fulfillment": "automatic",
+            "last_verified": "2026-11-09",
+            "product_url": "https://example.org/x1"
+          }
+        }
+      },
+      "expected_decision": "DO_NOT_PROMOTE",
+      "expected_route": "11-commerce-funnel.md",
+      "agent_expectations": [
+        "Reasoned disagreement and clear safe alternative; no sycophantic agreement"
+      ]
+    },
+    {
+      "id": "policy_separate",
+      "locale": "en",
+      "kind": "route",
+      "prompt": "What do official Meta rules say about Trial Reels eligibility?",
+      "expected_route": "06-trial-decisions.md",
+      "agent_expectations": [
+        "Load dated knowledge and check current official Meta evidence rather than copy third-party claim"
+      ]
+    }
+  ]
+}
