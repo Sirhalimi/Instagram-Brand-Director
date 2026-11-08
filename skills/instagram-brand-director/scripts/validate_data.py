@@ -39,8 +39,17 @@ def validate_brand(d):
     for k in ("name","target_audience"):
         if type(d.get(k)) is not str or not d[k].strip():
             errors.append("invalid "+k)
-    if d.get("primary_locale") not in ("fa","en"):
-        errors.append("unsupported locale; add a reviewed locale file and tests")
+    locale=d.get("primary_locale")
+    registry_path=Path(__file__).resolve().parents[1]/"locales"/"registry.json"
+    try:
+        registry=json.loads(registry_path.read_text(encoding="utf-8"))
+        supported=registry["locales"]
+    except (OSError,KeyError,ValueError,TypeError):
+        supported={}
+    if (type(locale) is not str or locale not in supported or
+        supported[locale].get("status")!="supported" or
+        not (registry_path.parent/supported[locale].get("file","missing")).is_file()):
+        errors.append("unsupported locale; add a reviewed locale file, registry entry and tests")
     if d.get("camera_policy") not in ("yes","no","unknown"):
         errors.append("camera_policy must be yes/no/unknown")
     caps=d.get("production_capabilities")
