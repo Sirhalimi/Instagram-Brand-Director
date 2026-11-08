@@ -11,8 +11,8 @@ Requests concern trial reels, content format and post-test decisions; do not loa
 1. Before posting, assess objective, novelty, urgency, current audience relevance, feature availability in this account, creative rights and verified commercial preflight.
 2. Choose one definite next action: TRIAL_REEL, NORMAL_REEL, CAROUSEL, REWORK, PAUSE or REQUEST_CRITICAL_DATA. Treat requests for Trial as platform-specific features, not API permissions.
 3. When Trial is chosen, obtain owner approval and use a supported native interface unless an authorized integration has been tested; mark exact publication time.
-4. Review at brand-agreed windows (typically first ~24h and again at ~72h) against comparable first-party baseline with sample thresholds declared beforehand. Use trial_review.py.
-5. After results, decide SHARE_WITH_EVERYONE, KEEP_TESTING, REWORK or STOP and log reason, data and review date.
+4. Review at brand-agreed windows (typically first ~24h and again at ~72h). **Predeclared brand policy defaults:** at least 300 reach on the Trial, at least 6 independent comparable historical posts, at least 1800 pooled historical reach, comparable format/objective/window and valid first-party metrics. If any gate fails, return `INSUFFICIENT_DATA` EVEN AFTER 72 HOURS. Never label low-reach Trial as a failure or success just because the clock expired. Use `scripts/trial_review.py`.
+5. After results, decide SHARE_WITH_EVERYONE, KEEP_TESTING, REWORK or NO_CONCLUSION and log reasons and data **only as single observations**. A single high-performing Reel can motivate a one-off operational action, but never proves a repeatable content formula. Read `knowledge/learnings-governance.md` before proposing memory updates.
 
 ## Output
 One distribution decision plus review trigger and rejection rationale.

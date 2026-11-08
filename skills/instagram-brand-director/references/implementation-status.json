@@ -29,21 +29,36 @@
     "skill_router": "implemented",
     "fa_en_locale_guidance": "implemented",
     "additional_languages": "not-implemented",
-    "schema_validation": "not-implemented",
+    "schema_validation": "implemented",
     "live_instagram_oauth": "not-implemented",
     "live_insights_sync": "not-implemented",
     "supplier_stock_sync": "not-implemented",
     "instagram_publish": "not-implemented",
     "dm_comment_sending": "not-implemented",
     "trial_reel_api_toggle": "not-implemented",
-    "ai_media_generation_adapter": "optional-disabled",
-    "paid_ads_execution": "optional-disabled",
+    "ai_media_generation_adapter": "not-implemented",
+    "paid_ads_execution": "not-implemented",
     "offline_commercial_gate": "implemented",
     "offline_trial_review": "implemented",
     "upstream_source_audit": "implemented",
     "agent_runtime_eval": "not-implemented",
     "cross_language_perf_calibration": "not-implemented",
     "automated_weekly_meta_knowledge_update": "not-implemented",
-    "versioned_behavior_fixtures": "not-implemented"
+    "versioned_behavior_fixtures": "implemented",
+    "cli_installer_smoke": "implemented",
+    "offline_learning_gate": "implemented"
+  },
+  "feature_flags": {
+    "media_generation_enabled": false,
+    "paid_ad_execution_enabled": false,
+    "live_auto_publish_enabled": false
+  },
+  "implementation_notes": {
+    "agent_runtime_eval": "Ten bilingual fixtures are supplied but real model-output evaluation is not yet run; Python contract tests are not LLM eval.",
+    "historical_v04_migration": "not-implemented: complete reconciliation with previous 78-file offline ZIP",
+    "live_insights_sync": "not-implemented: requires owner-authorized Meta OAuth and verified endpoint permissions",
+    "additional_languages": "not-implemented: add a reviewed locale and tests before marking a new language supported",
+    "paid_ads_execution": "not-implemented: strategic advice exists but no live spending tools enabled",
+    "ai_media_generation_adapter": "not-implemented: creative briefs only; external generators must be separately opted in"
   }
 }

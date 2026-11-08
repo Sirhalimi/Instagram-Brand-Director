@@ -8,7 +8,7 @@
 Requests concern reels creative production; do not load other modules unless the task requires their data or permissions.
 
 ## Procedure
-1. Load brand voice and creative constraints first. Choose one promise that can be substantiated and produced.
+1. Load brand voice and creative constraints first. **If camera preference is unknown, ask one direct question before drafting a shooting plan: can/will anyone appear on camera?** Do not force on-camera content; for a confirmed no-face brand use only faceless options. Choose one promise that can be substantiated and produced.
 2. Write three genuinely different hook concepts; ensure first frame/on-screen text works without audio where relevant.
 3. For English: run copied upstream hookscore.py and beats.py only as editing heuristics; for Persian: run `python3 -m scripts.creative_quality hook --text ...`, no English score or view forecast.
 4. Create beat sheet: hook, stakes, main value, payoff, CTA, shot, on-screen text, spoken/audio, timing, accessibility captions and cover. If no camera: product shots, b-roll, animation or text-led Reel.

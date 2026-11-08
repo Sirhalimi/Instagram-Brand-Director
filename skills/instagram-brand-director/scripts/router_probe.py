@@ -19,7 +19,7 @@ MAP = [
     ("10-community.md",r"\bdm\b|comment reply|دایرکت|پاسخ کامنت|مدیریت کامنت"),
     ("13-publishing.md",r"publish|schedule|انتشار|زمان‌بندی انتشار|پست کن"),
     ("14-analytics.md",r"analytics|experiment|learn from|گزارش عملکرد|آزمایش محتوا|یادگیری"),
-    ("15-governance.md",r"meta policy|instagram rules|قوانین اینستاگرام|قوانین متا|الگوریتم رسمی"),
+    ("15-governance.md",r"meta policy|meta rules|instagram rules|قوانین اینستاگرام|قوانین متا|الگوریتم رسمی"),
     ("04-strategy-calendar.md",r"strategy|content plan|calendar|استراتژی|تقویم محتوا|برنامه محتوا"),
     ("08-media-optional.md",r"generate video|generate images|تولید ویدئو با هوش|تولید عکس"),
 ]
@@ -41,7 +41,7 @@ def route(prompt, brand=None):
     # Knowledge is loaded only when the request requires actual Meta policy claims.
     policy=bool(re.search("meta policy|instagram rules|قوانین اینستاگرام|قوانین متا|الگوریتم رسمی",prompt,re.I))
     paths=["SKILL.md",PREFIX+primary]+[PREFIX+x for x in extra]
-    if policy and primary!="15-governance.md":
+    if policy:
         paths.append("knowledge/instagram-rules.md")
     camera=brand.get("camera_policy","unknown")
     ask_camera=primary=="05-reels.md" and camera=="unknown"

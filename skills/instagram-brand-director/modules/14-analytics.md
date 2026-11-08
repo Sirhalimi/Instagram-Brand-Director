@@ -12,7 +12,7 @@ Requests concern performance analysis, a/b tests and learning; do not load other
 2. Compare like-for-like formats and campaign objectives using weighted reach-normalized rates; watch time must have duration context; avoid cross-account causal claims.
 3. Design a clear A/B hypothesis with a primary metric, minimum sample, comparison group and predeclared evaluation time. Do not silently redefine success after results.
 4. Report what improved, what remains uncertain, and one next action with follow-up review date.
-5. Archive a private experiment log per brand; avoid leaking brand-specific operational data into public Skill source.
+5. Store private observations per brand. **Do not append any asserted pattern to `learnings.md` based on 1–2 posts or low reach.** Use `scripts/learning_gate.py` for at least 4 independent comparable posts, >=300 reach each and >=3000 pooled reach (brand-configured defaults); even passing gate creates only a human-review candidate, never an automatic memory write.
 
 ## Output
 Decision report with evidence and uncertainty classification.
