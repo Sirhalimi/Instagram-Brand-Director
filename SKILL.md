@@ -57,6 +57,21 @@ An instruction skill is not an OAuth connection, Instagram automation platform o
 
 Check current official Instagram/Meta sources before time-sensitive platform statements when web is available. Keep dated evidence and identify official policy, account observations and hypotheses separately. If offline, mark platform-specific recommendations provisional and check Account Status/Best Practices in the native app. Do not hardcode universal posting frequencies, hashtag formulas, or Trial performance guarantees.
 
+## Upstream skill reuse — audited routing
+
+Prefer vetted upstream materials already checked into `third_party/` rather than rebuilding generic Reel/caption/profile tooling. Keep upstream copies intact and preserve per-repository MIT licenses.
+
+- **Brand onboarding:** read `third_party/social-media-skills/skills/brand-profile/SKILL.md` and `references/brand-profile-template.md` as structure; extend with inventory, prices, fulfillment, production constraints, data freshness, and brand-specific decision history. Store each actual brand profile privately.
+- **Reel scripting (English):** consult `third_party/jake-instagram-agent-skill/skills/ig-reel/SKILL.md` and `hooks.json`; invoke `hookscore.py` and `beats.py` as *editing heuristics*, not forecast models. Also consult `third_party/social-media-skills/skills/reels-script/SKILL.md` for shot, on-screen, sound-off and cover planning.
+- **Captions:** run `third_party/jake-instagram-agent-skill/skills/ig-caption/caption.py` for English drafts; consult `third_party/sergebulaev-instagram-skills/skills/ig-caption-writer/SKILL.md` for writing patterns, without assuming its external publishing connection exists.
+- **Competitor Reels:** `third_party/jake-instagram-agent-skill/skills/ig-viral/swipe.py` ranks user-collected TSV records by account-relative performance. Do not scrape unauthorized data or present follower counts as a true reach baseline.
+- **Organic strategy:** consult `third_party/vidual-digital-marketing-skills/skills/marketing/instagram-organic/SKILL.md` for audit workflow, but validate platform claims and use first-party insights.
+- **Final decision:** only `scripts/campaign_decision.py`, `scripts/catalog_guard.py`, `scripts/trial_review.py` or a documented human judgment applying the stricter decision contract should choose actions. Third-party heuristics are supporting evidence, not final authority.
+
+**Locale constraint:** the currently imported Python analyzers rely mainly on English regex and word lists; **do not present their scores as validated for Persian.** For Persian drafts, explicitly mark automated scoring unsupported and conduct qualitative native-language review until localized tests exist.
+
+**Knowledge integrity:** imported Reels docs include unverified precise ranking weights and fixed “best length” claims. Treat them as marketing hypotheses, never official Meta rules. Read `docs/UPSTREAM_COMPARISON_2026_11_FA.md` for the audit, scope gaps and copied-file origin.
+
 ## Repository documentation
 
 Source snapshot: version 0.4, November 2026. Full pre-existing local release bundle was prepared separately with 155 documented capabilities, module guides, scripts, templates and local tests. This GitHub bootstrap does **not** represent completion of live integrations. All 15 modules are specified; two execution/integration groups are off by default. See the project README and release manifest for the status of files actually present.
