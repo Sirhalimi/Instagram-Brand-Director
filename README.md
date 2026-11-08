@@ -1,6 +1,6 @@
 # Instagram Brand Director
 
-**Version:** v0.4 specification / GitHub bootstrap (2026-11-08)
+**Version:** v0.5-dev (2026-11-09)
 
 An evidence-driven, brand-adaptive social media and marketing director Agent Skill for Instagram. It chooses one actionable next step, challenges poor marketing assumptions, and prioritizes commercial viability over vanity metrics.
 
@@ -37,14 +37,16 @@ Brand onboarding; audience research; profile and performance audits; competitor 
 
 ## Source credits
 
-Derived from independent analysis of [Social Media Skills](https://github.com/social-media-skills/skills), [Instagram Agent Skill](https://github.com/Jakeschincariol/instagram-agent-skill), [Instagram Skills](https://github.com/sergebulaev/instagram-skills), [Marketing Skills](https://github.com/coreyhaines31/marketingskills), [Digital Marketing Skills](https://github.com/vidual-labs/digital-marketing-skills) and [Apify Awesome Skills](https://github.com/apify/awesome-skills). Licensed upstream files are now included under `third_party/` (Jake Instagram Agent Skill, Social Media Skills, sergebulaev Instagram Skills, and vidual-labs Digital Marketing Skills). See `docs/UPSTREAM_COMPARISON_2026_11_FA.md` for files, caveats and integration status.
+Derived from independent analysis of [Social Media Skills](https://github.com/social-media-skills/skills), [Instagram Agent Skill](https://github.com/Jakeschincariol/instagram-agent-skill), [Instagram Skills](https://github.com/sergebulaev/instagram-skills), [Marketing Skills](https://github.com/coreyhaines31/marketingskills), [Digital Marketing Skills](https://github.com/vidual-labs/digital-marketing-skills) and [Apify Awesome Skills](https://github.com/apify/awesome-skills). 41 Git-blob-identical upstream files from all six reference repositories are included under `third_party/` with preserved MIT/Apache-2.0 licenses and a source manifest. See `docs/UPSTREAM_COMPARISON_2026_11_FA.md` for files, caveats and integration status.
 
 ## Executable components currently in GitHub
 
 - `scripts/catalog_guard.py`: commercial preflight for product stock, fulfillment, price freshness and campaign margin policy.
 - `scripts/trial_review.py`: offline post-Trial comparison against the account's configured baseline.
 - `scripts/campaign_decision.py`: decisive format and campaign recommendation combining brand production constraints, creative rights, account Trial availability and catalog checks.
-- `tests/`: 29 regression tests for these three GitHub components; GitHub Actions runs the suite on pushes and pull requests.
+- `scripts/creative_quality.py`: conservative Persian editing lint and direct English upstream tool execution.
+- `docs/UPSTREAM_SOURCE_MANIFEST.json`: provenance and exact original SHA for every copied source file.
+- `tests/`: 49 automated tests covering existing decision engines, imported CLI tools, Persian review and provenance.
 - `examples/`: synthetic JSON inputs. No real account, customer data or API tokens are included.
 
 Try the campaign decision engine:
@@ -52,6 +54,7 @@ Try the campaign decision engine:
 ```bash
 python3 -m scripts.campaign_decision examples/campaign-brief.sample.json
 python3 -m scripts.trial_review examples/trial-review.sample.json
+python3 -m scripts.creative_quality hook --text "۳ اشتباه رایج هنگام خرید لباس"
 python3 -m unittest discover -s tests -v
 ```
 
@@ -62,7 +65,7 @@ These scripts **do not** connect accounts, publish posts, run paid advertisement
 1. Mirror the remaining original v0.4 source bundle and local tests into GitHub, reconciling against already-imported upstream tools.
 2. Integrate a full product catalog and fresh stock/cost data adapters.
 3. Complete Meta OAuth and read-only Insights validation.
-4. Complete dependency closure for copied upstream skills and develop Persian-specific tests/adapters; English-oriented tools have already been imported and smoke-tested.
+4. Test Persian editorial quality on real labeled examples and import only relevant missing cross-skill dependencies.
 5. Add CI and clear operational release/version gates.
 6. Implement publishing connectors only where the permissions and human approval workflow are proven.
 
