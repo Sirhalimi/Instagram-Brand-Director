@@ -1,72 +1,79 @@
 # Instagram Brand Director
 
-**Version:** v0.5-dev (2026-11-09)
+**Version: `0.6.0-dev` · 2026-11-09**
 
-An evidence-driven, brand-adaptive social media and marketing director Agent Skill for Instagram. It chooses one actionable next step, challenges poor marketing assumptions, and prioritizes commercial viability over vanity metrics.
+A bilingual (فارسی / English), modular, evidence-aware **Instagram Social Media & Marketing Director** Agent Skill. It gives one accountable next action for strategy, but responds directly with usable copy for lightweight requests. Third-party tools are reused where they are demonstrably useful; inventory/Trial safeguards are original and conservative.
 
-> **Publication status:** This GitHub repository currently contains the published skill specification and project documentation. The previously prepared local v0.4 bundle includes additional scripts, templates, module references and 44 local tests, but those components are **not yet fully mirrored to this GitHub repository**. Do not mistake a capability being listed for a working integration.
+## Install / نصب
 
-## Install
-
-Compatible Agent Skills clients may load this repository's `SKILL.md`. For the Skills CLI, inspect current support for your agent and run:
+The actual Vercel Skills CLI installation has been tested on GitHub Actions with Codex. The CLI installs only the selected nested Skill directory, **not the entire repository**.
 
 ```bash
-npx skills add Sirhalimi/Instagram-Brand-Director
+npx skills add Sirhalimi/Instagram-Brand-Director --skill instagram-brand-director -a codex -y
 ```
 
-If using an agent without a repository installer, clone this repo and point its skill directory at `SKILL.md`.
+Installed directory: `.agents/skills/instagram-brand-director/` (the agent may symlink to it). A nested `SKILL.md` is the only entrypoint. Root `SKILL.md` was removed to prevent duplicate discovery.
 
-## Start using it
+## Architecture / معماری
 
-Ask: “Act as Instagram Brand Director for my brand. Interview me briefly about brand identity, current problems, products, stock, prices, target audience, and production constraints. Give me a single prioritized marketing decision with reasoning and a review criterion.”
+```text
+skills/instagram-brand-director/
+├── SKILL.md                         # short selective router
+├── modules/                         # 15 independent on-demand files
+├── knowledge/instagram-rules.md      # dated, weekly-reviewed facts
+├── knowledge/learnings-governance.md
+├── locales/{fa,en,registry.json}    # two supported languages, extensible
+├── schemas/                         # brand / baseline / posts contracts
+├── templates/                       # synthetic private brand templates
+├── scripts/                         # offline routing, checks and analysis
+├── references/implementation-status.json
+├── references/source-attribution.json
+└── third_party/                     # selected licensed upstream tools
+```
 
-## Core coverage
+**File-loading budget:** ordinary caption/Reel/audit request = router + one primary module (**2 files**). Mixed commercial creative can require one extra module (**3 files**). Platform-specific rules may require knowledge (**up to 4 files**). These budgets are tested by `router_probe.py`; actual model file reads still require separate agent-run evaluation.
 
-Brand onboarding; audience research; profile and performance audits; competitor research; content strategy and calendar; Reels, Trial Reels, Carousels and Stories; Instagram SEO and organic growth; community management; catalog/stock/margin-aware promotion; sales funnels; publishing preflight and approval; metrics, experimentation and learning; current Meta policies and grounded critical feedback.
+## Two response modes
 
-**Optional, disabled until configured:** generated image/video/audio integrations and actual paid-ad campaign execution. Content strategy and advertising advice remain available without these integrations.
+- **Production / تولیدی:** give the finished caption, Reel script, carousel plan or Story first, without a five-section strategy memo. If camera availability is unknown, ask once *before the first Reel production brief*, not before a caption.
+- **Strategy / تصمیم مدیریتی:** one choice + evidence + rejected alternative + execution + predeclared review trigger. Do not flatter unsupported ideas, fabricate metrics or guarantee reach.
 
-## Decision principles
+## Trial noise and learnings
 
-- A decisive recommendation is not a promised outcome.
-- Never recommend promoting a sold-out or unverifiably deliverable product.
-- Never silently recommend face-to-camera formats if the brand cannot make them.
-- Never invent Instagram Insights, audience demographics, pricing, competitor sales or algorithm weights.
-- Never publish, DM, spend advertising budget or change an account without explicit approval.
-- Prefer official Meta APIs where supported; CSV/manual exports otherwise. An installed skill alone cannot authorize an account.
+Conservative default decision gates (not Instagram rules): **Trial reach ≥300; ≥6 comparable historical posts; ≥1800 pooled historical reach; comparable first-party data; review age ≥24h**. Below the gates, the decision is `INSUFFICIENT_DATA`, including after 72h. A single promising Reel never proves a recurring pattern. `learning_gate.py` only produces a human-review candidate after repeated independent evidence; it never writes `learnings.md`.
 
-## Source credits
+## Private data validation / اعتبارسنجی داده
 
-Derived from independent analysis of [Social Media Skills](https://github.com/social-media-skills/skills), [Instagram Agent Skill](https://github.com/Jakeschincariol/instagram-agent-skill), [Instagram Skills](https://github.com/sergebulaev/instagram-skills), [Marketing Skills](https://github.com/coreyhaines31/marketingskills), [Digital Marketing Skills](https://github.com/vidual-labs/digital-marketing-skills) and [Apify Awesome Skills](https://github.com/apify/awesome-skills). 41 Git-blob-identical upstream files from all six reference repositories are included under `third_party/` with preserved MIT/Apache-2.0 licenses and a source manifest. See `docs/UPSTREAM_COMPARISON_2026_11_FA.md` for files, caveats and integration status.
-
-## Executable components currently in GitHub
-
-- `scripts/catalog_guard.py`: commercial preflight for product stock, fulfillment, price freshness and campaign margin policy.
-- `scripts/trial_review.py`: offline post-Trial comparison against the account's configured baseline.
-- `scripts/campaign_decision.py`: decisive format and campaign recommendation combining brand production constraints, creative rights, account Trial availability and catalog checks.
-- `scripts/creative_quality.py`: conservative Persian editing lint and direct English upstream tool execution.
-- `docs/UPSTREAM_SOURCE_MANIFEST.json`: provenance and exact original SHA for every copied source file.
-- `tests/`: 49 automated tests covering existing decision engines, imported CLI tools, Persian review and provenance.
-- `examples/`: synthetic JSON inputs. No real account, customer data or API tokens are included.
-
-Try the campaign decision engine:
+Copy `templates/brand.md`, `templates/baseline.md`, and `templates/posts.csv` to a **private brand workspace**. Fill in real data, then:
 
 ```bash
-python3 -m scripts.campaign_decision examples/campaign-brief.sample.json
-python3 -m scripts.trial_review examples/trial-review.sample.json
-python3 -m scripts.creative_quality hook --text "۳ اشتباه رایج هنگام خرید لباس"
-python3 -m unittest discover -s tests -v
+python3 skills/instagram-brand-director/scripts/validate_data.py brand /private/brand.md
+python3 skills/instagram-brand-director/scripts/validate_data.py baseline /private/baseline.md
+python3 skills/instagram-brand-director/scripts/validate_data.py posts /private/posts.csv
 ```
 
-These scripts **do not** connect accounts, publish posts, run paid advertisements or access live inventories. They choose auditable actions from the data supplied to them. Selected upstream tools have been imported with source licenses and smoke tests. The full original local v0.4 bundle has not yet been mirrored to GitHub.
+`brand.md` and `baseline.md` contain one fenced JSON object; the CSV uses explicit column types and timezone-aware timestamps. Validation means format integrity, **not** that metrics are sufficient for inference. Missing fields must not be silently treated as zero.
 
-## Development priorities
+Run the installed engines from the skill directory:
 
-1. Mirror the remaining original v0.4 source bundle and local tests into GitHub, reconciling against already-imported upstream tools.
-2. Integrate a full product catalog and fresh stock/cost data adapters.
-3. Complete Meta OAuth and read-only Insights validation.
-4. Test Persian editorial quality on real labeled examples and import only relevant missing cross-skill dependencies.
-5. Add CI and clear operational release/version gates.
-6. Implement publishing connectors only where the permissions and human approval workflow are proven.
+```bash
+cd skills/instagram-brand-director
+python3 -m scripts.router_probe 'برای برندم کپشن بنویس'
+python3 -m scripts.creative_quality hook --text '۳ اشتباه رایج در خرید لباس'
+python3 -m scripts.trial_review ../../examples/trial-review.sample.json
+```
 
-See `docs/FEATURE_SCOPE_FA.md` for Persian module scope and `docs/DEPLOYMENT_STATUS.md` for live status.
+## Status, evidence and licenses
+
+- Full specification: **15 modules**, with core decision workflows operating offline and external integrations explicitly tracked as partial or `not-implemented`.
+- Language: **fa / en supported**; other languages require a locale file, registry change, and regression tests. English-only upstream Hook scores are **not validated for Persian**.
+- Source provenance: **41 byte-identical files from six GitHub repositories** in the development repo; **21 selected source files** ship inside the installed Skill. Original MIT/Apache-2.0 licenses are retained. `docs/UPSTREAM_SOURCE_MANIFEST.json` and the installed `references/source-attribution.json` record source commit SHA and import date.
+- Live Instagram OAuth/Insights, store API sync, real publishing and paid-ad execution remain **not-implemented**. Media-generation and paid-ad integrations are **optional and disabled** until explicitly authorized.
+- CI: Python/unit/contract tests **and a real Skills CLI installation smoke test**. Fixed bilingual agent behavior fixtures are in `evals/`; actual LLM-generated response evaluation is **not executed** in this environment and must not be confused with code tests.
+
+See [implementation status](skills/instagram-brand-director/references/implementation-status.json), [change log](CHANGELOG.md), [agent eval fixtures](evals/agent-scenarios.json) and [release checklist](docs/RELEASE_CHECKLIST_FA.md).
+
+## Reference projects
+
+[social-media-skills](https://github.com/social-media-skills/skills) · [Jake Instagram Agent Skill](https://github.com/Jakeschincariol/instagram-agent-skill) · [Instagram Skills](https://github.com/sergebulaev/instagram-skills) · [Marketing Skills](https://github.com/coreyhaines31/marketingskills) · [Digital Marketing Skills](https://github.com/vidual-labs/digital-marketing-skills) · [Apify Awesome Skills](https://github.com/apify/awesome-skills).
+

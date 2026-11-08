@@ -1,17 +1,21 @@
 # Changelog
 
-## v0.5-dev — 2026-11-09
-- Imported a total of 41 unmodified third-party files from all six named GitHub sources, with preserved licenses.
-- Completed selected onboarding, Reels and caption reference dependencies; imported marketing, audience research, influencer and Apify advertising intelligence materials.
-- Added source SHA manifest and automated Git blob provenance tests.
-- Added `scripts/creative_quality.py`: upstream English tools plus conservative Persian review, with 12 tests.
-- Current GitHub test suite: 49 cases. No live Instagram/shop connection or paid-ad execution is claimed.
-- Kept commercial inventory constraints, human approval gates and definitive next-action decision contract.
+## 0.6.0-dev — 2026-11-09
+- Refactored to `skills/instagram-brand-director/`: short router + **15 independently loadable modules**. Removed root `SKILL.md` to prevent duplicate discovery.
+- Verified **real `npx skills add`** installation in GitHub Actions; installed package excludes `.github/`, test and eval directories from repository root.
+- Built bilingual `fa`/`en` localization files and an extensible locale registry. Persian copy is not evaluated using English Hook scores.
+- Separated platform facts into dated `knowledge/instagram-rules.md`; references reviewed weekly when current verification is available, stable instructions monthly. Automatic policy monitoring remains not-implemented.
+- Introduced offline `brand.md`, `baseline.md`, `posts.csv` templates, JSON schema descriptions and strict validators; missing metrics are not silently zero.
+- Replaced low-evidence Trial conclusions with `INSUFFICIENT_DATA`, requiring minimum reach and independent comparable baseline posts; 72h alone is not sufficient.
+- Added guarded learning assessment: no single-post generalization and no automatic `learnings.md` writes.
+- Added deterministic router/file-budget tests and ten bilingual fixed agent behavior fixtures. **LLM runtime evaluations not run**; do not conflate with unit tests.
+- Pinned upstream commit SHA, imported_on and verified_on for 41 identical third-party files; 21 selected licensed source files copied into installable Skill.
+- Status of every module and key integration now tracked in `references/implementation-status.json`, including explicit `not-implemented` entries and disabled optional flags.
 
-## Prior GitHub development
-- Bootstrapped fifteen-module SKILL.md, docs and CI.
-- Added `catalog_guard.py`, `trial_review.py` and `campaign_decision.py` plus offline tests.
-- Imported an initial group of independent Jake Instagram tools and tested their CLI.
+## 0.5-dev — 2026-11-09
+- Imported directly copied sources from six reference repositories; preserved original licenses.
+- Added offline campaign, product catalog, Trial and English/Persian creative analysis tools plus tests.
 
-## Historical local artifact
-- v0.4 ZIP exists separately and has not been fully reconciled into the GitHub repository.
+## Historical
+- Previous local v0.4 ZIP was not fully reconciled with GitHub. It remains a separate legacy artifact, not a shipped feature set.
+
