@@ -1,0 +1,64 @@
+name: Manual Codex agent behavior eval (opt-in)
+on:
+  workflow_dispatch:
+    inputs:
+      case_id:
+        description: "One synthetic scenario per deliberate paid evaluation"
+        type: choice
+        required: true
+        default: fa_sold_out
+        options:
+          - fa_sold_out
+          - fa_faceless
+          - en_camera_unknown
+          - fa_camera_unknown
+          - en_caption_light
+          - fa_caption_light
+          - trial_small_baseline
+          - trial_small_reach
+          - fa_weak_request
+          - policy_separate
+permissions:
+  contents: read
+jobs:
+  evaluate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Authenticate via explicitly configured repository secret
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY repository secret is not configured. No model call was made."
+            exit 1
+          fi
+      - name: Install Codex CLI
+        run: |
+          npm install --global @openai/codex
+          codex --version
+      - name: Evaluate one synthetic fixture (read-only sandbox)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DISABLE_TELEMETRY: "1"
+        run: |
+          python3 tools/run_agent_eval.py --mode run \
+            --case "${{ inputs.case_id }}" \
+            --allow-model-usage \
+            --output "$RUNNER_TEMP/igbd-agent-eval"
+      - name: Store synthetic response and event trace for HUMAN review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: igbd-agent-eval-${{ inputs.case_id }}
+          path: ${{ runner.temp }}/igbd-agent-eval
+          retention-days: 7
+          if-no-files-found: ignore
