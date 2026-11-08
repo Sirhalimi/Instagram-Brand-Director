@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "default_locale": "fa",
+  "fallback_policy": "ask_or_prepare_reviewed_locale",
+  "locales": {
+    "fa": {
+      "status": "supported",
+      "file": "fa.md",
+      "direction": "rtl"
+    },
+    "en": {
+      "status": "supported",
+      "file": "en.md",
+      "direction": "ltr"
+    }
+  }
+}
