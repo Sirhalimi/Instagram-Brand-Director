@@ -9,7 +9,18 @@ import csv
 import json
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from scripts.validate_data import read_md, validate_brand, validate_posts_csv, validate_baseline
+import importlib.util
+
+# Resolve the validator from this installed Skill, not from any unrelated
+# top-level `scripts` Python package in the host repository/agent environment.
+_validator_path = Path(__file__).resolve().with_name('validate_data.py')
+_spec = importlib.util.spec_from_file_location('_igbd_validator', _validator_path)
+_validator = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_validator)
+read_md = _validator.read_md
+validate_brand = _validator.validate_brand
+validate_posts_csv = _validator.validate_posts_csv
+validate_baseline = _validator.validate_baseline
 
 METRICS = ("likes", "shares", "saves", "follows")
 FORMATS = ("reel", "carousel", "story", "image")
