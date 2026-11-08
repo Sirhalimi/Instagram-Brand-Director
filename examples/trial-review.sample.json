@@ -7,10 +7,15 @@
     "shares": 20
   },
   "baseline": {
-    "shares_per_reach": 0.01
+    "shares_per_reach": 0.01,
+    "n_comparable_posts": 8,
+    "total_reach": 7800,
+    "comparable": true
   },
   "policy": {
-    "minimum_reach": 100,
+    "minimum_reach": 300,
+    "minimum_comparable_posts": 6,
+    "minimum_baseline_reach": 1800,
     "primary_metric": "shares_per_reach",
     "minimum_relative_to_baseline": 1.2
   }
