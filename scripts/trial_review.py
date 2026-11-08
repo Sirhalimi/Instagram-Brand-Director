@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Post-Trial decision using account-specific baseline and business-defined policy.
+"""Conservative Trial Reel operational review (NOT proof of an algorithmic pattern).
 
-Does not publish. Performance thresholds are not Instagram ranking rules.
+Predeclared brand thresholds are editorial decision rules, not Meta guidance.
+Individual posts never become learnings; repeat evidence is separately gated.
 """
 import argparse
 import json
@@ -9,59 +10,85 @@ import math
 from pathlib import Path
 
 METRICS = ("shares_per_reach", "likes_per_reach", "saves_per_reach", "follows_per_reach")
+SOURCE = {"shares_per_reach": "shares", "likes_per_reach": "likes",
+          "saves_per_reach": "saves", "follows_per_reach": "follows"}
 
-def valid_nonnegative(x):
-    return isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x) and x >= 0
+def finite(x):
+    return type(x) in (int, float) and math.isfinite(x) and x >= 0
+
+def positive_int(x):
+    return type(x) is int and x >= 1
+
+def report(decision, reasons, **fields):
+    return {"decision": decision, "reason": "; ".join(reasons), "evidence_gaps": reasons,
+            "learning_eligible": False, "human_approval_required": True,
+            "executed": False, **fields}
 
 def review(trial, baseline, policy):
+    if not all(isinstance(x, dict) for x in (trial, baseline, policy)):
+        raise ValueError("trial, baseline and policy must be objects")
     if trial.get("trial_available") is False:
-        return {"decision": "MANUAL_NORMAL_REEL", "reason": "Trial unavailable; do not claim it was tested."}
-    if not trial.get("is_trial"):
-        return {"decision": "HOLD", "reason": "Post is not identified as a Trial Reel."}
+        return report("MANUAL_NORMAL_REEL", ["Trial is not enabled for this account"])
+    if trial.get("is_trial") is not True:
+        return report("HOLD", ["Post not confirmed as Trial Reel"])
     elapsed = trial.get("hours_since_publish")
-    if not valid_nonnegative(elapsed):
-        return {"decision": "COLLECT_DATA", "reason": "Elapsed hours missing or invalid."}
-    if elapsed < 24:
-        return {"decision": "WAIT_FOR_FIRST_REVIEW", "reason": "Wait for approximately 24h initial measurement.", "review_after_hours": 24}
-    if not valid_nonnegative(trial.get("reach")) or trial["reach"] == 0:
-        return {"decision": "COLLECT_DATA", "reason": "No valid reach denominator."}
-    minimum = policy.get("minimum_reach", 100)
-    if not isinstance(minimum, int) or isinstance(minimum, bool) or minimum < 1:
-        raise ValueError("minimum_reach must be a positive integer")
-    if trial["reach"] < minimum:
-        return {"decision": "KEEP_TRIAL_COLLECT_MORE_DATA" if elapsed < 72 else "ARCHIVE_OR_REWORK",
-                "reason": "Account-specific minimum sample not reached; cannot compare reliably.",
-                "review_after_hours": 72 if elapsed < 72 else None, "minimum_reach": minimum}
+    if not finite(elapsed):
+        return report("INSUFFICIENT_DATA", ["Trial age missing or invalid"])
+    minimum_hours = policy.get("minimum_elapsed_hours", 24)
+    minimum_reach = policy.get("minimum_reach", 300)
+    minimum_comparables = policy.get("minimum_comparable_posts", 6)
+    minimum_baseline_reach = policy.get("minimum_baseline_reach", 1800)
+    multiplier = policy.get("minimum_relative_to_baseline", 1.2)
     metric = policy.get("primary_metric", "shares_per_reach")
-    if metric not in METRICS:
-        raise ValueError("Unsupported primary metric")
-    source_key = {"shares_per_reach": "shares", "likes_per_reach": "likes",
-                  "saves_per_reach": "saves", "follows_per_reach": "follows"}[metric]
-    value = trial.get(source_key)
-    base = baseline.get(metric)
-    if not valid_nonnegative(value) or not valid_nonnegative(base):
-        return {"decision": "COLLECT_DATA", "reason": "Selected metric/baseline missing; no comparison invented.", "metric": metric}
-    rate = value / trial["reach"]
-    uplift = rate / base if base > 0 else None
-    multiplier = policy.get("minimum_relative_to_baseline", 1.0)
-    if not valid_nonnegative(multiplier):
-        raise ValueError("Invalid comparison multiplier")
+    if (not finite(minimum_hours) or minimum_hours <= 0 or
+        not positive_int(minimum_reach) or not positive_int(minimum_comparables) or
+        not positive_int(minimum_baseline_reach) or not finite(multiplier) or multiplier <= 0 or
+        metric not in METRICS):
+        raise ValueError("Invalid campaign sampling policy")
+    if elapsed < minimum_hours:
+        return report("WAIT_FOR_FIRST_REVIEW", ["Trial not mature for initial review"],
+                      review_after_hours=minimum_hours)
+    reasons = []
+    reach = trial.get("reach")
+    if not positive_int(reach) or reach < minimum_reach:
+        reasons.append(f"Trial reach below brand minimum ({minimum_reach}) or missing")
+    count = baseline.get("n_comparable_posts")
+    if not positive_int(count) or count < minimum_comparables:
+        reasons.append(f"Too few independent comparable baseline posts (need {minimum_comparables})")
+    total = baseline.get("total_reach")
+    if not positive_int(total) or total < minimum_baseline_reach:
+        reasons.append(f"Insufficient pooled comparable baseline reach (need {minimum_baseline_reach})")
+    if baseline.get("comparable") is not True:
+        reasons.append("Baseline comparability (format, period, objective) not confirmed")
+    value, base = trial.get(SOURCE[metric]), baseline.get(metric)
+    if not finite(value) or not finite(base):
+        reasons.append("Primary metric or baseline rate missing/invalid")
+    if reasons:
+        return report("INSUFFICIENT_DATA", reasons,
+                      next_action="Collect more eligible samples; do not infer performance patterns or add learnings.",
+                      review_after_hours=72 if elapsed < 72 else None)
     if base == 0:
-        return {"decision": "MANUAL_REVIEW", "reason": "Historical baseline is zero; relative comparison undefined.", "observed_rate": round(rate, 6)}
-    positive = uplift >= multiplier
-    decision = "RECOMMEND_SHARE_WITH_EVERYONE" if positive else (
-        "KEEP_TRIAL_COLLECT_MORE_DATA" if elapsed < 72 else "REWORK_NEXT_CREATIVE")
-    return {"decision": decision, "metric": metric, "observed_rate": round(rate, 6),
-            "account_baseline": base, "observed_multiplier": round(uplift, 3),
-            "minimum_relative_to_baseline": multiplier,
-            "reason": ("Meets" if positive else "Below") + " brand-configured performance criterion.",
-            "review_after_hours": None if positive or elapsed >= 72 else 72,
-            "human_approval_required": True, "executed": False,
-            "notice": "Not an Instagram algorithm rule or causal estimate. Check comparability and business outcomes."}
+        return report("INSUFFICIENT_DATA", ["Baseline rate is zero; relative lift is undefined"])
+    observed_rate = value / reach
+    relative = observed_rate / base
+    if relative >= multiplier:
+        decision = "RECOMMEND_SHARE_WITH_EVERYONE"
+    elif elapsed < 72:
+        decision = "KEEP_TRIAL_COLLECT_MORE_DATA"
+    else:
+        decision = "REWORK_NEXT_CREATIVE"
+    return report(decision, ["Sufficient for an operational single-post comparison; NOT a learned repeatable pattern"],
+                  metric=metric, observed_rate=round(observed_rate, 6),
+                  account_baseline=base, observed_multiplier=round(relative, 3),
+                  minimum_relative_to_baseline=multiplier,
+                  review_after_hours=72 if decision=="KEEP_TRIAL_COLLECT_MORE_DATA" else None,
+                  next_action="Human review; treat as a single observation only.",
+                  inference="exploratory_single_post", minimum_reach=minimum_reach,
+                  minimum_comparable_posts=minimum_comparables)
 
 def main():
-    parser = argparse.ArgumentParser(description="Review Trial Reel against account baseline")
-    parser.add_argument("input", help="JSON with trial, baseline and policy")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input")
     args = parser.parse_args()
     data = json.loads(Path(args.input).read_text(encoding="utf8"))
     print(json.dumps(review(data["trial"], data["baseline"], data["policy"]), ensure_ascii=False, indent=2))
