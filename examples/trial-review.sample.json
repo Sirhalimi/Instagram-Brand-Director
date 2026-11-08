@@ -1,0 +1,17 @@
+{
+  "trial": {
+    "trial_available": true,
+    "is_trial": true,
+    "hours_since_publish": 26,
+    "reach": 1000,
+    "shares": 20
+  },
+  "baseline": {
+    "shares_per_reach": 0.01
+  },
+  "policy": {
+    "minimum_reach": 100,
+    "primary_metric": "shares_per_reach",
+    "minimum_relative_to_baseline": 1.2
+  }
+}
