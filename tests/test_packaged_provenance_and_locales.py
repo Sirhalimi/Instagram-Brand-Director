@@ -35,6 +35,12 @@ class ProvenanceAndLocales(unittest.TestCase):
         self.assertFalse(s["feature_flags"]["paid_ad_execution_enabled"])
         self.assertFalse(s["feature_flags"]["media_generation_enabled"])
 
+    def test_openai_skill_display_metadata_is_packaged(self):
+        content=(SKILL/"agents/openai.yaml").read_text(encoding="utf8")
+        self.assertIn('display_name: "Instagram Brand Director"',content)
+        self.assertIn("$instagram-brand-director",content)
+        self.assertIn('short_description:',content)
+
     def test_root_has_single_intended_skill(self):
         self.assertFalse((ROOT/"SKILL.md").exists())
         self.assertTrue((SKILL/"SKILL.md").exists())

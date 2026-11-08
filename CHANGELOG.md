@@ -7,6 +7,8 @@
 - Added manual GitHub Actions workflow_dispatch for one synthetic behavior fixture only, requiring a configured key and explicit run; regular CI never invokes paid models.
 - Protected new-sales campaigns against unknown unit costs/margins, inconsistent no-camera policies, and invalid boolean flags; added regression tests.
 - Added parity test so checked root Python engines and the installed Skill cannot silently diverge.
+- Added `agents/openai.yaml` metadata and verified its inclusion during real CLI installation.
+- Added five synthetic cross-brand regressions and a Persian human review rubric for the opt-in model evaluation.
 
 ## 0.6.0-dev — 2026-11-09
 - Refactored to `skills/instagram-brand-director/`: short router + **15 independently loadable modules**. Removed root `SKILL.md` to prevent duplicate discovery.

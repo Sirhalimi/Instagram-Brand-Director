@@ -51,7 +51,9 @@
     "real_agent_eval_harness": "implemented",
     "live_agent_eval_run": "not-implemented",
     "baseline_human_comparability_review": "partial",
-    "runtime_code_parity_check": "implemented"
+    "runtime_code_parity_check": "implemented",
+    "openai_skill_metadata": "implemented",
+    "synthetic_cross_brand_regression": "implemented"
   },
   "feature_flags": {
     "media_generation_enabled": false,
