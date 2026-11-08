@@ -1,0 +1,15 @@
+# Private client data and local secrets
+.env
+.env.*
+!.env.example
+brands/
+brand-profile.yaml
+client-data/
+exports/
+secrets/
+*.token
+*.pem
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
