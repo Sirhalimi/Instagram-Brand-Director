@@ -1,0 +1,36 @@
+{
+  "brand": {
+    "name": "Sample faceless product brand",
+    "production_capabilities": [
+      "filming_products",
+      "static_design"
+    ],
+    "paid_ads_enabled": false
+  },
+  "content": {
+    "goal": "conversion",
+    "preferred_format": "reel",
+    "novel_concept": true,
+    "time_sensitive": false,
+    "trial_available": true,
+    "rights_verified": true,
+    "claims_verified": true
+  },
+  "commercial": {
+    "minimum_margin_pct": 15,
+    "paid_execution_requested": false,
+    "product": {
+      "sku": "SKU-001",
+      "name": "Product",
+      "status": "active",
+      "currency": "USD",
+      "stock_policy": "tracked",
+      "stock": 18,
+      "price": "120",
+      "unit_cost": "75",
+      "fulfillment": "automatic",
+      "last_verified": "2026-11-09",
+      "product_url": "https://example.org/products/SKU-001"
+    }
+  }
+}
