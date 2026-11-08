@@ -50,6 +50,20 @@ class CatalogTests(unittest.TestCase):
         self.product["stock"] = 1.2
         self.assertEqual(self.check()["decision"], "DO_NOT_PROMOTE")
 
+    def test_missing_cost_blocks_new_sales(self):
+        self.product.pop("unit_cost")
+        result = self.check()
+        self.assertEqual(result["decision"], "DO_NOT_PROMOTE")
+        self.assertTrue(any("margin" in x.lower() for x in result["blocks"]))
+
+    def test_nonfinite_margin_floor_is_invalid(self):
+        with self.assertRaises(ValueError):
+            guard.assess(self.product, today=self.today, min_margin_pct=float("nan"))
+
+    def test_missing_currency_blocks_sales(self):
+        self.product.pop("currency")
+        self.assertEqual(self.check()["decision"], "DO_NOT_PROMOTE")
+
     def test_duplicate_skus(self):
         with self.assertRaises(ValueError):
             guard.analyze({"products": [self.product, self.product]}, today=self.today)

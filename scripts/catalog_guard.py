@@ -3,6 +3,7 @@
 import argparse
 import json
 from datetime import date
+import math
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
@@ -16,11 +17,23 @@ def money(value):
         return None
 
 def assess(product, purpose="conversion", min_margin_pct=0, today=None, max_age_days=14):
+    if not isinstance(product, dict):
+        raise ValueError("Product must be an object.")
+    if purpose not in ("conversion", "promotion", "awareness"):
+        raise ValueError("Unrecognized promotion purpose.")
+    if type(min_margin_pct) not in (int, float) or not math.isfinite(min_margin_pct) or not 0 <= min_margin_pct <= 100:
+        raise ValueError("Margin floor must be a finite percentage between 0 and 100.")
+    if type(max_age_days) is not int or max_age_days < 0:
+        raise ValueError("Maximum data age must be a nonnegative integer.")
     today = today or date.today()
     blocks, warnings, missing = [], [], []
-    for field in ("sku", "name", "status", "currency", "fulfillment", "last_verified"):
+    for field in ("sku", "name", "status", "currency", "fulfillment", "last_verified", "price", "unit_cost", "stock_policy"):
         if product.get(field) in (None, ""):
             missing.append(field)
+    if not isinstance(product.get("currency"), str) or not product["currency"].strip():
+        blocks.append("Currency unknown; cannot quote a reliable sale price.")
+    if product.get("fulfillment") not in ("automatic", "manual", "supplier"):
+        blocks.append("Fulfillment model unknown.")
     if product.get("status") not in VALID_STATUS:
         blocks.append("Product status is absent or unrecognized.")
     elif product["status"] != "active":
@@ -44,7 +57,10 @@ def assess(product, purpose="conversion", min_margin_pct=0, today=None, max_age_
     if price is None or price <= 0:
         blocks.append("Sale price is missing or invalid.")
     if cost is None or cost < 0:
-        warnings.append("Cost/margin unknown or invalid; paid campaign must be separately gated.")
+        if purpose in ("promotion", "conversion"):
+            blocks.append("Cost unknown; margin cannot be verified for a new-sales promotion.")
+        else:
+            warnings.append("Cost/margin unknown; avoid purchase claims until verified.")
     elif price is not None and price > 0:
         margin_pct = float((price - cost) / price * 100)
         if margin_pct < float(min_margin_pct):

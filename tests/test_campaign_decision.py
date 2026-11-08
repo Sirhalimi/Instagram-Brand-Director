@@ -67,7 +67,24 @@ class CampaignTests(unittest.TestCase):
         p = product()
         p.pop("unit_cost")
         item["commercial"] = {"product": p, "paid_execution_requested": True}
-        self.assertEqual(decide(item, today=TODAY)["decision"], "HOLD_PAID_AD")
+        self.assertEqual(decide(item, today=TODAY)["decision"], "DO_NOT_PROMOTE")
+
+    def test_out_of_stock_precedes_creative_rights(self):
+        item = brief(goal="conversion", rights_verified=False)
+        item["commercial"]["product"] = product()
+        item["commercial"]["product"]["stock"] = 0
+        self.assertEqual(decide(item, today=TODAY)["decision"], "DO_NOT_PROMOTE")
+
+    def test_reject_string_boolean_instead_of_truthiness(self):
+        item = brief(requires_face="false")
+        with self.assertRaises(ValueError):
+            decide(item, today=TODAY)
+
+    def test_conflicting_no_camera_policy(self):
+        item = brief()
+        item["brand"]["camera_policy"] = "no"
+        item["brand"]["production_capabilities"].append("on_camera")
+        self.assertEqual(decide(item, today=TODAY)["decision"], "REWORK_FACELESS")
 
     def test_human_approval_flag(self):
         out = decide(brief(), today=TODAY)

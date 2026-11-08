@@ -30,11 +30,18 @@ def decide(brief, today=None):
         raise ValueError("production_capabilities must be a list of supported values.")
     if not capabilities:
         return result("REQUEST_CRITICAL_DATA", "Production capability unknown.", "Identify at least one format the brand can actually produce.", [])
-    if content.get("rights_verified") is not True or content.get("claims_verified") is not True:
-        return result("HOLD_CREATIVE", "Media rights or claims not yet verified.", "Verify content rights and factual claims before publishing.", [])
-    if content.get("requires_face") and "on_camera" not in capabilities:
-        return result("REWORK_FACELESS", "Creative requires on-camera presence that the brand cannot provide.",
-                      "Rewrite as product footage, graphics or carousel compatible with the brand.", ["on_camera"])
+    for field in ("rights_verified", "claims_verified", "requires_face", "novel_concept", "time_sensitive", "trial_available"):
+        if field in content and content[field] is not None and type(content[field]) is not bool:
+            raise ValueError(f"{field} must be a boolean or null.")
+    for owner, field in ((brand, "paid_ads_enabled"), (commercial, "paid_execution_requested")):
+        if field in owner and type(owner[field]) is not bool:
+            raise ValueError(f"{field} must be a boolean.")
+    camera_policy = brand.get("camera_policy")
+    if camera_policy not in (None, "yes", "no", "unknown"):
+        raise ValueError("camera_policy must be yes/no/unknown.")
+    if camera_policy == "no" and "on_camera" in capabilities:
+        return result("REWORK_FACELESS", "The brand does not permit on-camera production.",
+                      "Remove on-camera production from the plan and use faceless capabilities.", ["on_camera"])
     product_result = None
     if goal == "conversion":
         product = commercial.get("product")
@@ -52,6 +59,11 @@ def decide(brief, today=None):
         if product_result["warnings"] and commercial.get("paid_execution_requested"):
             return result("HOLD_PAID_AD", "Paid acquisition requires verified unit economics.",
                           "Confirm unit cost and margin before buying traffic.", [], product_result)
+    if content.get("rights_verified") is not True or content.get("claims_verified") is not True:
+        return result("HOLD_CREATIVE", "Media rights or claims not yet verified.", "Verify content rights and factual claims before publishing.", [], product_result)
+    if content.get("requires_face") is True and (camera_policy == "no" or "on_camera" not in capabilities):
+        return result("REWORK_FACELESS", "Creative requires an on-camera presenter unavailable to this brand.",
+                      "Rewrite using product footage, graphics or a carousel.", ["on_camera"], product_result)
     if commercial.get("paid_execution_requested") and not brand.get("paid_ads_enabled", False):
         return result("PAID_ADS_DISABLED", "Paid-ad execution is an optional module disabled for this brand.",
                       "Use organic content now or explicitly configure paid advertising.", [], product_result)
