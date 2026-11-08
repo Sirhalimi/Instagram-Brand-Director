@@ -5,21 +5,26 @@
     "post_id",
     "published_at",
     "format",
+    "goal",
     "reach",
     "likes",
     "shares",
     "saves",
-    "follows"
+    "follows",
+    "source"
   ],
   "optional_columns": [
     "trial",
     "sku",
-    "source"
+    "metrics_age_hours"
   ],
   "rules": [
     "unique post_id",
     "timezone-aware ISO 8601 timestamp",
     "nonnegative integer reach and engagement",
-    "no implied conclusion from one or two posts"
+    "no implied conclusion from one or two posts",
+    "goal must be discovery, community, conversion or education",
+    "source must identify first-party export for analysis",
+    "metrics_age_hours is optional for raw validation but needed for defensible comparable observation windows"
   ]
 }

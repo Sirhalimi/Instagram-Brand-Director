@@ -9,8 +9,8 @@ GOALS = {"discovery","community","conversion","education"}
 CAPABILITIES = {"on_camera","filming_products","motion_graphics","static_design","voiceover"}
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{1,63}$")
 FENCE = re.compile(r"(?ms)^\x60{3}json[ \t]*\n(.*?)\n\x60{3}[ \t]*$", re.I)
-BASE_COLUMNS = ("post_id","published_at","format","reach","likes","shares","saves","follows")
-EXTRA_COLUMNS = ("trial","sku","source")
+BASE_COLUMNS = ("post_id","published_at","format","goal","reach","likes","shares","saves","follows","source")
+EXTRA_COLUMNS = ("trial","sku","metrics_age_hours")
 
 def iso_date(s):
     try:
@@ -111,6 +111,13 @@ def validate_posts_csv(s):
             errors.append(f"line {rowno}: published_at needs ISO timestamp with timezone")
         if (row.get("format") or "").strip() not in FORMATS:
             errors.append(f"line {rowno}: invalid format")
+        if (row.get("goal") or "").strip() not in GOALS:
+            errors.append(f"line {rowno}: invalid goal")
+        if not (row.get("source") or "").strip():
+            errors.append(f"line {rowno}: missing data source")
+        if "metrics_age_hours" in row and row["metrics_age_hours"] not in ("",None):
+            if not re.fullmatch(r"[0-9]+",row["metrics_age_hours"]):
+                errors.append(f"line {rowno}: invalid metrics_age_hours")
         vals={}
         for key in ("reach","likes","shares","saves","follows"):
             s=(row.get(key) or "").strip()

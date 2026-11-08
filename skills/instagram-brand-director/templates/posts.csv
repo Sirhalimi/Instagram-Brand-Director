@@ -1,3 +1,2 @@
-post_id,published_at,format,reach,likes,shares,saves,follows,trial,sku,source
-EXAMPLE_ONLY,2026-11-01T12:00:00+03:30,reel,0,0,0,0,0,false,,example_only
-
+post_id,published_at,format,goal,reach,likes,shares,saves,follows,trial,sku,source,metrics_age_hours
+EXAMPLE_ONLY,2026-11-01T12:00:00+03:30,reel,discovery,0,0,0,0,0,false,,example_only,
