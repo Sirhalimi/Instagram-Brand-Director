@@ -8,7 +8,7 @@
 Requests concern performance analysis, a/b tests and learning; do not load other modules unless the task requires their data or permissions.
 
 ## Procedure
-1. Load only validated baseline.md and posts.csv or permitted first-party API results. Verify metric definitions, sample windows and completeness.
+1. Load only validated brand.md/posts.csv or permitted first-party API results. Build a pooled first-party baseline via `scripts/baseline_builder.py`; retain `comparable=false` and `INSUFFICIENT_DATA` if observation ages, sample floors or manual representativeness review are absent. Verify metric definitions, dates and provenance.
 2. Compare like-for-like formats and campaign objectives using weighted reach-normalized rates; watch time must have duration context; avoid cross-account causal claims.
 3. Design a clear A/B hypothesis with a primary metric, minimum sample, comparison group and predeclared evaluation time. Do not silently redefine success after results.
 4. Report what improved, what remains uncertain, and one next action with follow-up review date.

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "0.6.0-dev",
+  "release": "0.7.0-dev",
   "updated_on": "2026-11-09",
   "status_values": [
     "implemented",
@@ -46,7 +46,12 @@
     "automated_weekly_meta_knowledge_update": "not-implemented",
     "versioned_behavior_fixtures": "implemented",
     "cli_installer_smoke": "implemented",
-    "offline_learning_gate": "implemented"
+    "offline_learning_gate": "implemented",
+    "offline_pooled_baseline_builder": "implemented",
+    "real_agent_eval_harness": "implemented",
+    "live_agent_eval_run": "not-implemented",
+    "baseline_human_comparability_review": "partial",
+    "runtime_code_parity_check": "implemented"
   },
   "feature_flags": {
     "media_generation_enabled": false,
@@ -54,11 +59,12 @@
     "live_auto_publish_enabled": false
   },
   "implementation_notes": {
-    "agent_runtime_eval": "Ten bilingual fixtures are supplied but real model-output evaluation is not yet run; Python contract tests are not LLM eval.",
+    "agent_runtime_eval": "Runner and manual opt-in workflow implemented; actual live model evaluation not executed, no validated pass claimed.",
     "historical_v04_migration": "not-implemented: complete reconciliation with previous 78-file offline ZIP",
     "live_insights_sync": "not-implemented: requires owner-authorized Meta OAuth and verified endpoint permissions",
     "additional_languages": "not-implemented: add a reviewed locale and tests before marking a new language supported",
     "paid_ads_execution": "not-implemented: strategic advice exists but no live spending tools enabled",
-    "ai_media_generation_adapter": "not-implemented: creative briefs only; external generators must be separately opted in"
+    "ai_media_generation_adapter": "not-implemented: creative briefs only; external generators must be separately opted in",
+    "offline_pooled_baseline_builder": "Computes pooled normalized rates from validated post rows; provenance labels and manual comparability review are user-supplied, not cryptographic/API attestations."
   }
 }

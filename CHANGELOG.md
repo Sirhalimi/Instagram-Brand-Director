@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0-dev — 2026-11-09
+- Added audited baseline builder from validated posts.csv: pooled event/reach rates, comparable observation ages, minimum independent posts/reach, and explicit human comparability review; low samples cannot create strong learnings.
+- Tightened posts.csv contract to require source and campaign goal for every record; rates can legitimately exceed 1 due to repeat interactions.
+- Added safe real-model evaluation **harness** with offline prepare mode and explicit opt-in Codex CLI execution; no live model evaluation has been run yet.
+- Added manual GitHub Actions workflow_dispatch for one synthetic behavior fixture only, requiring a configured key and explicit run; regular CI never invokes paid models.
+- Protected new-sales campaigns against unknown unit costs/margins, inconsistent no-camera policies, and invalid boolean flags; added regression tests.
+- Added parity test so checked root Python engines and the installed Skill cannot silently diverge.
+
 ## 0.6.0-dev — 2026-11-09
 - Refactored to `skills/instagram-brand-director/`: short router + **15 independently loadable modules**. Removed root `SKILL.md` to prevent duplicate discovery.
 - Verified **real `npx skills add`** installation in GitHub Actions; installed package excludes `.github/`, test and eval directories from repository root.

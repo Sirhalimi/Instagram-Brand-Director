@@ -1,6 +1,6 @@
 # Instagram Brand Director
 
-**Version: `0.6.0-dev` · 2026-11-09**
+**Version: `0.7.0-dev` · 2026-11-09**
 
 A bilingual (فارسی / English), modular, evidence-aware **Instagram Social Media & Marketing Director** Agent Skill. It gives one accountable next action for strategy, but responds directly with usable copy for lightweight requests. Third-party tools are reused where they are demonstrably useful; inventory/Trial safeguards are original and conservative.
 
@@ -72,6 +72,30 @@ python3 -m scripts.trial_review ../../examples/trial-review.sample.json
 - CI: Python/unit/contract tests **and a real Skills CLI installation smoke test**. Fixed bilingual agent behavior fixtures are in `evals/`; actual LLM-generated response evaluation is **not executed** in this environment and must not be confused with code tests.
 
 See [implementation status](skills/instagram-brand-director/references/implementation-status.json), [change log](CHANGELOG.md), [agent eval fixtures](evals/agent-scenarios.json) and [release checklist](docs/RELEASE_CHECKLIST_FA.md).
+
+
+## Evidence-first baselines and real-agent evaluation (v0.7-dev)
+
+A new offline `scripts/baseline_builder.py` derives **pooled reach-normalized rates** from posts.csv rather than trusting a manually typed average. CSV now requires each post's `goal` and `source`; `metrics_age_hours` can establish comparable observation horizons. The generated baseline stays `INSUFFICIENT_DATA` until the sampling floors, time windows and explicit human comparability review pass. Data-source labels are user-supplied and do not prove API provenance.
+
+```bash
+cd skills/instagram-brand-director
+python3 -m scripts.baseline_builder --brand /private/brand.md --posts /private/posts.csv --start 2026-10-01 --as-of 2026-11-09 --goal discovery --format reel --output /private/baseline.md
+```
+
+An optional real-model eval runner is available, **but no live Codex model evaluations have been executed in this release**. Offline mode is safe and cost-free:
+
+```bash
+python3 tools/run_agent_eval.py --mode prepare --output /tmp/igbd-eval-prep
+```
+
+To deliberately run one synthetic case on an already authenticated Codex CLI (may consume model usage), invoke:
+
+```bash
+python3 tools/run_agent_eval.py --mode run --case fa_sold_out --allow-model-usage --output /tmp/igbd-eval-live
+```
+
+The [opt-in GitHub workflow](.github/workflows/agent-eval.yml) provides a one-case manual alternative after configuring a repository `OPENAI_API_KEY` secret. It does **not run on push or PR**. Model response logs, weak mechanical checks and raw trace are always for **human evaluation**, not a pass certificate. The public CI continues using deterministic fixtures and a real Skills CLI installation smoke test.
 
 ## Reference projects
 

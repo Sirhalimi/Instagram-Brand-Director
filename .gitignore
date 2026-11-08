@@ -13,3 +13,11 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .DS_Store
+
+# Local private evidence and generated model eval outputs
+brand.md
+baseline.md
+posts.csv
+eval-results/
+agent-eval-results/
+private/

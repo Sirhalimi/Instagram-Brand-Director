@@ -9,7 +9,7 @@ Requests concern instagram profile and insights audit; do not load other modules
 
 ## Procedure
 1. Request authorized Instagram Professional insights or a user-supplied export; never request passwords or session cookies.
-2. Validate baseline.md and posts.csv before using any metric; missing is not zero; preserve sample times and metric provenance.
+2. Validate brand.md and posts.csv before using any metric; missing is not zero. Use `scripts/baseline_builder.py` to derive pooled rates rather than averaging per-post rates, and keep `comparable=false` without explicit review of format, goal, observation horizon, representativeness and source.
 3. Audit username, biography, category, profile image, pinned posts, highlights, link destination, content library, account-status recommendation eligibility.
 4. Compare like-for-like post formats over declared time windows and sample sizes; use reach-normalized shares, saves, follows, business conversions; interpret watch time relative to Reel length.
 5. Identify the top one or two root problems, explicitly separate hypothesis vs observation; produce action with measurable check-in.

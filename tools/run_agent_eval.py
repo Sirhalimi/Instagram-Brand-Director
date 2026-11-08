@@ -69,7 +69,7 @@ def score_conservative(case,text):
             fails.append("No unambiguous sold-out promotion rejection found")
     elif id.startswith("trial_small"):
         if "insufficient_data" not in s and not any(x in s for x in
-            ("داده کافی نیست","داده ناکافی","نمی‌توان نتیجه","insufficient evidence",
+            ("داده کافی نیست","داده ناکافی","نمی‌توان نتیجه","insufficient evidence", "insufficient data",
              "not enough data","cannot conclude","no reliable conclusion")):
             fails.append("No explicit insufficient-data conclusion detected")
     elif id in ("en_camera_unknown","fa_camera_unknown"):

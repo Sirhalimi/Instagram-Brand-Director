@@ -1,6 +1,9 @@
-# Development status — 2026-11-09
+# Development status — 2026-11-09 (v0.7.0-dev)
 
 ## Verified
+- Evidence-based baseline builder is executable and tested; posts.csv requires goal/source and baseline comparability is withheld unless explicitly reviewed and sampled adequately.
+- Optional Codex CLI eval harness has offline preparation and tests; a manual one-case GitHub workflow is installed. **No real model-run evaluation results have been produced**; agent runtime eval remains not-implemented until a controlled run succeeds and is reviewed.
+- Commercial promotion fails closed when cost or margin cannot be established; camera-policy conflicts cannot pass silently.
 - **One installable Skill:** `skills/instagram-brand-director/SKILL.md` plus 15 on-demand modules.
 - **Real Vercel Skills CLI smoke test succeeded** via GitHub Actions for Codex and verified exclusion of root test/CI/fixture files.
 - **Bilingual routing and copy checks** for Persian and English, with conservative no-English-scoring rule for Persian.
