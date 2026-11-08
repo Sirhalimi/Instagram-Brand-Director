@@ -37,7 +37,7 @@ Brand onboarding; audience research; profile and performance audits; competitor 
 
 ## Source credits
 
-Derived from independent analysis of [Social Media Skills](https://github.com/social-media-skills/skills), [Instagram Agent Skill](https://github.com/Jakeschincariol/instagram-agent-skill), [Instagram Skills](https://github.com/sergebulaev/instagram-skills), [Marketing Skills](https://github.com/coreyhaines31/marketingskills), [Digital Marketing Skills](https://github.com/vidual-labs/digital-marketing-skills) and [Apify Awesome Skills](https://github.com/apify/awesome-skills). No third-party source files are bundled in the GitHub bootstrap.
+Derived from independent analysis of [Social Media Skills](https://github.com/social-media-skills/skills), [Instagram Agent Skill](https://github.com/Jakeschincariol/instagram-agent-skill), [Instagram Skills](https://github.com/sergebulaev/instagram-skills), [Marketing Skills](https://github.com/coreyhaines31/marketingskills), [Digital Marketing Skills](https://github.com/vidual-labs/digital-marketing-skills) and [Apify Awesome Skills](https://github.com/apify/awesome-skills). Licensed upstream files are now included under `third_party/` (Jake Instagram Agent Skill, Social Media Skills, sergebulaev Instagram Skills, and vidual-labs Digital Marketing Skills). See `docs/UPSTREAM_COMPARISON_2026_11_FA.md` for files, caveats and integration status.
 
 ## Executable components currently in GitHub
 
@@ -55,14 +55,14 @@ python3 -m scripts.trial_review examples/trial-review.sample.json
 python3 -m unittest discover -s tests -v
 ```
 
-These scripts **do not** connect accounts, publish posts, run paid advertisements or access live inventories. They choose auditable actions from the data supplied to them. The full original local v0.4 bundle has not yet been mirrored to GitHub.
+These scripts **do not** connect accounts, publish posts, run paid advertisements or access live inventories. They choose auditable actions from the data supplied to them. Selected upstream tools have been imported with source licenses and smoke tests. The full original local v0.4 bundle has not yet been mirrored to GitHub.
 
 ## Development priorities
 
-1. Mirror the complete original v0.4 source bundle and local tests into GitHub.
+1. Mirror the remaining original v0.4 source bundle and local tests into GitHub, reconciling against already-imported upstream tools.
 2. Integrate a full product catalog and fresh stock/cost data adapters.
 3. Complete Meta OAuth and read-only Insights validation.
-4. Import vetted upstream scripts with preserved licenses and Persian tests.
+4. Complete dependency closure for copied upstream skills and develop Persian-specific tests/adapters; English-oriented tools have already been imported and smoke-tested.
 5. Add CI and clear operational release/version gates.
 6. Implement publishing connectors only where the permissions and human approval workflow are proven.
 
