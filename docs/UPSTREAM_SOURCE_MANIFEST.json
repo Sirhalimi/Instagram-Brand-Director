@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-11-09",
+  "note": "SHA-1 is Git blob identity, not a security attestation. Upstream paths were read from default main branch on audit date.",
+  "files": [
+    {
+      "path": "third_party/apify-awesome-skills/LICENSE",
+      "source_repo": "apify/awesome-skills",
+      "source_path": "LICENSE",
+      "license": "Apache-2.0",
+      "upstream_blob_sha": "8effb33b6996f6db058161cfe48b01e1f614e726",
+      "vendored_blob_sha": "8effb33b6996f6db058161cfe48b01e1f614e726",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/apify-awesome-skills/skills/apify-ads-intelligence/SKILL.md",
+      "source_repo": "apify/awesome-skills",
+      "source_path": "skills/apify-ads-intelligence/SKILL.md",
+      "license": "Apache-2.0",
+      "upstream_blob_sha": "df180c4e3caf7411a6d6266bd7870f37aff2abd3",
+      "vendored_blob_sha": "df180c4e3caf7411a6d6266bd7870f37aff2abd3",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/corey-marketingskills/LICENSE",
+      "source_repo": "coreyhaines31/marketingskills",
+      "source_path": "LICENSE",
+      "license": "MIT",
+      "upstream_blob_sha": "7c48dd638a9ebed49a8ef0c0c4eea90105381cdf",
+      "vendored_blob_sha": "7c48dd638a9ebed49a8ef0c0c4eea90105381cdf",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/corey-marketingskills/skills/customer-research/references/interviews-and-surveys.md",
+      "source_repo": "coreyhaines31/marketingskills",
+      "source_path": "skills/customer-research/references/interviews-and-surveys.md",
+      "license": "MIT",
+      "upstream_blob_sha": "aade5bc6ed6c3f97c50bc03c1b00de8057021f9e",
+      "vendored_blob_sha": "aade5bc6ed6c3f97c50bc03c1b00de8057021f9e",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/corey-marketingskills/skills/customer-research/references/source-guides.md",
+      "source_repo": "coreyhaines31/marketingskills",
+      "source_path": "skills/customer-research/references/source-guides.md",
+      "license": "MIT",
+      "upstream_blob_sha": "be6fb691d16b6cbdf9d474c9cf52c42104e7e542",
+      "vendored_blob_sha": "be6fb691d16b6cbdf9d474c9cf52c42104e7e542",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/corey-marketingskills/skills/customer-research/SKILL.md",
+      "source_repo": "coreyhaines31/marketingskills",
+      "source_path": "skills/customer-research/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "8783f0835501e509583643dd3b1a9eb7226d7d63",
+      "vendored_blob_sha": "8783f0835501e509583643dd3b1a9eb7226d7d63",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/corey-marketingskills/skills/influencer-marketing/references/ugc-creator-program.md",
+      "source_repo": "coreyhaines31/marketingskills",
+      "source_path": "skills/influencer-marketing/references/ugc-creator-program.md",
+      "license": "MIT",
+      "upstream_blob_sha": "370f48901ce7aa7afc7d68ac081d6fa0e670ea05",
+      "vendored_blob_sha": "370f48901ce7aa7afc7d68ac081d6fa0e670ea05",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/corey-marketingskills/skills/influencer-marketing/SKILL.md",
+      "source_repo": "coreyhaines31/marketingskills",
+      "source_path": "skills/influencer-marketing/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "0766bba3bd2bde03dc8dc92b87502f95028fd4d8",
+      "vendored_blob_sha": "0766bba3bd2bde03dc8dc92b87502f95028fd4d8",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/corey-marketingskills/skills/product-marketing/references/brand-voice.md",
+      "source_repo": "coreyhaines31/marketingskills",
+      "source_path": "skills/product-marketing/references/brand-voice.md",
+      "license": "MIT",
+      "upstream_blob_sha": "697bc73db156319753d16e4eecfc8aadb469ef92",
+      "vendored_blob_sha": "697bc73db156319753d16e4eecfc8aadb469ef92",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/corey-marketingskills/skills/product-marketing/SKILL.md",
+      "source_repo": "coreyhaines31/marketingskills",
+      "source_path": "skills/product-marketing/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "3af463a602aa0233c4d5fc98c23ba13224aa8f6b",
+      "vendored_blob_sha": "3af463a602aa0233c4d5fc98c23ba13224aa8f6b",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/LICENSE",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "LICENSE",
+      "license": "MIT",
+      "upstream_blob_sha": "ac31f09aba721de8d139c7bef3d5024421426472",
+      "vendored_blob_sha": "ac31f09aba721de8d139c7bef3d5024421426472",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/skills/ig-caption/caption.py",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "skills/ig-caption/caption.py",
+      "license": "MIT",
+      "upstream_blob_sha": "b53780779f08461260502172ed2e45ad7bc6998f",
+      "vendored_blob_sha": "b53780779f08461260502172ed2e45ad7bc6998f",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/skills/ig-caption/SKILL.md",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "skills/ig-caption/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "5f8cc931d304d7ff58cf3702039259274879cbb6",
+      "vendored_blob_sha": "5f8cc931d304d7ff58cf3702039259274879cbb6",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/skills/ig-reel/beats.py",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "skills/ig-reel/beats.py",
+      "license": "MIT",
+      "upstream_blob_sha": "7f2db6a0af656075c571a77b405b06b2857ad021",
+      "vendored_blob_sha": "7f2db6a0af656075c571a77b405b06b2857ad021",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/skills/ig-reel/hooks.json",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "skills/ig-reel/hooks.json",
+      "license": "MIT",
+      "upstream_blob_sha": "922884029dbd0c885cb7f8e90b885d2e03215a01",
+      "vendored_blob_sha": "922884029dbd0c885cb7f8e90b885d2e03215a01",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/skills/ig-reel/hookscore.py",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "skills/ig-reel/hookscore.py",
+      "license": "MIT",
+      "upstream_blob_sha": "c5299c59687070dc9b22561dcf3842908f204d96",
+      "vendored_blob_sha": "c5299c59687070dc9b22561dcf3842908f204d96",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/skills/ig-reel/SKILL.md",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "skills/ig-reel/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "43aee7ce0abe5f181dc6fde5af271825c936600c",
+      "vendored_blob_sha": "43aee7ce0abe5f181dc6fde5af271825c936600c",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/skills/ig-viral/SKILL.md",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "skills/ig-viral/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "274af157563ebaba98f6f066d322dfcf8c27beb5",
+      "vendored_blob_sha": "274af157563ebaba98f6f066d322dfcf8c27beb5",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/jake-instagram-agent-skill/skills/ig-viral/swipe.py",
+      "source_repo": "Jakeschincariol/instagram-agent-skill",
+      "source_path": "skills/ig-viral/swipe.py",
+      "license": "MIT",
+      "upstream_blob_sha": "fa2c5fa631b0978b47addf695a35633cfa6efda2",
+      "vendored_blob_sha": "fa2c5fa631b0978b47addf695a35633cfa6efda2",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/sergebulaev-instagram-skills/LICENSE",
+      "source_repo": "sergebulaev/instagram-skills",
+      "source_path": "LICENSE",
+      "license": "MIT",
+      "upstream_blob_sha": "6170859542913d403316ed4556e43d6f31d97512",
+      "vendored_blob_sha": "6170859542913d403316ed4556e43d6f31d97512",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/sergebulaev-instagram-skills/references/hashtag-strategy.md",
+      "source_repo": "sergebulaev/instagram-skills",
+      "source_path": "references/hashtag-strategy.md",
+      "license": "MIT",
+      "upstream_blob_sha": "f02c1d3d28c60bc37fd16373972bb00d783f1079",
+      "vendored_blob_sha": "f02c1d3d28c60bc37fd16373972bb00d783f1079",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/sergebulaev-instagram-skills/references/hook-formulas.md",
+      "source_repo": "sergebulaev/instagram-skills",
+      "source_path": "references/hook-formulas.md",
+      "license": "MIT",
+      "upstream_blob_sha": "f8bedafa2fb3a7d6a1c8368a96a2a3a9a10e1f90",
+      "vendored_blob_sha": "f8bedafa2fb3a7d6a1c8368a96a2a3a9a10e1f90",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/sergebulaev-instagram-skills/references/voice-profile.md",
+      "source_repo": "sergebulaev/instagram-skills",
+      "source_path": "references/voice-profile.md",
+      "license": "MIT",
+      "upstream_blob_sha": "c4a47a0228569e85664a0d242d90bde46ed31ff1",
+      "vendored_blob_sha": "c4a47a0228569e85664a0d242d90bde46ed31ff1",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/sergebulaev-instagram-skills/references/voice-rules.md",
+      "source_repo": "sergebulaev/instagram-skills",
+      "source_path": "references/voice-rules.md",
+      "license": "MIT",
+      "upstream_blob_sha": "29f6247c44a7e5ba908de8b6333ef2ca03293724",
+      "vendored_blob_sha": "29f6247c44a7e5ba908de8b6333ef2ca03293724",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/sergebulaev-instagram-skills/skills/ig-caption-writer/references/caption-checklist.md",
+      "source_repo": "sergebulaev/instagram-skills",
+      "source_path": "skills/ig-caption-writer/references/caption-checklist.md",
+      "license": "MIT",
+      "upstream_blob_sha": "5312f29f34e7b9caa26c7f4db3721d1bd2e940f7",
+      "vendored_blob_sha": "5312f29f34e7b9caa26c7f4db3721d1bd2e940f7",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/sergebulaev-instagram-skills/skills/ig-caption-writer/SKILL.md",
+      "source_repo": "sergebulaev/instagram-skills",
+      "source_path": "skills/ig-caption-writer/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "40c9c6832af7b82f32a6b1aa9ef11ce37fd28cd7",
+      "vendored_blob_sha": "40c9c6832af7b82f32a6b1aa9ef11ce37fd28cd7",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/LICENSE",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "LICENSE",
+      "license": "MIT",
+      "upstream_blob_sha": "875c6a380ad9a9f77c9dc5c87c20825590ab5816",
+      "vendored_blob_sha": "875c6a380ad9a9f77c9dc5c87c20825590ab5816",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/brand-profile/references/audience.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/brand-profile/references/audience.md",
+      "license": "MIT",
+      "upstream_blob_sha": "b6f66606f634498d9f43303b2b924f7d9763a777",
+      "vendored_blob_sha": "b6f66606f634498d9f43303b2b924f7d9763a777",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/brand-profile/references/brand-profile-template.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/brand-profile/references/brand-profile-template.md",
+      "license": "MIT",
+      "upstream_blob_sha": "3984a2478e882a13d12148ef9db6ecb1d7d7df16",
+      "vendored_blob_sha": "3984a2478e882a13d12148ef9db6ecb1d7d7df16",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/brand-profile/references/examples.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/brand-profile/references/examples.md",
+      "license": "MIT",
+      "upstream_blob_sha": "874b52c9efb9623d2ca0475dd0eddee0091b8f34",
+      "vendored_blob_sha": "874b52c9efb9623d2ca0475dd0eddee0091b8f34",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/brand-profile/references/positioning.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/brand-profile/references/positioning.md",
+      "license": "MIT",
+      "upstream_blob_sha": "79e901553d15eaf25739c0ce31391eebc74fa49a",
+      "vendored_blob_sha": "79e901553d15eaf25739c0ce31391eebc74fa49a",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/brand-profile/references/voice.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/brand-profile/references/voice.md",
+      "license": "MIT",
+      "upstream_blob_sha": "d19f63141f2f4efc58e6ad0636486d759c7255af",
+      "vendored_blob_sha": "d19f63141f2f4efc58e6ad0636486d759c7255af",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/brand-profile/SKILL.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/brand-profile/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "929cb4585bb9835e0fd6f1e54f106e03c9304cb0",
+      "vendored_blob_sha": "929cb4585bb9835e0fd6f1e54f106e03c9304cb0",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/reels-script/references/examples.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/reels-script/references/examples.md",
+      "license": "MIT",
+      "upstream_blob_sha": "d0880abd92a0fd3d477ed2aaeaa9690ebf449dfd",
+      "vendored_blob_sha": "d0880abd92a0fd3d477ed2aaeaa9690ebf449dfd",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/reels-script/references/formats-and-audio.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/reels-script/references/formats-and-audio.md",
+      "license": "MIT",
+      "upstream_blob_sha": "7fca2cdcb7b3491d6870949d084f3be2845926fc",
+      "vendored_blob_sha": "7fca2cdcb7b3491d6870949d084f3be2845926fc",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/reels-script/references/hooks-and-retention.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/reels-script/references/hooks-and-retention.md",
+      "license": "MIT",
+      "upstream_blob_sha": "2ca929fc4a221b3c3e3331c362a7619876d12e42",
+      "vendored_blob_sha": "2ca929fc4a221b3c3e3331c362a7619876d12e42",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/reels-script/references/reels-mechanics.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/reels-script/references/reels-mechanics.md",
+      "license": "MIT",
+      "upstream_blob_sha": "ffc14586409a9f354b8ebcc0c005f77bfabb0569",
+      "vendored_blob_sha": "ffc14586409a9f354b8ebcc0c005f77bfabb0569",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/reels-script/references/veo-prompt-pack.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/reels-script/references/veo-prompt-pack.md",
+      "license": "MIT",
+      "upstream_blob_sha": "e1cae9c5dedf0021701130f672c676d7b9940c31",
+      "vendored_blob_sha": "e1cae9c5dedf0021701130f672c676d7b9940c31",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/social-media-skills/skills/reels-script/SKILL.md",
+      "source_repo": "social-media-skills/skills",
+      "source_path": "skills/reels-script/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "96ed6cab8d8bee48fc53b54b0d22b8a04d4b9185",
+      "vendored_blob_sha": "96ed6cab8d8bee48fc53b54b0d22b8a04d4b9185",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/vidual-digital-marketing-skills/LICENSE",
+      "source_repo": "vidual-labs/digital-marketing-skills",
+      "source_path": "LICENSE",
+      "license": "MIT",
+      "upstream_blob_sha": "3b83bfb3d7e1b5afe31132e47800330014eda497",
+      "vendored_blob_sha": "3b83bfb3d7e1b5afe31132e47800330014eda497",
+      "byte_identical": true
+    },
+    {
+      "path": "third_party/vidual-digital-marketing-skills/skills/marketing/instagram-organic/SKILL.md",
+      "source_repo": "vidual-labs/digital-marketing-skills",
+      "source_path": "skills/marketing/instagram-organic/SKILL.md",
+      "license": "MIT",
+      "upstream_blob_sha": "117c525ad2a1ab7a8efc5fac130a7deafff1280d",
+      "vendored_blob_sha": "117c525ad2a1ab7a8efc5fac130a7deafff1280d",
+      "byte_identical": true
+    }
+  ]
+}
