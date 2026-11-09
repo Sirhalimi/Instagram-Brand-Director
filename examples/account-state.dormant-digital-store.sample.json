@@ -1,0 +1,102 @@
+{
+  "today": "2026-11-09",
+  "followers": 1000,
+  "following": 120,
+  "account_type": "professional",
+  "account_created_date": "2024-03-01",
+  "posts": [
+    {
+      "date": "2026-04-01",
+      "format": "reel",
+      "reach": 200,
+      "likes": 12,
+      "comments": 1,
+      "saves": 3,
+      "shares": 1,
+      "sends": 1,
+      "follows_gained": 0
+    },
+    {
+      "date": "2026-04-02",
+      "format": "reel",
+      "reach": 220,
+      "likes": 13,
+      "comments": 1,
+      "saves": 3,
+      "shares": 1,
+      "sends": 1,
+      "follows_gained": 0
+    },
+    {
+      "date": "2026-04-03",
+      "format": "reel",
+      "reach": 240,
+      "likes": 14,
+      "comments": 1,
+      "saves": 3,
+      "shares": 1,
+      "sends": 1,
+      "follows_gained": 0
+    },
+    {
+      "date": "2026-04-04",
+      "format": "reel",
+      "reach": 260,
+      "likes": 15,
+      "comments": 1,
+      "saves": 3,
+      "shares": 1,
+      "sends": 1,
+      "follows_gained": 0
+    },
+    {
+      "date": "2026-04-05",
+      "format": "reel",
+      "reach": 280,
+      "likes": 16,
+      "comments": 1,
+      "saves": 3,
+      "shares": 1,
+      "sends": 1,
+      "follows_gained": 0
+    },
+    {
+      "date": "2026-04-06",
+      "format": "reel",
+      "reach": 300,
+      "likes": 17,
+      "comments": 1,
+      "saves": 3,
+      "shares": 1,
+      "sends": 1,
+      "follows_gained": 0
+    },
+    {
+      "date": "2026-04-07",
+      "format": "reel",
+      "reach": 320,
+      "likes": 18,
+      "comments": 1,
+      "saves": 3,
+      "shares": 1,
+      "sends": 1,
+      "follows_gained": 0
+    },
+    {
+      "date": "2026-04-08",
+      "format": "reel",
+      "reach": 340,
+      "likes": 19,
+      "comments": 1,
+      "saves": 3,
+      "shares": 1,
+      "sends": 1,
+      "follows_gained": 0
+    }
+  ],
+  "story_views_median": 40,
+  "account_status": {
+    "eligible_for_recommendations": true
+  },
+  "trial_toggle_seen_in_app": false
+}

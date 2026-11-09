@@ -4,7 +4,8 @@ import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 SKILL=ROOT/"skills"/"instagram-brand-director"
-FILES=("campaign_decision.py","catalog_guard.py","trial_review.py","creative_quality.py")
+FILES=("campaign_decision.py","catalog_guard.py","trial_review.py","creative_quality.py",
+       "account_state.py","calibrate_thresholds.py")
 
 class RuntimeConsistencyTests(unittest.TestCase):
     def test_no_shadow_copy_divergence(self):

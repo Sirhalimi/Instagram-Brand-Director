@@ -1,0 +1,9 @@
+{
+  "earlier_active_period": {
+    "start": "2026-01-01",
+    "end": "2026-02-20",
+    "followers": 1000,
+    "story_views_median": 125
+  },
+  "notes": "Entirely synthetic earlier active period, not a real client."
+}

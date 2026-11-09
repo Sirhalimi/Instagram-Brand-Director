@@ -40,10 +40,12 @@ jobs:
           test -s "$TARGET/knowledge/instagram-rules.md"
           test -s "$TARGET/agents/openai.yaml"
           test -s "$TARGET/scripts/baseline_builder.py"
+          test -s "$TARGET/scripts/account_state.py"
+          test -s "$TARGET/scripts/calibrate_thresholds.py"
           test ! -e "$TARGET/.github"
           test ! -e "$TARGET/tests"
           test ! -e "$TARGET/evals"
-          test "$(find "$TARGET/modules" -name '*.md' | wc -l | tr -d ' ')" = "15"
+          test "$(find "$TARGET/modules" -name '*.md' | wc -l | tr -d ' ')" = "16"
           echo "Skill installed in isolation and does not include repository CI/tests/fixtures"
       - name: Cost-free agent fixture preparation smoke test
         run: |

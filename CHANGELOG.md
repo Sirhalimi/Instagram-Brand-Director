@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0-dev-phase1 — 2026-11-09
+- Added standalone deterministic account-state classification (NO_DATA, COLD_START, DORMANT, ACTIVE_LOW_DATA, ACTIVE_WITH_BASELINE) and per-format median/MAD first-party baselines with n and explicit missingness.
+- Added conservative ghost-risk diagnostics that require prior active-period self-baseline; dormant confidence capped at low; manual samples under 30 never imply a percentage.
+- Added synthetic account-state and calibration examples; proposed thresholds include default/derived evidence and confidence.
+- Added threshold calibration from brand cadence, multiple-step per-format median stability and prior active-period reach/follower history; proposal is never auto-approved or overwritten.
+- Shipped both tools at repository scripts/ and inside the installed Skill. Added 29 new regression tests and extended runtime parity checks.
+- New module 00 increases file count to 16; old fixed-count tests and Skills CLI smoke test were explicitly updated. Mandatory module-00 router wiring is deferred to Phase 3 and marked not-implemented.
+- Kept third_party/ untouched, real brands/ ignored, source data offline, and historical analytics CSV contract unchanged.
+
 ## 0.7.0-dev — 2026-11-09
 - Added audited baseline builder from validated posts.csv: pooled event/reach rates, comparable observation ages, minimum independent posts/reach, and explicit human comparability review; low samples cannot create strong learnings.
 - Tightened posts.csv contract to require source and campaign goal for every record; rates can legitimately exceed 1 due to repeat interactions.

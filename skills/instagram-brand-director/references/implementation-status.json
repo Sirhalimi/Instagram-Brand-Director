@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "0.7.0-dev",
+  "release": "0.8.0-dev-phase1",
   "updated_on": "2026-11-09",
   "status_values": [
     "implemented",
@@ -9,6 +9,7 @@
     "optional-disabled"
   ],
   "modules": {
+    "00-account-state": "partial",
     "01-onboarding": "partial",
     "02-account-audit": "partial",
     "03-competitive-intelligence": "partial",
@@ -53,7 +54,11 @@
     "baseline_human_comparability_review": "partial",
     "runtime_code_parity_check": "implemented",
     "openai_skill_metadata": "implemented",
-    "synthetic_cross_brand_regression": "implemented"
+    "synthetic_cross_brand_regression": "implemented",
+    "account_state_classification": "implemented",
+    "brand_threshold_calibration": "implemented",
+    "account_state_mandatory_router": "not-implemented",
+    "calibration_csv_format_conversion": "not-implemented"
   },
   "feature_flags": {
     "media_generation_enabled": false,
@@ -67,6 +72,9 @@
     "additional_languages": "not-implemented: add a reviewed locale and tests before marking a new language supported",
     "paid_ads_execution": "not-implemented: strategic advice exists but no live spending tools enabled",
     "ai_media_generation_adapter": "not-implemented: creative briefs only; external generators must be separately opted in",
-    "offline_pooled_baseline_builder": "Computes pooled normalized rates from validated post rows; provenance labels and manual comparability review are user-supplied, not cryptographic/API attestations."
+    "offline_pooled_baseline_builder": "Computes pooled normalized rates from validated post rows; provenance labels and manual comparability review are user-supplied, not cryptographic/API attestations.",
+    "account_state_mandatory_router": "Phase 1 ships account-state code and module, Phase 3 will make it a pre-strategy routing gate.",
+    "account_state_classification": "Median/MAD observational baselines only from nonmissing positive reach; no ghost percentage without manual sample and no 'healthy' universal ratio.",
+    "brand_threshold_calibration": "Proposed config only, never overwrite approved config; all defaults are editorial assumptions, derived entries need evidence."
   }
 }

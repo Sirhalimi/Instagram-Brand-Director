@@ -27,7 +27,7 @@ class ProvenanceAndLocales(unittest.TestCase):
 
     def test_release_declares_missing_connectors(self):
         s=json.loads((SKILL/"references/implementation-status.json").read_text(encoding="utf8"))
-        self.assertEqual(s["release"],"0.7.0-dev")
+        self.assertEqual(s["release"],"0.8.0-dev-phase1")
         self.assertEqual(s["capabilities"]["schema_validation"],"implemented")
         self.assertEqual(s["capabilities"]["versioned_behavior_fixtures"],"implemented")
         for missing in ("live_insights_sync","instagram_publish","paid_ads_execution","agent_runtime_eval","additional_languages"):
@@ -44,6 +44,6 @@ class ProvenanceAndLocales(unittest.TestCase):
     def test_root_has_single_intended_skill(self):
         self.assertFalse((ROOT/"SKILL.md").exists())
         self.assertTrue((SKILL/"SKILL.md").exists())
-        self.assertEqual(len(list((SKILL/"modules").glob("*.md"))),15)
+        self.assertEqual(len(list((SKILL/"modules").glob("*.md"))),16)
 
 if __name__=="__main__":unittest.main()

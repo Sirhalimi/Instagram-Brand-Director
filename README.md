@@ -1,6 +1,6 @@
 # Instagram Brand Director
 
-**Version: `0.7.0-dev` · 2026-11-09**
+**Version: `0.8.0-dev-phase1` · 2026-11-09**
 
 A bilingual (فارسی / English), modular, evidence-aware **Instagram Social Media & Marketing Director** Agent Skill. It gives one accountable next action for strategy, but responds directly with usable copy for lightweight requests. Third-party tools are reused where they are demonstrably useful; inventory/Trial safeguards are original and conservative.
 
@@ -19,7 +19,7 @@ Installed directory: `.agents/skills/instagram-brand-director/` (the agent may s
 ```text
 skills/instagram-brand-director/
 ├── SKILL.md                         # short selective router
-├── modules/                         # 15 independent on-demand files
+├── modules/                         # 16 independent on-demand files (modules 00–15)
 ├── knowledge/instagram-rules.md      # dated, weekly-reviewed facts
 ├── knowledge/learnings-governance.md
 ├── locales/{fa,en,registry.json}    # two supported languages, extensible
@@ -65,7 +65,7 @@ python3 -m scripts.trial_review ../../examples/trial-review.sample.json
 
 ## Status, evidence and licenses
 
-- Full specification: **15 modules**, with core decision workflows operating offline and external integrations explicitly tracked as partial or `not-implemented`.
+- Full specification: **16 modules (00–15)**, with core decision workflows operating offline and external integrations explicitly tracked as partial or `not-implemented`.
 - Language: **fa / en supported**; other languages require a locale file, registry change, and regression tests. English-only upstream Hook scores are **not validated for Persian**.
 - Source provenance: **41 byte-identical files from six GitHub repositories** in the development repo; **21 selected source files** ship inside the installed Skill. Original MIT/Apache-2.0 licenses are retained. `docs/UPSTREAM_SOURCE_MANIFEST.json` and the installed `references/source-attribution.json` record source commit SHA and import date.
 - Live Instagram OAuth/Insights, store API sync, real publishing and paid-ad execution remain **not-implemented**. Media-generation and paid-ad integrations are **optional and disabled** until explicitly authorized.
@@ -96,6 +96,23 @@ python3 tools/run_agent_eval.py --mode run --case fa_sold_out --allow-model-usag
 ```
 
 The [opt-in GitHub workflow](.github/workflows/agent-eval.yml) provides a one-case manual alternative after configuring a repository `OPENAI_API_KEY` secret. It does **not run on push or PR**. Model response logs, weak mechanical checks and raw trace are always for **human evaluation**, not a pass certificate. The public CI continues using deterministic fixtures and a real Skills CLI installation smoke test.
+
+## Phase 1 of 5 — account-state classification and proposed calibration
+
+**Status:** Account classification and per-brand calibration CLIs are implemented and covered by synthetic tests. Mandatory routing through module 00 is **not implemented until Phase 3**; the main router is intentionally unchanged in this phase.
+
+```bash
+python3 -m scripts.account_state examples/account-state.zero-follower-editorial.sample.json
+python3 -m scripts.account_state examples/account-state.dormant-digital-store.sample.json
+python3 -m scripts.account_state examples/account-state.established-wholesale.sample.json
+python3 -m scripts.calibrate_thresholds examples/calibration.wholesale.posts.sample.csv --growth examples/calibration.wholesale.growth.sample.json --today 2026-11-09 --output /tmp/config.proposed.json
+```
+
+The classification covers NO_DATA, COLD_START, DORMANT, ACTIVE_LOW_DATA, and ACTIVE_WITH_BASELINE; current-format baselines report per-reach medians, median absolute deviations and sample sizes. Missing observations remain missing. Ghost/fake-follower risk remains **unknown** without earlier first-party self-history. No automated mass removal, publication, or account modifications.
+
+Calibrated thresholds are submitted as config.proposed.json only. The owner must review their provenance and explicitly promote the file to the private brands/<slug>/config.json. Default thresholds remain labeled uncalibrated editorial assumptions, NOT Meta rules. The new calibration CSV schema is distinct from the earlier analytics posts.csv schema and is not silently converted.
+
+Read [Strategy by State](docs/STRATEGY_BY_STATE.md) and [Calibration/approval](docs/CALIBRATION.md). All committed examples are synthetic; brands/ remains Git-ignored.
 
 ## Reference projects
 

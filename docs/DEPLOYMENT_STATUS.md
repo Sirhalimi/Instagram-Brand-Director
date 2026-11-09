@@ -1,4 +1,12 @@
-# Development status — 2026-11-09 (v0.7.0-dev)
+# Development status — 2026-11-09 (0.8.0-dev-phase1)
+
+## Phase 1 of 5 — implemented and tested
+- Offline account-state classifier distinguishes NO_DATA, COLD_START, DORMANT, ACTIVE_LOW_DATA and ACTIVE_WITH_BASELINE. Positive-reach per-format rates use median and MAD; all report n.
+- Conservative provisional Trial eligibility bands; official source conflicts (200 vs 1,000) must be reconciled with the owner's exact Phase-2 knowledge file before they are treated as dated facts.
+- Proposed threshold calibration from observed cadence, per-format multi-step median stability and available historical self-baselines; no approved config is overwritten.
+- All Phase-1 fixtures are synthetic. No network or credentials. Default threshold values remain labeled uncalibrated assumptions.
+- New module 00 is present but mandatory routing is **not-implemented until Phase 3**. Existing 15-module count assertions were intentionally revised to 16.
+- The calibration posts.csv schema has columns date/format/topic/hook/... and is not identical to the pre-existing validation export schema with post_id/published_at/goal/source; no implicit format conversion exists.
 
 ## Verified
 - Evidence-based baseline builder is executable and tested; posts.csv requires goal/source and baseline comparability is withheld unless explicitly reviewed and sampled adequately.

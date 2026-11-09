@@ -140,8 +140,10 @@ class SampleSizeTests(unittest.TestCase):
         self.assertFalse(r["can_write_learnings"])
 
 class PackagingTests(unittest.TestCase):
-    def test_exactly_fifteen_modules(self):
-        self.assertEqual(len(list((SKILL/"modules").glob("*.md"))),15)
+    def test_sixteen_modules_including_account_state(self):
+        # Intentional Phase-1 change: new module 00 increases the package to 16.
+        self.assertEqual(len(list((SKILL/"modules").glob("*.md"))),16)
+        self.assertTrue((SKILL/"modules/00-account-state.md").is_file())
 
     def test_package_has_no_repo_tooling(self):
         self.assertFalse((SKILL/".github").exists())
