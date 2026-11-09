@@ -1,6 +1,6 @@
 # Instagram Brand Director
 
-**Version: `0.8.0-dev-phase2` · 2026-11-09**
+**Version: `0.8.0-dev-phase3` · 2026-11-09**
 
 A bilingual (فارسی / English), modular, evidence-aware **Instagram Social Media & Marketing Director** Agent Skill. It gives one accountable next action for strategy, but responds directly with usable copy for lightweight requests. Third-party tools are reused where they are demonstrably useful; inventory/Trial safeguards are original and conservative.
 
@@ -128,6 +128,29 @@ Output includes the file-level Verified age, each dated entry older than the lim
 **Source priority:** first-party account data for brand performance; official Meta/Instagram for platform policy; reported secondary sources; community-skill assumptions. Preserve labels `OFFICIAL`, `REPORTED`, `SINGLE-SOURCE`, `CONFLICT`, `HYPOTHESIS`, and `UNVERIFIED`. Dated facts can be consulted with qualification; marketing formulas and posting-frequency promises are hypotheses. An older-than-60-day entry needs current verification if online, or a provisional/stale label offline. The user-supplied claim tags have **not** been individually re-verified in this phase.
 
 **Not yet implemented:** automated weekly Meta refresh, resolution of conflicting eligibility claims, and the mandatory account-state routing change planned for Phase 3.
+
+## Phase 3 of 5 — mandatory account-state routing, honest module status, and private post intake
+
+For a real brand's strategy or **format/distribution selection**, the Skill now requires module `00-account-state.md` *before* a plan. If first-party follower count or dated post history is missing, the correct response is `REQUEST_CRITICAL_DATA`, not generic advice. Already-chosen simple copy, translation and immediate `DO_NOT_PROMOTE` safety refusals are exceptions. This is an **instruction-level** gate plus a deterministic router probe: an actual model-output behavioral eval has **not yet been executed**.
+
+```bash
+# Lightweight route budget and decision-gate prediction
+python3 skills/instagram-brand-director/scripts/router_probe.py "Create a monthly content calendar"
+# Read-only post intake: synthetic example, no real-brand data
+python3 skills/instagram-brand-director/scripts/post_intake.py --brand skills/instagram-brand-director/templates/brand.md --post examples/post-intake.sample.json
+# General account learning/review gate: default N=12 unless approved derived config overrides
+python3 -m scripts.review_gate examples/review-gate.sample.json
+```
+
+The **16-module status table** in the installed `SKILL.md` and `references/implementation-status.json` now uses `implemented`, `spec-only`, and `not-implemented`. Executable modules are explicitly **offline**, without Instagram publishing/Insights access. A spec-only module is guidance or a draft, not a completed integration.
+
+`post_intake.py` asks only unknown **on-camera person (video only), exact audience, excluded audience, post goal (trust/saves/sends/leads/sales), and production capacity**. It reads supplied private `brand.md` and post JSON only; `--save` plus an explicit answers JSON and `durable_keys` is required to atomically persist stable defaults in that provided brand file. A single-shoot answer is not silently turned into a durable preference.
+
+For **generalized strategy/review conclusions**, `review_gate.py` uses the account's approved config's derived per-format minimum N where present, otherwise the uncalibrated default **N=12**; too little or unverified data means `INSUFFICIENT_DATA`. The existing separate **Trial one-post operational gate** retains its previous minimum (6 comparable historical posts plus reach floors); passing a Trial gate does **not** establish a repeatable account pattern.
+
+Persian output now has [a human review checklist](docs/PERSIAN_REVIEW_CHECKLIST.md) covering ZWNJ, formal/colloquial consistency, RTL overlays, hashtags, subtitles and evidence. English-only `hookscore.py` remains **unsupported for Persian**. No real brand data belongs in Git.
+
+**Phase 4 remains not-implemented:** third-party production-rights policy and generalized digital/service availability adapters have not been started in this phase.
 
 ## Reference projects
 

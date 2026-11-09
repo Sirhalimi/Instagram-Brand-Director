@@ -1,0 +1,9 @@
+{
+  "format": "reel",
+  "n_comparable_posts": 8,
+  "total_reach": 3500,
+  "verified_first_party": true,
+  "comparable": true,
+  "account_state": "ACTIVE_WITH_BASELINE",
+  "note": "Synthetic fixture for default N=12; should be INSUFFICIENT_DATA"
+}

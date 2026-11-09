@@ -36,6 +36,11 @@ jobs:
           python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"]); assert json.loads((p/"zero.json").read_text())["state"] == "COLD_START"; assert json.loads((p/"dormant.json").read_text())["state"] == "DORMANT"; assert json.loads((p/"established.json").read_text())["state"] == "ACTIVE_WITH_BASELINE"'
           python3 -m scripts.calibrate_thresholds examples/calibration.wholesale.posts.sample.csv --growth examples/calibration.wholesale.growth.sample.json --today 2026-11-09 --output "$RUNNER_TEMP/config.proposed.json" > "$RUNNER_TEMP/calibration-summary.txt"
           test -s "$RUNNER_TEMP/config.proposed.json"
+      - name: Phase 3 private-intake and evidence gates (read-only synthetic CLIs)
+        run: |
+          python3 skills/instagram-brand-director/scripts/post_intake.py --brand skills/instagram-brand-director/templates/brand.md --post examples/post-intake.sample.json > "$RUNNER_TEMP/post-intake.json"
+          python3 -m scripts.review_gate examples/review-gate.sample.json > "$RUNNER_TEMP/review.json"
+          python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"]); assert json.loads((p/"post-intake.json").read_text())["status"] == "NEEDS_INPUT"; assert json.loads((p/"review.json").read_text())["decision"] == "INSUFFICIENT_DATA"'
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -55,6 +60,9 @@ jobs:
           test -s "$TARGET/scripts/account_state.py"
           test -s "$TARGET/scripts/calibrate_thresholds.py"
           test -s "$TARGET/scripts/knowledge_age.py"
+          test -s "$TARGET/scripts/post_intake.py"
+          test -s "$TARGET/scripts/review_gate.py"
+          test -s "$TARGET/references/persian-review-checklist.md"
           test ! -e "$TARGET/.github"
           test ! -e "$TARGET/tests"
           test ! -e "$TARGET/evals"

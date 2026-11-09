@@ -1,8 +1,8 @@
 # Module 00 — Account-state classification / وضعیت پیج
 
-**Implementation:** deterministic offline scripts/account_state.py and scripts/calibrate_thresholds.py. Classification is implemented; mandatory router integration belongs to Phase 3.
+**Implementation:** deterministic offline scripts/account_state.py and scripts/calibrate_thresholds.py. Classification is implemented offline and is now a mandatory pre-strategy routing gate in Phase 3. A validated existing classification need not be rerun. This is not a live API.
 
-Load when the user provides account analytics or asks for a strategy that depends on whether the page is new, dormant, data-poor or baseline-rich. Do not infer state from follower count alone. All metrics not supplied are **missing**, not zero. Do not use unofficial "healthy engagement" norms.
+Load FIRST for any brand-specific strategy, format choice or growth recommendation. Pure copy in an already chosen format and immediate safety refusals are exceptions. If input is absent, request exact missing followers/post history (an explicit empty list is valid), then stop strategy inference. Do not infer state from follower count alone. All metrics not supplied are **missing**, not zero. Do not use unofficial "healthy engagement" norms.
 
 ## Required minimal evidence
 - Actual followers (zero is allowed).
