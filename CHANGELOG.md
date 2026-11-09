@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0-dev-phase3 — 2026-11-09
+- Added mandatory module-00 preflight for brand-specific strategy and format selection in the lean router and deterministic router probe. Avoids blocking pure copy or known sold-out-product safety rejection.
+- Replaced vague module statuses with an explicit 16-row implemented/spec-only/not-implemented table and matching machine-readable registry; live API features remain not implemented.
+- Added offline per-post intake with only missing camera/audience/excluded-audience/goal/capacity questions, private post_defaults schema validation and explicit --save for durable preferences.
+- Added conservative general-strategy review_gate.py: approved derived per-format N or default N=12, first-party comparability gates, no automatic learning. Preserved the separate original Trial operational thresholds.
+- Added human Persian review checklist (ZWNJ, tone, RTL, hashtags and subtitles), synthetic CLI examples, deterministic tests and actual Skills CLI package checks. Real LLM behavior evaluation remains not implemented.
+- All new scripts use Python standard library only, no network or credentials; third_party/ unchanged.
+
 ## 0.8.0-dev-phase2 — 2026-11-09
 - Imported the owner-provided 11,359-byte Instagram rules knowledge file verbatim into repository and installable Skill; recorded SHA-256 and provenance in knowledge/IMPORT_MANIFEST.json. Did not modify third_party/.
 - Added stdlib-only scripts/knowledge_age.py to parse Verified headers, dated source-tagged facts, [CONFLICT], [UNVERIFIED], and undated conflict notes with configurable 60-day staleness.

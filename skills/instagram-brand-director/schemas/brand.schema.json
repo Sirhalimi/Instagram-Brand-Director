@@ -72,6 +72,41 @@
         "null"
       ],
       "format": "date"
+    },
+    "post_defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "camera_presenter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "target_audience": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "excluded_audience": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "post_goal": {
+          "enum": [
+            "trust",
+            "saves",
+            "sends",
+            "leads",
+            "sales"
+          ]
+        },
+        "production_capacity": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        }
+      }
     }
   }
 }

@@ -8,7 +8,7 @@
 Requests concern strategy, content pillars and calendar; do not load other modules unless the task requires their data or permissions.
 
 ## Procedure
-1. Choose one business objective and leading/lagging KPIs tied to stage: discovery, community, conversion or education.
+1. Inspect module 00's validated current account state first. NO_DATA → REQUEST_CRITICAL_DATA; DORMANT → reactivation measurement; COLD_START → initial discovery measurement; ACTIVE_LOW_DATA → build baseline; ACTIVE_WITH_BASELINE → compare per-format medians/MAD. Then choose one business objective and leading/lagging KPIs tied to stage: discovery, community, conversion or education.
 2. Select audience priorities, content pillars and practical formats constrained by real production capacity; explicitly reject unsustainable post quotas.
 3. Determine available production hours and approvals; build editorial backlog with topic, segment, goal, format, owner, draft date, publication window, campaign product and data needs.
 4. Batch production only where feasible; insert data/rights/stock check gates. Add a weekly insights-based review.

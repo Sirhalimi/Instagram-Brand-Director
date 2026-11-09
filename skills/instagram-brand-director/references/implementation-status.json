@@ -1,30 +1,31 @@
 {
   "schema_version": 1,
-  "release": "0.8.0-dev-phase2",
+  "release": "0.8.0-dev-phase3",
   "updated_on": "2026-11-09",
   "status_values": [
     "implemented",
-    "partial",
+    "spec-only",
     "not-implemented",
+    "partial",
     "optional-disabled"
   ],
   "modules": {
-    "00-account-state": "partial",
-    "01-onboarding": "partial",
-    "02-account-audit": "partial",
-    "03-competitive-intelligence": "partial",
-    "04-strategy-calendar": "partial",
-    "05-reels": "partial",
-    "06-trial-decisions": "partial",
-    "07-content-writing": "partial",
-    "08-media-optional": "optional-disabled",
-    "09-organic-seo": "partial",
-    "10-community": "partial",
-    "11-commerce-funnel": "partial",
-    "12-ads-optional": "optional-disabled",
-    "13-publishing": "partial",
-    "14-analytics": "partial",
-    "15-governance": "partial"
+    "00-account-state": "implemented",
+    "01-onboarding": "spec-only",
+    "02-account-audit": "spec-only",
+    "03-competitive-intelligence": "spec-only",
+    "04-strategy-calendar": "spec-only",
+    "05-reels": "spec-only",
+    "06-trial-decisions": "implemented",
+    "07-content-writing": "spec-only",
+    "08-media-optional": "not-implemented",
+    "09-organic-seo": "spec-only",
+    "10-community": "spec-only",
+    "11-commerce-funnel": "implemented",
+    "12-ads-optional": "spec-only",
+    "13-publishing": "not-implemented",
+    "14-analytics": "spec-only",
+    "15-governance": "implemented"
   },
   "capabilities": {
     "skill_router": "implemented",
@@ -57,11 +58,15 @@
     "synthetic_cross_brand_regression": "implemented",
     "account_state_classification": "implemented",
     "brand_threshold_calibration": "implemented",
-    "account_state_mandatory_router": "not-implemented",
+    "account_state_mandatory_router": "implemented",
     "calibration_csv_format_conversion": "not-implemented",
     "knowledge_age_audit": "implemented",
     "tagged_platform_knowledge_import": "implemented",
-    "knowledge_conflict_resolution": "not-implemented"
+    "knowledge_conflict_resolution": "not-implemented",
+    "per_post_intake": "implemented",
+    "per_post_durable_profile_updates": "implemented",
+    "persian_editorial_checklist": "implemented",
+    "real_agent_preflight_behavior_eval": "not-implemented"
   },
   "feature_flags": {
     "media_generation_enabled": false,
@@ -76,10 +81,13 @@
     "paid_ads_execution": "not-implemented: strategic advice exists but no live spending tools enabled",
     "ai_media_generation_adapter": "not-implemented: creative briefs only; external generators must be separately opted in",
     "offline_pooled_baseline_builder": "Computes pooled normalized rates from validated post rows; provenance labels and manual comparability review are user-supplied, not cryptographic/API attestations.",
-    "account_state_mandatory_router": "Phase 1 ships account-state code and module, Phase 3 will make it a pre-strategy routing gate.",
+    "account_state_mandatory_router": "The primary skill and deterministic router enforce a pre-strategy gate; live LLM response evaluation has not been executed. Pure finished-copy tasks and immediate commercial safety rejections are excluded.",
     "account_state_classification": "Median/MAD observational baselines only from nonmissing positive reach; no ghost percentage without manual sample and no 'healthy' universal ratio.",
     "brand_threshold_calibration": "Proposed config only, never overwrite approved config; all defaults are editorial assumptions, derived entries need evidence.",
     "tagged_platform_knowledge_import": "Owner-provided original source copied unchanged; tags originate in that file and are not independent Meta fact-checks.",
-    "knowledge_age_audit": "Offline date/tag parser and CI advisory implemented; unresolved tags require human review, automatic source refresh remains not-implemented."
-  }
+    "knowledge_age_audit": "Offline date/tag parser and CI advisory implemented; unresolved tags require human review, automatic source refresh remains not-implemented.",
+    "per_post_durable_profile_updates": "Only an explicit --save writes stable, whitelisted post_defaults to a provided private brand.md. Ephemeral post choices are not saved without affirmative selection.",
+    "persian_editorial_checklist": "Human-language checks only; automated performance scoring is unsupported for Persian."
+  },
+  "module_status_scope": "Statuses describe actual implemented executable coverage. 'implemented' modules may be offline only; see per-module scope in SKILL.md."
 }

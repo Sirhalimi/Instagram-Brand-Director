@@ -64,6 +64,19 @@ def validate_brand(d):
         errors.append("invalid catalog_last_verified")
     if d.get("catalog_source") is not None and type(d["catalog_source"]) is not str:
         errors.append("invalid catalog_source")
+    post_defaults=d.get("post_defaults",{})
+    allowed_post_fields={"camera_presenter","target_audience","excluded_audience",
+                         "post_goal","production_capacity"}
+    if type(post_defaults) is not dict:
+        errors.append("post_defaults must be object")
+    else:
+        for k,v in post_defaults.items():
+            if k not in allowed_post_fields or type(v) is not str or not v.strip() or len(v)>1000:
+                errors.append("invalid post_defaults."+str(k))
+            elif k=="post_goal" and v not in {"trust","saves","sends","leads","sales"}:
+                errors.append("invalid post_defaults.post_goal")
+            elif k=="camera_presenter" and d.get("camera_policy")=="no" and v.lower() not in ("none","بدون چهره","هیچ‌کس"):
+                errors.append("faceless brand cannot declare an on-camera presenter")
     return errors
 
 def validate_baseline(d):

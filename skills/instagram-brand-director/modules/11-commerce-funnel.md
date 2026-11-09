@@ -8,7 +8,7 @@
 Requests concern catalog, inventory, offers, pricing, conversion; do not load other modules unless the task requires their data or permissions.
 
 ## Procedure
-1. Read full product and offer catalog with SKU, options, in-stock/supplier checks, local currency, last-verified price, cost, gross margin, target, lead time, restrictions, returns and checkout link.
+1. If product is obviously unavailable, immediately reject new-sale promotion with DO_NOT_PROMOTE; do not delay safety refusal for account metrics. Before other brand campaign/format choices run module 00. Read full product and offer catalog with SKU, options, in-stock/supplier checks, local currency, last-verified price, cost, gross margin, target, lead time, restrictions, returns and checkout link.
 2. Before selecting a product for promotion, execute catalog_guard.py. Out-of-stock, stale pricing or unverified fulfillment means DO_NOT_PROMOTE for new sales.
 3. Distinguish marketing awareness from direct checkout promises. Paid ads require current unit economics; do not authorize below-margin budget from guesswork.
 4. Audit Instagram → bio/link/DM → product page → checkout → delivery → retention path. Trace UTM and conversions without claiming causal attribution unsupported by data.

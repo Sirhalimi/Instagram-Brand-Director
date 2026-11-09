@@ -8,7 +8,7 @@
 Requests concern carousel, story and caption production; do not load other modules unless the task requires their data or permissions.
 
 ## Procedure
-1. Pick format based on job: carousel for sequential explanation/reference, Story for existing-audience relationship, post for focused visual, Reel for short video where feasible.
+1. If selecting a format rather than drafting an already chosen caption/story, first run module 00. For a tailored post brief use `scripts/post_intake.py` to ask only unknown audience, non-audience, goal and capacity; do not ask camera preference for caption-only work. Pick format based on job: carousel for sequential explanation/reference, Story for existing-audience relationship, post for focused visual, Reel for short video where feasible.
 2. Build carousel cover and slide-by-slide argument; Story arc with explicit interaction and privacy-safe response handling; caption with useful first line and one optional CTA.
 3. Use `creative_quality.py` for Persian text; original upstream English caption tool for English. Do not borrow a fake voice or invent testimonials.
 4. Use relevant keywords naturally. Recommend hashtags only when they label the topic and align with dated Instagram rules in knowledge.

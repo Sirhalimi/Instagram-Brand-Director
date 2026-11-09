@@ -7,6 +7,7 @@ phrases map to at most one primary and one secondary module.
 import argparse, json, re
 
 MAP = [
+    ("00-account-state.md",r"account state|account maturity|وضعیت حساب|وضعیت پیج|طبقه‌بندی پیج"),
     ("06-trial-decisions.md",r"trial\b|trial reel|ریلز آزمایشی|ریلز تریال|تست آزمایشی ریل"),
     ("11-commerce-funnel.md",r"out of stock|sold out|ناموجود|تمام شده|موجودی|stock|inventory|حاشیه سود|margin"),
     ("07-content-writing.md",r"caption|کپشن|کاروسل|carousel|استوری|story|پست متنی"),
@@ -39,17 +40,48 @@ def route(prompt, brand=None):
         primary="11-commerce-funnel.md"
         extra=[]
     # Knowledge is loaded only when the request requires actual Meta policy claims.
-    policy=bool(re.search("meta policy|instagram rules|قوانین اینستاگرام|قوانین متا|الگوریتم رسمی",prompt,re.I))
-    paths=["SKILL.md",PREFIX+primary]+[PREFIX+x for x in extra]
+    policy=bool(re.search("meta policy|meta rules|instagram rules|قوانین اینستاگرام|قوانین متا|الگوریتم رسمی",prompt,re.I))
+    # Account-state is the mandatory first decision gate for brand-specific
+    # strategy and format choices. Pure ready-to-write copy and immediate
+    # safety rejections (e.g. sold-out offers) must not be delayed by it.
+    choose_format=bool(re.search(r"which format|what format|best format|normal or trial|which is better|چه فرمتی|کدوم فرمت|چه قالبی|بهتره ریلز|ریلز یا کاروسل",prompt,re.I))
+    immediate_rejection=bool(re.search(r"out.of.stock|sold out|ناموجود|تمام شده",prompt,re.I))
+    strategic={"01-onboarding.md","02-account-audit.md","04-strategy-calendar.md",
+               "06-trial-decisions.md","09-organic-seo.md","11-commerce-funnel.md",
+               "12-ads-optional.md","14-analytics.md"}
+    account_required=(primary!="00-account-state.md" and
+       (primary in strategic or choose_format or
+        (primary=="03-competitive-intelligence.md" and
+         bool(re.search(r"my brand|our brand|برندم|پیج من",prompt,re.I)))))
+    if primary=="11-commerce-funnel.md" and immediate_rejection:
+        account_required=False
+    if primary in ("05-reels.md","07-content-writing.md") and not choose_format:
+        account_required=False
+    paths=["SKILL.md"]
+    if account_required:
+        paths.append(PREFIX+"00-account-state.md")
+    paths.append(PREFIX+primary)
+    paths.extend(PREFIX+x for x in extra)
     if policy:
         paths.append("knowledge/instagram-rules.md")
+    account_state=brand.get("account_state")
+    state_present=(isinstance(account_state,dict) and
+                   account_state.get("state") in {"NO_DATA","COLD_START","DORMANT",
+                   "ACTIVE_LOW_DATA","ACTIVE_WITH_BASELINE"} and
+                   isinstance(account_state.get("thresholds_used"),dict))
+    account_gate=("RUN_CLASSIFIER_OR_REQUEST_CRITICAL_DATA"
+                  if account_required and not state_present else
+                  "USE_VALIDATED_STATE" if account_required else "NOT_REQUIRED")
     camera=brand.get("camera_policy","unknown")
     ask_camera=primary=="05-reels.md" and camera=="unknown"
     mode=("production" if primary in ("05-reels.md","07-content-writing.md")
           and not re.search("strategy|استراتژی|آمار|نتایج|تحلیل",prompt,re.I) else "strategy")
     return {"primary":primary,"files":paths,"file_count":len(paths),
             "needs_camera_confirmation":ask_camera,"response_mode":mode,
-            "module_count":1+len(extra),"max_files":4}
+            "module_count":len([p for p in paths if p.startswith(PREFIX)]),
+            "account_state_required":account_required,
+            "account_state_gate":account_gate,
+            "max_files":5}
 
 def main():
     ap=argparse.ArgumentParser()
