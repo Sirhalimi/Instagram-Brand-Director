@@ -18,7 +18,7 @@ HEADER = re.compile(r"\bVerified:\s*(\d{4}-\d{2}-\d{2})\b")
 TAG = re.compile(
     r"^\s*-\s+(.+?)\s+·\s+\["
     r"(OFFICIAL|REPORTED|SINGLE-SOURCE|CONFLICT|HYPOTHESIS|UNVERIFIED)"
-    r"\](?=\s*(?:·|$))"
+    r"\]"
 )
 PREFIX_TAG = re.compile(r"^\s*-\s+\*\*\[(CONFLICT|UNVERIFIED)\]\*\*\s+(.+?)\s*$")
 SUFFIX_DATE = re.compile(r"·\s*(\d{4}-\d{2}-\d{2})\s*$")

@@ -61,6 +61,15 @@ class KnowledgeAgeTests(unittest.TestCase):
         self.assertEqual(len(result["undated_entries"]), 1)
         self.assertEqual(result["exit_code"], 0)
 
+    def test_qualifier_after_tag_is_still_a_dated_entry(self):
+        example = ("Verified: 2026-11-09\n"
+                   "- A trial inference · [HYPOTHESIS] (practitioner guidance) · source · 2026-11-09\n"
+                   "- Tag convention · [HYPOTHESIS] derived from above · 2026-11-09\n")
+        result = audit(example, today=date(2026, 11, 9))
+        self.assertEqual(result["entries_checked"], 2)
+        self.assertEqual(result["status"], "CURRENT")
+        self.assertEqual(result["exit_code"], 0)
+
     def test_definition_bullets_are_not_claims(self):
         example = ("Verified: 2026-11-09\n"
                    "## Confidence tags\n"
@@ -110,7 +119,7 @@ class KnowledgeAgeTests(unittest.TestCase):
 
     def test_actual_source_matches_its_2026_format(self):
         result=audit(SOURCE.read_text(encoding="utf-8"),today=date(2026,11,9))
-        self.assertGreaterEqual(result["entries_checked"],20)
+        self.assertEqual(result["entries_checked"],35)
         self.assertEqual(result["file_verified"],"2026-11-09")
         self.assertGreaterEqual(len(result["conflicts"]), 3)
         self.assertTrue(result["unverified"])
