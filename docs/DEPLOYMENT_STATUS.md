@@ -1,4 +1,12 @@
-# Development status — 2026-11-09 (0.8.0-dev-phase1)
+# Development status — 2026-11-09 (0.8.0-dev-phase2)
+
+## Phase 2 of 5 — implemented and tested
+- User-provided Instagram knowledge file has been imported byte-identically to root and installed Skill; see knowledge/IMPORT_MANIFEST.json. Existing generic placeholder was replaced, not merged.
+- Offline knowledge_age CLI audits the file-level Verified date, dated claim entries, source conflicts and unverified/undated notes; it does **not** verify factual accuracy online.
+- Stale dates fail the CLI with exit code 1, but the GitHub Actions advisory step has continue-on-error=true so unrelated tests still pass.
+- Source hierarchy and tag restrictions are included in the primary Skill router. A claim tagged OFFICIAL in the owner-provided registry is not independently verified by this import.
+- Current supplied file is marked REVIEW_REQUIRED because unresolved conflicts and unverified entries remain; these are not silently promoted to platform facts.
+- Live policy refresh and Phase-3 account-state mandatory routing remain not-implemented.
 
 ## Phase 1 of 5 — implemented and tested
 - Offline account-state classifier distinguishes NO_DATA, COLD_START, DORMANT, ACTIVE_LOW_DATA and ACTIVE_WITH_BASELINE. Positive-reach per-format rates use median and MAD; all report n.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0-dev-phase2 — 2026-11-09
+- Imported the owner-provided 11,359-byte Instagram rules knowledge file verbatim into repository and installable Skill; recorded SHA-256 and provenance in knowledge/IMPORT_MANIFEST.json. Did not modify third_party/.
+- Added stdlib-only scripts/knowledge_age.py to parse Verified headers, dated source-tagged facts, [CONFLICT], [UNVERIFIED], and undated conflict notes with configurable 60-day staleness.
+- Added regression fixture and tests plus non-blocking CI knowledge freshness reporting; no live Meta source re-verification claimed.
+- Added source hierarchy and evidence-tag honesty to the lean SKILL.md router; documented provisional/offline claims.
+- Added direct CLI checks on the Phase-1 synthetic account examples and calibration proposal.
+- Kept Phase-3 mandatory account-state preflight and real agent evaluation as not-implemented.
+
 ## 0.8.0-dev-phase1 — 2026-11-09
 - Added standalone deterministic account-state classification (NO_DATA, COLD_START, DORMANT, ACTIVE_LOW_DATA, ACTIVE_WITH_BASELINE) and per-format median/MAD first-party baselines with n and explicit missingness.
 - Added conservative ghost-risk diagnostics that require prior active-period self-baseline; dormant confidence capped at low; manual samples under 30 never imply a percentage.

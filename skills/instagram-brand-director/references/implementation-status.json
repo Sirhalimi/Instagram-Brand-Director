@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "0.8.0-dev-phase1",
+  "release": "0.8.0-dev-phase2",
   "updated_on": "2026-11-09",
   "status_values": [
     "implemented",
@@ -58,7 +58,10 @@
     "account_state_classification": "implemented",
     "brand_threshold_calibration": "implemented",
     "account_state_mandatory_router": "not-implemented",
-    "calibration_csv_format_conversion": "not-implemented"
+    "calibration_csv_format_conversion": "not-implemented",
+    "knowledge_age_audit": "implemented",
+    "tagged_platform_knowledge_import": "implemented",
+    "knowledge_conflict_resolution": "not-implemented"
   },
   "feature_flags": {
     "media_generation_enabled": false,
@@ -75,6 +78,8 @@
     "offline_pooled_baseline_builder": "Computes pooled normalized rates from validated post rows; provenance labels and manual comparability review are user-supplied, not cryptographic/API attestations.",
     "account_state_mandatory_router": "Phase 1 ships account-state code and module, Phase 3 will make it a pre-strategy routing gate.",
     "account_state_classification": "Median/MAD observational baselines only from nonmissing positive reach; no ghost percentage without manual sample and no 'healthy' universal ratio.",
-    "brand_threshold_calibration": "Proposed config only, never overwrite approved config; all defaults are editorial assumptions, derived entries need evidence."
+    "brand_threshold_calibration": "Proposed config only, never overwrite approved config; all defaults are editorial assumptions, derived entries need evidence.",
+    "tagged_platform_knowledge_import": "Owner-provided original source copied unchanged; tags originate in that file and are not independent Meta fact-checks.",
+    "knowledge_age_audit": "Offline date/tag parser and CI advisory implemented; unresolved tags require human review, automatic source refresh remains not-implemented."
   }
 }
