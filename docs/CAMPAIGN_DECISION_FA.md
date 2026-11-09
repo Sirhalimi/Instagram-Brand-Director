@@ -31,3 +31,11 @@ python3 -m unittest discover -s tests -v
 - تطبیق آمار تاریخی محتوا
 - اتصال خروجی تصمیم به برنامه زمان‌بندی و گردش‌کار تأیید
 - ثبت تاریخچه تصمیم و نتیجه واقعی
+
+
+## Phase 4 — New source_content and availability types
+- For each asset in `source_content`, specify `origin` (owned/licensed/permission/third_party), `has_visible_watermark` and `documented_permission` as actual booleans. `usage="research"` never authorizes publication.
+- `subtitles_only_repost=true` blocks a publishable asset even with documented permission: translating on top of somebody else's clip does not make new original production.
+- The rights result is attached under `source_content_review`. `HOLD_CREATIVE` is distinct from `DO_NOT_PROMOTE`: one blocks the media, the other a commercial offer. An unavailable item is rejected immediately.
+- `availability_type`: physical_stock (legacy), digital_product, cohort_seats, consult_slots. Full field contracts and CLI examples: [CONTENT_RIGHTS_AND_AVAILABILITY.md](CONTENT_RIGHTS_AND_AVAILABILITY.md).
+- All results are offline, owner-provided evidence; no Meta/source API, license registry, slot booking or sales execution.

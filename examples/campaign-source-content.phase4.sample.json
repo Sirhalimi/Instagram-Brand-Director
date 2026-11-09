@@ -1,0 +1,30 @@
+{
+  "brand": {
+    "production_capabilities": [
+      "filming_products",
+      "static_design"
+    ],
+    "camera_policy": "no"
+  },
+  "content": {
+    "goal": "discovery",
+    "preferred_format": "reel",
+    "rights_verified": true,
+    "claims_verified": true
+  },
+  "source_content": [
+    {
+      "origin": "third_party",
+      "has_visible_watermark": true,
+      "documented_permission": false,
+      "usage": "research"
+    },
+    {
+      "origin": "owned",
+      "has_visible_watermark": false,
+      "documented_permission": false,
+      "usage": "publish"
+    }
+  ],
+  "commercial": {}
+}

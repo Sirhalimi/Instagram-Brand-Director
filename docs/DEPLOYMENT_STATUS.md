@@ -1,4 +1,11 @@
-# Development status — 2026-11-09 (0.8.0-dev-phase3)
+# Development status — 2026-11-09 (0.8.0-dev-phase4)
+
+## Phase 4 of 5 — implemented offline, live integrations not implemented
+- Per-source media rights gate distinguishes actual publishable assets from third-party references used ONLY for research, with explicit watermark/permission fields and rejection of subtitles-only reposts. Rights assertions are self-reported and require human documentation.
+- Availability adapters for physical_stock (legacy unchanged), digital_product, cohort_seats and consult_slots are used by campaign_decision and catalog_guard. Zero seats/slots, unavailable digital fulfillment/licenses, stale data and unknown cost/margin stop new-sales promotion.
+- Original physical-stock tests are unchanged and must continue passing; no new external Python dependencies or network access.
+- Live license checks, Meta content rights verification, actual supplier/calendar/slot lookups, posting and transactions remain not-implemented.
+- Successful fixture tests or `PROMOTE` never means a public asset was legally cleared or a real item has been reserved.
 
 ## Phase 3 of 5 — deterministic implementation, not live LLM validation
 - Module 00 is now required by the Skill router *before brand-specific strategy and format decisions*. Missing account evidence triggers REQUEST_CRITICAL_DATA. Fixed-format caption drafts and immediate product safety refusals remain unblocked.
