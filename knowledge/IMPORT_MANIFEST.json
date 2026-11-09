@@ -1,0 +1,13 @@
+{
+  "source": "user-provided-library-file",
+  "original_name": "instagram-rules.md",
+  "sha256": "996568b143eab5f0b4e4d9d36e11592fcc4e720168fd29c2ce78382f35086375",
+  "size_bytes": 11359,
+  "imported_on": "2026-11-09",
+  "verified_header": "2026-11-09",
+  "copies": [
+    "knowledge/instagram-rules.md",
+    "skills/instagram-brand-director/knowledge/instagram-rules.md"
+  ],
+  "notes": "Imported without textual edits. Source hash verified against raw Library bytes. Future edits require updating this manifest; this is not independent verification of Meta claims."
+}

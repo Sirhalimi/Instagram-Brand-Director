@@ -1,6 +1,6 @@
 # Instagram Brand Director
 
-**Version: `0.8.0-dev-phase1` · 2026-11-09**
+**Version: `0.8.0-dev-phase2` · 2026-11-09**
 
 A bilingual (فارسی / English), modular, evidence-aware **Instagram Social Media & Marketing Director** Agent Skill. It gives one accountable next action for strategy, but responds directly with usable copy for lightweight requests. Third-party tools are reused where they are demonstrably useful; inventory/Trial safeguards are original and conservative.
 
@@ -113,6 +113,21 @@ The classification covers NO_DATA, COLD_START, DORMANT, ACTIVE_LOW_DATA, and ACT
 Calibrated thresholds are submitted as config.proposed.json only. The owner must review their provenance and explicitly promote the file to the private brands/<slug>/config.json. Default thresholds remain labeled uncalibrated editorial assumptions, NOT Meta rules. The new calibration CSV schema is distinct from the earlier analytics posts.csv schema and is not silently converted.
 
 Read [Strategy by State](docs/STRATEGY_BY_STATE.md) and [Calibration/approval](docs/CALIBRATION.md). All committed examples are synthetic; brands/ remains Git-ignored.
+
+## Phase 2 of 5 — source-tagged, dated Instagram knowledge
+
+The original, user-provided `instagram-rules.md` (11,359 UTF-8 bytes) is preserved **unchanged** at both `knowledge/instagram-rules.md` and the installable Skill's `skills/instagram-brand-director/knowledge/instagram-rules.md`. The SHA-256 and import provenance are in `knowledge/IMPORT_MANIFEST.json`. The previous generic knowledge placeholder was replaced rather than merged, to avoid changing the supplied content.
+
+```bash
+python3 -m scripts.knowledge_age knowledge/instagram-rules.md --as-of 2026-11-09 --max-age-days 60
+python3 -m scripts.knowledge_age knowledge/instagram-rules.md --as-of 2027-02-01 --max-age-days 60
+```
+
+Output includes the file-level Verified age, each dated entry older than the limit, and unresolved `[CONFLICT]`/`[UNVERIFIED]` entries (including an undated prefix-tagged conflict). Exit codes: 0 = no stale dates (review flags may still exist); 1 = stale file header or entry; 2 = malformed dates or inputs. The CI knowledge check uses `continue-on-error: true` so staleness is visible but does **not** block unrelated development.
+
+**Source priority:** first-party account data for brand performance; official Meta/Instagram for platform policy; reported secondary sources; community-skill assumptions. Preserve labels `OFFICIAL`, `REPORTED`, `SINGLE-SOURCE`, `CONFLICT`, `HYPOTHESIS`, and `UNVERIFIED`. Dated facts can be consulted with qualification; marketing formulas and posting-frequency promises are hypotheses. An older-than-60-day entry needs current verification if online, or a provisional/stale label offline. The user-supplied claim tags have **not** been individually re-verified in this phase.
+
+**Not yet implemented:** automated weekly Meta refresh, resolution of conflicting eligibility claims, and the mandatory account-state routing change planned for Phase 3.
 
 ## Reference projects
 

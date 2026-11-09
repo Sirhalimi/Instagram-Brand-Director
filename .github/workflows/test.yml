@@ -24,6 +24,18 @@ jobs:
       - name: Unit and deterministic behavior contract tests
         run: |
           python3 -m unittest discover -s tests -v
+      - name: Knowledge age advisory (non-blocking, no network)
+        continue-on-error: true
+        run: |
+          python3 -m scripts.knowledge_age knowledge/instagram-rules.md --max-age-days 60
+      - name: Phase 1 synthetic CLI smoke checks
+        run: |
+          python3 -m scripts.account_state examples/account-state.zero-follower-editorial.sample.json > "$RUNNER_TEMP/zero.json"
+          python3 -m scripts.account_state examples/account-state.dormant-digital-store.sample.json > "$RUNNER_TEMP/dormant.json"
+          python3 -m scripts.account_state examples/account-state.established-wholesale.sample.json > "$RUNNER_TEMP/established.json"
+          python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"]); assert json.loads((p/"zero.json").read_text())["state"] == "COLD_START"; assert json.loads((p/"dormant.json").read_text())["state"] == "DORMANT"; assert json.loads((p/"established.json").read_text())["state"] == "ACTIVE_WITH_BASELINE"'
+          python3 -m scripts.calibrate_thresholds examples/calibration.wholesale.posts.sample.csv --growth examples/calibration.wholesale.growth.sample.json --today 2026-11-09 --output "$RUNNER_TEMP/config.proposed.json" > "$RUNNER_TEMP/calibration-summary.txt"
+          test -s "$RUNNER_TEMP/config.proposed.json"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -42,6 +54,7 @@ jobs:
           test -s "$TARGET/scripts/baseline_builder.py"
           test -s "$TARGET/scripts/account_state.py"
           test -s "$TARGET/scripts/calibrate_thresholds.py"
+          test -s "$TARGET/scripts/knowledge_age.py"
           test ! -e "$TARGET/.github"
           test ! -e "$TARGET/tests"
           test ! -e "$TARGET/evals"
