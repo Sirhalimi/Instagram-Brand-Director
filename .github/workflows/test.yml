@@ -46,6 +46,10 @@ jobs:
           python3 -m scripts.catalog_guard examples/catalog-availability.phase4.sample.json > "$RUNNER_TEMP/availability.json"
           python3 -m scripts.campaign_decision examples/campaign-source-content.phase4.sample.json > "$RUNNER_TEMP/rights.json"
           python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"]); a=json.loads((p/"availability.json").read_text()); b=json.loads((p/"rights.json").read_text()); assert a["products_reviewed"]==4 and a["promotable"]==3; assert b["decision"]=="NORMAL_REEL" and b["source_content_review"]["research_only_indexes"]==[0]'
+      - name: Phase 5 six synthetic behavior fixtures and cost-free model eval preparation
+        run: |
+          python3 tools/run_agent_eval.py --mode prepare --fixtures tests/behavior --output "$RUNNER_TEMP/igbd-phase5-eval"
+          python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"igbd-phase5-eval"; s=json.loads((p/"summary.json").read_text()); assert s["case_count"]==6 and not s["actual_model_executed"]; assert all(pathlib.Path(c["rubric_file"]).is_file() and pathlib.Path(c["prompt_file"]).is_file() for c in s["cases"]); assert all("expected_decision" not in pathlib.Path(c["prompt_file"]).read_text() for c in s["cases"])'
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

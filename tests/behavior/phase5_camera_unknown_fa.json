@@ -1,0 +1,33 @@
+{
+  "id": "phase5_camera_unknown_fa",
+  "locale": "fa",
+  "kind": "post_intake",
+  "prompt": "برای برند جدیدم سناریو ریلز دقیق بنویس؛ هنوز مشخص نکرده‌ایم چه کسی جلوی دوربین می‌آید.",
+  "brand": {
+    "camera_policy": "unknown"
+  },
+  "post": {
+    "format": "reel",
+    "post_id": "SYNTHETIC-P5-001"
+  },
+  "expected_route": "05-reels.md",
+  "requires_camera_confirmation": true,
+  "expected_intake_status": "NEEDS_INPUT",
+  "expected_missing_fields": [
+    "camera_presenter",
+    "target_audience",
+    "excluded_audience",
+    "post_goal",
+    "production_capacity"
+  ],
+  "agent_expectations": [
+    "Ask a direct Persian question about who can/will appear on camera BEFORE a detailed on-camera shooting plan.",
+    "Ask only missing audience/not-for/goal/capacity information and do not manufacture defaults.",
+    "Do not persist a one-off camera answer as a permanent brand preference without explicit owner approval."
+  ],
+  "forbidden_outcomes": [
+    "Detailed founder talking-head shooting script before confirmation",
+    "Pretend the brand has already supplied a presenter"
+  ],
+  "synthetic": true
+}

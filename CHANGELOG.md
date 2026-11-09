@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0-dev-phase5 — 2026-11-09
+- Added six independent, wholly synthetic behavior fixtures in tests/behavior/ for stock, faceless production, zero followers, dormancy, missing on-camera confirmation and explicit goal conflict. Each supplies expected deterministic decisions and a separate human-grade behavior rubric with forbidden outcomes.
+- Extended the existing optional Codex CLI eval preparer to accept a folder of JSON scenarios, include synthetic account/review/post input context, and save an isolated rubric.json **outside** the model workspace; no expected result is injected into the prompt.
+- Marked phase5 lexical grading NOT_GRADED to prevent false certification. Existing default ten legacy fixtures and the opt-in real-model workflow remain intact.
+- Added behavior-fixture engine/router/inference regression tests, offline CI prepare smoke test and reviewer guide.
+- All unit tests/Skills CLI installation remain the formal automated release evidence. Actual LLM-generated responses have not been evaluated; status remains not-implemented. No third_party/ change or brand/customer data.
+
 ## 0.8.0-dev-phase4 — 2026-11-09
 - Added explicit per-asset source-content rights audit to offline campaign triage: owned/licensed/permission/third_party, watermark, documented permission, research-only separation, subtitles-only repost rejection, and human review. Preserved general legacy rights_verified gate.
 - Generalized availability in catalog_guard to digital_product (validity, region and fulfillment checks), cohort_seats (capacity/start/enrollment), and consult_slots (open slots/response/verified delivery), while keeping untyped/physical_stock behavior unchanged.

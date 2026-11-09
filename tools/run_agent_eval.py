@@ -19,10 +19,31 @@ SKILL = ROOT / "skills" / "instagram-brand-director"
 DEFAULT_FIXTURES = ROOT / "evals" / "agent-scenarios.json"
 
 def load_cases(path=DEFAULT_FIXTURES):
-    data=json.loads(Path(path).read_text(encoding="utf-8"))
-    cases=data.get("scenarios")
+    """Load either the legacy aggregated JSON or separate phase-5 JSON fixtures.
+
+    Directory inputs are explicitly supplied by the caller; no discovery of
+    real brand folders or other locations is performed.
+    """
+    path=Path(path)
+    if path.is_dir():
+        files=sorted(path.glob("*.json"))
+        if not files:
+            raise ValueError("No JSON behavior fixtures in supplied directory")
+        cases=[json.loads(p.read_text(encoding="utf-8")) for p in files]
+    else:
+        data=json.loads(path.read_text(encoding="utf-8"))
+        cases=data.get("scenarios")
     if not isinstance(cases,list) or not cases:
         raise ValueError("No agent scenarios found")
+    for case in cases:
+        if not isinstance(case,dict):
+            raise ValueError("Each scenario must be a JSON object")
+        if not isinstance(case.get("prompt"),str) or not case["prompt"].strip():
+            raise ValueError("Every scenario needs a nonempty prompt")
+        if case.get("locale") not in ("fa","en"):
+            raise ValueError("Every scenario must have a supported locale")
+        if not isinstance(case.get("agent_expectations"),list) or not case["agent_expectations"]:
+            raise ValueError("Every scenario needs explicit human-grade expectations")
     ids=[case.get("id") for case in cases]
     if any(not isinstance(i,str) or not re.fullmatch(r"[a-z0-9_]+",i) for i in ids):
         raise ValueError("Fixture IDs must be safe slug-like names")
@@ -32,7 +53,7 @@ def load_cases(path=DEFAULT_FIXTURES):
 
 def prompt_for_case(case):
     """Do not expose expected decisions to the tested model."""
-    inputs={k:case[k] for k in ("brand","brief","trial","baseline","policy") if k in case}
+    inputs={k:case[k] for k in ("brand","brief","trial","baseline","policy","account","review","post") if k in case}
     lang="Persian" if case.get("locale")=="fa" else "English"
     return (
         "Act as the installed Instagram Brand Director skill. Read the "
@@ -56,12 +77,30 @@ def prepare_case(case,output):
     prompt=prompt_for_case(case)
     path=cwd.parent/"prompt.txt"
     path.write_text(prompt,encoding="utf-8")
+    # Expectation/rubric data is for a HUMAN reviewer after execution.
+    # It remains outside the agent's isolated workspace and prompt.
+    rubric_fields=("expected_decision","expected_route","expected_state",
+                   "expected_trial_eligible","expected_baseline",
+                   "expected_ghost_risk","expected_ghost_confidence",
+                   "expected_next_action","expected_intake_status",
+                   "expected_missing_fields","agent_expectations",
+                   "forbidden_outcomes")
+    rubric={key:case[key] for key in rubric_fields if key in case}
+    rubric.update({"fixture_id":case["id"],"human_review_required":True,
+                   "actual_model_validation":"NOT_EXECUTED_BY_PREPARE"})
+    (cwd.parent/"rubric.json").write_text(
+        json.dumps(rubric,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     return cwd,path
 
 def score_conservative(case,text):
     """Positive signals are only triage; subjective quality always needs human review."""
     s=text.lower()
     id=case["id"]
+    if id.startswith("phase5_"):
+        return {"mechanical_gate":"NOT_GRADED",
+                "flags":["Phase-5 rubric requires independent human review of actual response"],
+                "human_review_required":True,
+                "note":"No lexical marker certifies an objection, a truthful CTA or a faceless storyboard."}
     fails=[]
     if id in ("fa_sold_out","fa_weak_request"):
         if "do_not_promote" not in s and not ("ناموجود" in s and
@@ -130,7 +169,8 @@ def execute(*,fixtures=DEFAULT_FIXTURES,output,mode="prepare",case_ids=None,
     for case in all_cases:
         cwd,p=prepare_case(case,out)
         item={"id":case["id"],"locale":case.get("locale"),
-              "mode":mode,"prompt_file":str(p)}
+              "mode":mode,"prompt_file":str(p),
+              "rubric_file":str(p.parent/"rubric.json")}
         if mode=="run":
             item.update(run_case(case,cwd,p,codex=codex,model=model,timeout=timeout))
             (p.parent/"record.json").write_text(

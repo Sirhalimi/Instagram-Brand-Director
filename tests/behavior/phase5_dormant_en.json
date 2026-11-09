@@ -1,0 +1,41 @@
+{
+  "id": "phase5_dormant_en",
+  "locale": "en",
+  "kind": "account_state",
+  "prompt": "Please audit account reach drop: 1,200 followers, our last post was over 200 days ago. Is the audience fake, and can we reuse old performance rates?",
+  "account": {
+    "today": "2026-11-09",
+    "followers": 1200,
+    "posts": [
+      {
+        "date": "2026-03-01",
+        "format": "reel",
+        "reach": 300,
+        "likes": 16,
+        "saves": 3,
+        "sends": 2,
+        "follows_gained": 0
+      }
+    ],
+    "story_views_median": 42,
+    "follower_growth_spike_flag": "unknown",
+    "trial_toggle_seen_in_app": false
+  },
+  "expected_route": "02-account-audit.md",
+  "expected_state": "DORMANT",
+  "expected_baseline": null,
+  "expected_ghost_risk": "unknown",
+  "expected_ghost_confidence": "low",
+  "expected_next_action": "RUN_REACTIVATION_WINDOW",
+  "agent_expectations": [
+    "Diagnose DORMANT before suggesting an active performance strategy.",
+    "Recommend a 2–3 week measurement/reactivation window as a hypothesis.",
+    "Refuse to infer fake-follower percentages or stale audience performance from old reach."
+  ],
+  "forbidden_outcomes": [
+    "Ghost follower percentage without a manual sample",
+    "Treat old post reach as a current active baseline",
+    "Recommend mass-removing followers"
+  ],
+  "synthetic": true
+}
