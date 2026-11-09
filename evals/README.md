@@ -1,6 +1,6 @@
 # Agent behavior evaluation fixtures / سناریوهای رفتار ایجنت
 
-These ten fixed scenarios define expected behavior in Persian and English. They cover sold-out promotions, faceless brands, camera onboarding, unreasonable owner instructions, compact caption output, Trial evidence gaps, and Meta source checking.
+The ten legacy aggregated fixtures in evals/agent-scenarios.json define expected behavior in Persian and English. Six **additional** independent phase-5 scenarios under tests/behavior/ add account-state and goal-conflict coverage. They cover sold-out promotions, faceless brands, camera onboarding, unreasonable owner instructions, compact caption output, Trial evidence gaps, and Meta source checking.
 
 **Two distinct validation levels:**
 
@@ -22,3 +22,7 @@ These ten fixed scenarios define expected behavior in Persian and English. They 
 Re-run behavior evaluation on every release that changes routing, response contracts, Trial sampling policy or localized copy rules. Do not put brand secrets in fixtures; these are synthetic examples.
 
 **Important:** Official `skill-creator` guidance provides a quick structure validator but does not itself establish that these model-output scenarios passed. We deliberately distinguish skill structure lint, deterministic engine tests, and actual agent response evaluation.
+
+## Phase 5 independent scenario directory
+
+Run `python3 tools/run_agent_eval.py --mode prepare --fixtures tests/behavior --output /tmp/igbd-phase5-prep`. This never executes a model. Every fixture has its own independent rubric.json outside the model workspace, with expectations/forbidden outcomes withheld from prompt.txt. To deliberately evaluate one case using a configured Codex CLI: `python3 tools/run_agent_eval.py --mode run --fixtures tests/behavior --case phase5_sold_out_fa --allow-model-usage --output /tmp/igbd-phase5-live`. This may use paid credits; ALL actual response judgments require human review. For phase-5 cases the program deliberately reports `NOT_GRADED` rather than a lexical 'pass'. Read docs/BEHAVIOR_EVAL_PHASE5_FA.md.

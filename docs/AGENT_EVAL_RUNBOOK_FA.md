@@ -52,3 +52,7 @@ python3 tools/run_agent_eval.py --mode run \
 ## نتیجه‌گیری
 
 تا این لحظه **اجرا و داوری پاسخ زنده مدل انجام نشده**؛ خروجی موفق GitHub Actions فقط صحت تست‌های Python، نصب و آماده‌سازی fixture را اثبات می‌کند. در هر نسخه تغییر روتر، منطق فروش، Trial یا قواعد زبان، سناریوهای ثابت مجدداً باید اجرا و بازبینی شوند.
+
+## افزوده فاز ۵
+
+شش سناریوی مستقل جدید در `tests/behavior/` وجود دارند. دستور آماده‌سازی بدون تماس مدل: `python3 tools/run_agent_eval.py --mode prepare --fixtures tests/behavior --output /tmp/igbd-phase5-prep`. فایل `rubric.json` خارج از محیط ایزوله مدل و `prompt.txt` نگهداری می‌شود؛ پاسخ موردانتظار به مدل داده نمی‌شود. سناریوهای فاز ۵ هیچ قبولی ماشینی یا واقعی مدل ادعا نمی‌کنند. توضیحات دقیق در [BEHAVIOR_EVAL_PHASE5_FA.md](BEHAVIOR_EVAL_PHASE5_FA.md).

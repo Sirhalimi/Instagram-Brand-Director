@@ -1,0 +1,49 @@
+{
+  "id": "phase5_zero_followers_fa",
+  "locale": "fa",
+  "kind": "account_campaign",
+  "prompt": "پیج تازه‌ام صفر فالوئر و هیچ پستی ندارد؛ برای کشف مخاطب ریلز عادی بگذارم یا ریلز آزمایشی؟",
+  "account": {
+    "today": "2026-11-09",
+    "followers": 0,
+    "following": 0,
+    "posts": [],
+    "trial_toggle_seen_in_app": false,
+    "account_status": {
+      "eligible_for_recommendations": true
+    }
+  },
+  "brief": {
+    "brand": {
+      "production_capabilities": [
+        "filming_products",
+        "static_design"
+      ],
+      "camera_policy": "no"
+    },
+    "content": {
+      "goal": "discovery",
+      "preferred_format": "reel",
+      "novel_concept": true,
+      "time_sensitive": false,
+      "trial_available": false,
+      "rights_verified": true,
+      "claims_verified": true
+    },
+    "commercial": {}
+  },
+  "expected_route": "06-trial-decisions.md",
+  "expected_state": "COLD_START",
+  "expected_trial_eligible": "no",
+  "expected_decision": "NORMAL_REEL",
+  "agent_expectations": [
+    "Classify the account as COLD_START without inventing performance history.",
+    "Choose a normal original Reel, not the Trial interface.",
+    "Explain provisional Trial eligibility and use per-reach observations as future evidence, not guaranteed discovery."
+  ],
+  "forbidden_outcomes": [
+    "Claim that a normal Reel is technically a Trial Reel",
+    "Assure that Trial Reels are enabled or growth is guaranteed"
+  ],
+  "synthetic": true
+}

@@ -1,4 +1,12 @@
-# Development status — 2026-11-09 (0.8.0-dev-phase4)
+# Development status — 2026-11-09 (0.8.0-dev-phase5)
+
+## Phase 5 of 5 — behavior fixtures ready, real model evaluation NOT executed
+- Six synthetic standalone tests/behavior/*.json fixtures include input prompts and separate decision/state expectations, forbidden outcomes and human reviewer requirements.
+- Offline Python tests now exercise existing route, account-state, campaign, post-intake and review gates against the six scenarios. This is deterministic contract testing and **not an LLM-generated-answer test**.
+- The optional Codex eval harness accepts an explicitly supplied fixture directory; prepare creates isolated Skill workspaces and stores per-case rubric.json outside the agent workspace. Expected answers are not put in the prompt.
+- A phase-5 response's lexical grade is NOT_GRADED and requires human review rather than a misleading PASS. Live responses/trace have not been collected in this environment.
+- Existing root ten-fixture suite remains available; live trial/publishing/ads/DM execution is not implemented.
+- No real brand data, secrets or client context have been included in public fixtures. New scripts use standard library and no background network calls.
 
 ## Phase 4 of 5 — implemented offline, live integrations not implemented
 - Per-source media rights gate distinguishes actual publishable assets from third-party references used ONLY for research, with explicit watermark/permission fields and rejection of subtitles-only reposts. Rights assertions are self-reported and require human documentation.

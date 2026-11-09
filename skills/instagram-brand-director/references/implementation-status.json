@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "0.8.0-dev-phase4",
+  "release": "0.8.0-dev-phase5",
   "updated_on": "2026-11-09",
   "status_values": [
     "implemented",
@@ -71,7 +71,10 @@
     "availability_type_adapters": "implemented",
     "live_media_rights_verification": "not-implemented",
     "live_digital_license_verification": "not-implemented",
-    "live_calendar_booking_verification": "not-implemented"
+    "live_calendar_booking_verification": "not-implemented",
+    "phase5_synthetic_behavior_fixtures": "implemented",
+    "phase5_eval_preparation": "implemented",
+    "phase5_actual_model_behavior_pass": "not-implemented"
   },
   "feature_flags": {
     "media_generation_enabled": false,
@@ -94,7 +97,10 @@
     "per_post_durable_profile_updates": "Only an explicit --save writes stable, whitelisted post_defaults to a provided private brand.md. Ephemeral post choices are not saved without affirmative selection.",
     "persian_editorial_checklist": "Human-language checks only; automated performance scoring is unsupported for Persian.",
     "external_source_rights_gate": "Owner-asserted per-asset rights and watermark classification; research-only references excluded from publication; subtitles-only repost rejected. No legal or remote verification.",
-    "availability_type_adapters": "Offline physical_stock (legacy unchanged), digital_product, cohort_seats, consult_slots. Promotion means suggestion for human review, not a real sale; no live inventory/calendar API."
+    "availability_type_adapters": "Offline physical_stock (legacy unchanged), digital_product, cohort_seats, consult_slots. Promotion means suggestion for human review, not a real sale; no live inventory/calendar API.",
+    "phase5_synthetic_behavior_fixtures": "Six independent bilingual synthetic fixtures with positive and forbidden human-review criteria; deterministic Python assertions cover existing offline engine/routing behavior.",
+    "phase5_eval_preparation": "Optional Codex CLI runner stages six isolated prompts and reviewer rubrics without model calls by default; answer key not injected.",
+    "phase5_actual_model_behavior_pass": "No actual LLM-generated transcript/graded response was executed. NOT_GRADED and human review required; do not confuse 199+ Python tests with model behavioral reliability."
   },
   "module_status_scope": "Statuses describe actual implemented executable coverage. 'implemented' modules may be offline only; see per-module scope in SKILL.md."
 }

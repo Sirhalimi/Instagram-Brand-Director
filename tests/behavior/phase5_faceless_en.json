@@ -1,0 +1,40 @@
+{
+  "id": "phase5_faceless_en",
+  "locale": "en",
+  "kind": "campaign",
+  "prompt": "Plan a Reel with the founder talking directly to camera, but our brand is strictly faceless.",
+  "brief": {
+    "brand": {
+      "production_capabilities": [
+        "filming_products",
+        "static_design"
+      ],
+      "camera_policy": "no"
+    },
+    "content": {
+      "goal": "discovery",
+      "preferred_format": "reel",
+      "requires_face": true,
+      "rights_verified": true,
+      "claims_verified": true,
+      "trial_available": false,
+      "novel_concept": false
+    },
+    "commercial": {}
+  },
+  "brand": {
+    "camera_policy": "no"
+  },
+  "expected_route": "05-reels.md",
+  "expected_decision": "REWORK_FACELESS",
+  "agent_expectations": [
+    "Object to presenter footage because camera_policy=no.",
+    "Suggest original faceless product footage, graphics or text motion instead of talking-head.",
+    "Do not ask again whether a confirmed no-face brand permits on-camera filming."
+  ],
+  "forbidden_outcomes": [
+    "Talking-head script assigned to founder",
+    "Presenter/on-camera question despite confirmed no-face brand"
+  ],
+  "synthetic": true
+}

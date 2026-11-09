@@ -1,6 +1,6 @@
 # Instagram Brand Director
 
-**Version: `0.8.0-dev-phase4` · 2026-11-09**
+**Version: `0.8.0-dev-phase5` · 2026-11-09**
 
 A bilingual (فارسی / English), modular, evidence-aware **Instagram Social Media & Marketing Director** Agent Skill. It gives one accountable next action for strategy, but responds directly with usable copy for lightweight requests. Third-party tools are reused where they are demonstrably useful; inventory/Trial safeguards are original and conservative.
 
@@ -150,7 +150,7 @@ For **generalized strategy/review conclusions**, `review_gate.py` uses the accou
 
 Persian output now has [a human review checklist](docs/PERSIAN_REVIEW_CHECKLIST.md) covering ZWNJ, formal/colloquial consistency, RTL overlays, hashtags, subtitles and evidence. English-only `hookscore.py` remains **unsupported for Persian**. No real brand data belongs in Git.
 
-**Phase 4 remains not-implemented:** third-party production-rights policy and generalized digital/service availability adapters have not been started in this phase.
+**Phase 4 completed:** offline rights and digital/service availability adapters were added and tested; external rights and availability verification are still not implemented.
 
 ## Phase 4 of 5 — media rights and availability types
 
@@ -175,4 +175,36 @@ See [Rights and Availability](docs/CONTENT_RIGHTS_AND_AVAILABILITY.md). Phase 5 
 ## Reference projects
 
 [social-media-skills](https://github.com/social-media-skills/skills) · [Jake Instagram Agent Skill](https://github.com/Jakeschincariol/instagram-agent-skill) · [Instagram Skills](https://github.com/sergebulaev/instagram-skills) · [Marketing Skills](https://github.com/coreyhaines31/marketingskills) · [Digital Marketing Skills](https://github.com/vidual-labs/digital-marketing-skills) · [Apify Awesome Skills](https://github.com/apify/awesome-skills).
+
+
+## Phase 5 of 5 — synthetic behavioral fixtures and honest agent-eval readiness
+
+Six **separate synthetic scenarios** live under `tests/behavior/`: sold-out inventory → `DO_NOT_PROMOTE`; no-face brand → `REWORK_FACELESS` and never talking-head; zero followers → `COLD_START`, Trial unavailable and `NORMAL_REEL`; dormant account → `DORMANT`, no current baseline and reactivation window; camera preference unknown → direct presenter question; owner requests a vanity-content pivot conflicting with sales after two posts → `INSUFFICIENT_DATA` and a **required reasoned objection** to be checked by a human reviewer.
+
+The scenarios declare `expected_decision`, `expected_state`, `agent_expectations` and `forbidden_outcomes`. **Deterministic Python tests assert engine/routing contracts, NOT that a language model really follows those instructions.** The goal-conflict objection, helpfulness and absence of misleading talking-head/CTA content remain manual evaluation criteria. A lexical keyword match is not considered a behavioral pass.
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 tools/run_agent_eval.py --mode prepare --fixtures tests/behavior --output /tmp/igbd-phase5-prep
+```
+
+The cost-free prepare command creates one isolated Codex Skill workspace and `prompt.txt` per scenario, while `rubric.json` is stored **outside** that workspace and is **not shown to the model**. No real brands, accounts or secrets are needed. Optional live evaluation needs an authenticated Codex CLI and deliberate opt-in (potentially billed):
+
+```bash
+python3 tools/run_agent_eval.py --mode run --fixtures tests/behavior --case phase5_sold_out_fa --allow-model-usage --output /tmp/igbd-phase5-live
+```
+
+No live model-response evaluation has been performed or certified in this phase. Reports always require independent human grading, version/model identification, review of the actual answer and observed behavior. Consult [Phase-5 behavior runbook](docs/BEHAVIOR_EVAL_PHASE5_FA.md) for the rubric and unresolved limits.
+
+### Executable components vs missing integrations
+
+| Component | Verified offline scope | Not implemented / not verified |
+|---|---|---|
+| Account state/calibration | Deterministic classifier and proposed config, no auto-approval | Live first-party Instagram sync |
+| Commercial availability | Physical, digital, cohort and consultation guards | Live supplier/stock/license/calendar APIs |
+| Creative rights | Per-item declared origin and research-only gates | Independent legal/license verification |
+| Strategy/review | Sample floor/Trial gates and optional human reviewer | Causal impact, automatically learned marketing truth |
+| Bilingual content | fa/en guidance, Persian human editorial checklist | Validated Persian automated performance scoring |
+| Behavior fixtures | Six separate fixtures, offline contract assertions and eval prep | **Actual LLM answer certification** |
+| Posting/media/ads/DMs | Drafts and specifications only | Real automated execution |
 
