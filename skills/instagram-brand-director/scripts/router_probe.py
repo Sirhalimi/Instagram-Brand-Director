@@ -40,7 +40,7 @@ def route(prompt, brand=None):
         primary="11-commerce-funnel.md"
         extra=[]
     # Knowledge is loaded only when the request requires actual Meta policy claims.
-    policy=bool(re.search("meta policy|instagram rules|قوانین اینستاگرام|قوانین متا|الگوریتم رسمی",prompt,re.I))
+    policy=bool(re.search("meta policy|meta rules|instagram rules|قوانین اینستاگرام|قوانین متا|الگوریتم رسمی",prompt,re.I))
     # Account-state is the mandatory first decision gate for brand-specific
     # strategy and format choices. Pure ready-to-write copy and immediate
     # safety rejections (e.g. sold-out offers) must not be delayed by it.
