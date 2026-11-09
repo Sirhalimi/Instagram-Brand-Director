@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0-dev-eval1 — 2026-11-10
+- Hardened optional Codex runner with SHA-256 checksums of staged Skill, prompt and captured answer plus fail-closed protection against reusing a non-empty evaluation output directory.
+- Added offline standard-library-only human-attested grader. A verdict requires a captured run, hash match, all explicit criterion and forbidden-behavior judgments, quotes present in the actual answer and full-response reviewer attestation. No lexical keyword screen can certify behavior.
+- Added explicit nonpassing reviewer template, deterministic negative-control tests and workflow smoke test.
+- Extended **manual-only** GitHub workflow_dispatch selection to include all six Phase-5 fixtures while leaving the ordinary CI model-free. No actual model invocation was performed in this turn.
+- Preserved third_party/ and existing synthetic fixtures. Execution of the live model, multi-run repeatability and independent verification remain not-implemented.
+
 ## 0.8.0-dev-phase5 — 2026-11-09
 - Added six independent, wholly synthetic behavior fixtures in tests/behavior/ for stock, faceless production, zero followers, dormancy, missing on-camera confirmation and explicit goal conflict. Each supplies expected deterministic decisions and a separate human-grade behavior rubric with forbidden outcomes.
 - Extended the existing optional Codex CLI eval preparer to accept a folder of JSON scenarios, include synthetic account/review/post input context, and save an isolated rubric.json **outside** the model workspace; no expected result is injected into the prompt.

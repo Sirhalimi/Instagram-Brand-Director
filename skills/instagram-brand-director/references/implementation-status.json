@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "release": "0.8.0-dev-phase5",
-  "updated_on": "2026-11-09",
+  "release": "0.8.0-dev-eval1",
+  "updated_on": "2026-11-10",
   "status_values": [
     "implemented",
     "spec-only",
@@ -74,7 +74,10 @@
     "live_calendar_booking_verification": "not-implemented",
     "phase5_synthetic_behavior_fixtures": "implemented",
     "phase5_eval_preparation": "implemented",
-    "phase5_actual_model_behavior_pass": "not-implemented"
+    "phase5_actual_model_behavior_pass": "not-implemented",
+    "offline_human_agent_grader": "implemented",
+    "agent_run_transcript_integrity_hashes": "implemented",
+    "manual_phase5_workflow_dispatch": "implemented"
   },
   "feature_flags": {
     "media_generation_enabled": false,
@@ -100,7 +103,10 @@
     "availability_type_adapters": "Offline physical_stock (legacy unchanged), digital_product, cohort_seats, consult_slots. Promotion means suggestion for human review, not a real sale; no live inventory/calendar API.",
     "phase5_synthetic_behavior_fixtures": "Six independent bilingual synthetic fixtures with positive and forbidden human-review criteria; deterministic Python assertions cover existing offline engine/routing behavior.",
     "phase5_eval_preparation": "Optional Codex CLI runner stages six isolated prompts and reviewer rubrics without model calls by default; answer key not injected.",
-    "phase5_actual_model_behavior_pass": "No actual LLM-generated transcript/graded response was executed. NOT_GRADED and human review required; do not confuse 199+ Python tests with model behavioral reliability."
+    "phase5_actual_model_behavior_pass": "No actual LLM-generated transcript/graded response was executed. NOT_GRADED and human review required; do not confuse 199+ Python tests with model behavioral reliability.",
+    "offline_human_agent_grader": "Human-attested PASS requires real captured-response record, matching response SHA-256, full-response attestation and evidence quotes for each positive criterion; no automated LLM quality certification.",
+    "agent_run_transcript_integrity_hashes": "Codex run outputs include prompt/answer SHA-256 and staged skill-tree snapshot hash. These detect accidental mismatch, not signed provenance or independent attestation.",
+    "manual_phase5_workflow_dispatch": "The opt-in workflow lists six phase-5 fixtures in addition to ten old scenarios. It is workflow_dispatch only and requires repo OPENAI_API_KEY secret; no CI-triggered model run."
   },
   "module_status_scope": "Statuses describe actual implemented executable coverage. 'implemented' modules may be offline only; see per-module scope in SKILL.md."
 }

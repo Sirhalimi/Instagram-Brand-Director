@@ -18,6 +18,12 @@ on:
           - trial_small_reach
           - fa_weak_request
           - policy_separate
+          - phase5_sold_out_fa
+          - phase5_faceless_en
+          - phase5_zero_followers_fa
+          - phase5_dormant_en
+          - phase5_camera_unknown_fa
+          - phase5_goal_conflict_en
 permissions:
   contents: read
 jobs:
@@ -50,8 +56,14 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           DISABLE_TELEMETRY: "1"
         run: |
+          CASE="${{ inputs.case_id }}"
+          EXTRA=()
+          if [[ "$CASE" == phase5_* ]]; then
+            EXTRA=(--fixtures tests/behavior)
+          fi
           python3 tools/run_agent_eval.py --mode run \
-            --case "${{ inputs.case_id }}" \
+            "${EXTRA[@]}" \
+            --case "$CASE" \
             --allow-model-usage \
             --output "$RUNNER_TEMP/igbd-agent-eval"
       - name: Store synthetic response and event trace for HUMAN review

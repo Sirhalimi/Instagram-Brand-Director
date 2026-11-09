@@ -50,6 +50,10 @@ jobs:
         run: |
           python3 tools/run_agent_eval.py --mode prepare --fixtures tests/behavior --output "$RUNNER_TEMP/igbd-phase5-eval"
           python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"igbd-phase5-eval"; s=json.loads((p/"summary.json").read_text()); assert s["case_count"]==6 and not s["actual_model_executed"]; assert all(pathlib.Path(c["rubric_file"]).is_file() and pathlib.Path(c["prompt_file"]).is_file() for c in s["cases"]); assert all("expected_decision" not in pathlib.Path(c["prompt_file"]).read_text() for c in s["cases"])'
+      - name: Human-review template is nonpassing (offline, no model)
+        run: |
+          python3 tools/grade_agent_eval.py --fixture tests/behavior/phase5_sold_out_fa.json --make-template "$RUNNER_TEMP/review.template.json"
+          python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"review.template.json"; r=json.loads(p.read_text()); assert not r["reviewed_full_response"] and all(i["verdict"]=="unclear" for i in r["criteria"]) and all(i["verdict"]=="unclear" for i in r["forbidden"])'
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
