@@ -37,7 +37,7 @@ Paths above are relative to `modules/`. For standalone account-state questions, 
 
 **File budget:** simple copy = router + primary (2); brand strategy = router + 00 + primary (3); mixed sales preflight may need one commercial module (4); dated platform claim may additionally need `knowledge/instagram-rules.md` (up to 5 in exceptional mixed cases). Never load all modules. `scripts/router_probe.py` is a deterministic budget/regression approximation, not evidence that an actual LLM obeyed the router.
 
-## Module implementation status — release 0.8.0-dev-phase3
+## Module implementation status — release 0.8.0-dev-eval1
 | Module | Status | Scope available today |
 |---|---|---|
 | 00 account-state | implemented | Offline state classifier/calibration |

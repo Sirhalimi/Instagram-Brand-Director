@@ -1,4 +1,11 @@
-# Development status — 2026-11-09 (0.8.0-dev-phase5)
+# Development status — 2026-11-10 (0.8.0-dev-eval1)
+
+## Eval hardening 1 — 2026-11-10
+- Added hashes for staged Skill, prompt and actual response; refuse evaluation output directory reuse. These detect accidental mismatch and do not cryptographically prove a Codex run.
+- Added `tools/grade_agent_eval.py` offline human-attested rubric grader; its blank template is NOT_GRADED. A human-reviewed PASS requires all criteria met with quoted response evidence, all forbidden outcomes explicitly absent, response integrity checks and a successfully captured real-run record.
+- Manual GitHub Actions workflow offers six new phase-5 scenarios on top of the original ten and is strictly workflow_dispatch; paid model execution requires explicitly configuring the secret and manually starting it.
+- **No actual model evaluation ran** in this environment; live_agent_eval_run and real-agent behavior pass remain not-implemented.
+- No external services called by added scripts, no credentials read, no real brand fixtures, no third_party/ modifications.
 
 ## Phase 5 of 5 — behavior fixtures ready, real model evaluation NOT executed
 - Six synthetic standalone tests/behavior/*.json fixtures include input prompts and separate decision/state expectations, forbidden outcomes and human reviewer requirements.

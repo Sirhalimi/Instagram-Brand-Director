@@ -6,6 +6,7 @@ Codex CLI, and a human-initiated command. Never automatically publish or spend.
 This evaluates the actual model response, not just the Python decision engines.
 """
 import argparse
+import hashlib
 import json
 import re
 import shutil
@@ -66,6 +67,21 @@ def prompt_for_case(case):
         "SYNTHETIC BRAND DATA:\n"+json.dumps(inputs,ensure_ascii=False,indent=2)+
         "\n\nUSER REQUEST:\n"+case["prompt"]+"\n"
     )
+
+def sha256_file(path):
+    """Digest only an explicitly staged file; do not access credentials."""
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+def skill_snapshot_hash(folder):
+    """Digest the exact staged Skill tree, not merely the router text."""
+    root=Path(folder)
+    digest=hashlib.sha256()
+    for path in sorted(p for p in root.rglob("*") if p.is_file()):
+        relative=path.relative_to(root).as_posix().encode("utf-8")
+        digest.update(len(relative).to_bytes(4,"big"))
+        digest.update(relative)
+        digest.update(hashlib.sha256(path.read_bytes()).digest())
+    return digest.hexdigest()
 
 def prepare_case(case,output):
     cwd=Path(output)/case["id"]/"workspace"
@@ -164,15 +180,24 @@ def execute(*,fixtures=DEFAULT_FIXTURES,output,mode="prepare",case_ids=None,
         unknown=set(case_ids)-set(case["id"] for case in all_cases)
         if unknown:raise ValueError("Unknown case IDs: "+",".join(sorted(unknown)))
         all_cases=[x for x in all_cases if x["id"] in case_ids]
+    # Prevent accidental destruction, mixing or false attribution of old
+    # transcripts and human reviews. Use a fresh explicitly given directory.
+    if out.exists() and any(out.iterdir()):
+        raise ValueError("Evaluation output directory must be new or empty")
     out.mkdir(parents=True,exist_ok=True)
     results=[]
     for case in all_cases:
         cwd,p=prepare_case(case,out)
         item={"id":case["id"],"locale":case.get("locale"),
               "mode":mode,"prompt_file":str(p),
-              "rubric_file":str(p.parent/"rubric.json")}
+              "rubric_file":str(p.parent/"rubric.json"),
+              "prompt_sha256":sha256_file(p),
+              "skill_snapshot_sha256":skill_snapshot_hash(
+                  cwd/".agents/skills/instagram-brand-director")}
         if mode=="run":
             item.update(run_case(case,cwd,p,codex=codex,model=model,timeout=timeout))
+            if item["status"]=="RESPONSE_CAPTURED":
+                item["answer_sha256"]=sha256_file(p.parent/"answer.txt")
             (p.parent/"record.json").write_text(
                 json.dumps(item,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         else:
@@ -180,6 +205,8 @@ def execute(*,fixtures=DEFAULT_FIXTURES,output,mode="prepare",case_ids=None,
         results.append(item)
     record={"schema_version":1,"mode":mode,
             "actual_model_executed":mode=="run",
+            "captured_response_count":sum(
+                x.get("status")=="RESPONSE_CAPTURED" for x in results),
             "model":model or "Codex CLI default (if run)",
             "executed_at":datetime.now(timezone.utc).isoformat(),
             "case_count":len(results),

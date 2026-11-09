@@ -1,6 +1,6 @@
 # Instagram Brand Director
 
-**Version: `0.8.0-dev-phase5` · 2026-11-09**
+**Version: `0.8.0-dev-eval1` · 2026-11-10**
 
 A bilingual (فارسی / English), modular, evidence-aware **Instagram Social Media & Marketing Director** Agent Skill. It gives one accountable next action for strategy, but responds directly with usable copy for lightweight requests. Third-party tools are reused where they are demonstrably useful; inventory/Trial safeguards are original and conservative.
 
@@ -208,3 +208,27 @@ No live model-response evaluation has been performed or certified in this phase.
 | Behavior fixtures | Six separate fixtures, offline contract assertions and eval prep | **Actual LLM answer certification** |
 | Posting/media/ads/DMs | Drafts and specifications only | Real automated execution |
 
+
+## Eval hardening 1 — evidence-backed human review
+
+The user-requested **real six-case model evaluation is not yet executed** in this environment: there is no configured Codex CLI authenticated runtime here and the connector cannot dispatch GitHub workflow runs. The repo nevertheless now supports selecting all six phase-5 cases in the **manual** opt-in workflow `.github/workflows/agent-eval.yml` (the owner must configure the repository secret and initiate the run). Normal CI has no model invocation.
+
+`tools/run_agent_eval.py` now records SHA-256 of the exact staged Skill, the prompt, and each successfully captured answer. It also refuses to reuse a non-empty result folder so past runs cannot be accidentally mixed or overwritten. These hashes are **mismatch detection**, not proof of model execution.
+
+`tools/grade_agent_eval.py` provides an **offline human-attested grading contract** for an actual captured response:
+
+```bash
+# Creates an unreviewed, deliberately nonpassing human-review template
+python3 tools/grade_agent_eval.py --fixture tests/behavior/phase5_sold_out_fa.json --make-template /tmp/review.json
+
+# Only after a genuine Codex run and independent manual review:
+python3 tools/grade_agent_eval.py --fixture tests/behavior/phase5_sold_out_fa.json \
+  --record /tmp/igbd-live/phase5_sold_out_fa/record.json \
+  --answer /tmp/igbd-live/phase5_sold_out_fa/answer.txt \
+  --prompt /tmp/igbd-live/phase5_sold_out_fa/prompt.txt \
+  --review /tmp/review.json --output /tmp/grade.json
+```
+
+For `PASS`, a reviewer must attest to inspecting the entire answer, address **every** positive and forbidden criterion, supply quoted evidence that exists in the unmodified response for each met/present claim, and have a successful captured run record matching answer/prompt hashes. Any forbidden outcome present or required criterion failed is `FAIL`; unclear results become `NEEDS_REVIEW`. A template, prepared scenario, failed run or missing evidence can **never** pass.
+
+These are reviewer attestations, **not automatic or independent LLM judging**. See [Human agent-eval grading](docs/AGENT_EVAL_GRADING_FA.md).
