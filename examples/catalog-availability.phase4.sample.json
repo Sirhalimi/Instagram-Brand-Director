@@ -1,0 +1,66 @@
+{
+  "products": [
+    {
+      "sku": "SYN-physical",
+      "name": "Synthetic physical item",
+      "availability_type": "physical_stock",
+      "status": "active",
+      "stock_policy": "tracked",
+      "stock": 3,
+      "price": "100",
+      "unit_cost": "45",
+      "currency": "USD",
+      "fulfillment": "automatic",
+      "last_verified": "2026-11-09",
+      "product_url": "https://example.org/demo/physical"
+    },
+    {
+      "sku": "SYN-digital",
+      "name": "Synthetic subscription code",
+      "availability_type": "digital_product",
+      "status": "active",
+      "price": "80",
+      "unit_cost": "40",
+      "currency": "USD",
+      "last_verified": "2026-11-09",
+      "product_url": "https://example.org/demo/digital",
+      "delivery_mode": "automatic",
+      "delivery_verified": true,
+      "automation_operational": true,
+      "license_valid": true,
+      "license_valid_until": "2027-03-01"
+    },
+    {
+      "sku": "SYN-cohort",
+      "name": "Synthetic online workshop",
+      "availability_type": "cohort_seats",
+      "status": "active",
+      "price": "150",
+      "unit_cost": "50",
+      "currency": "USD",
+      "last_verified": "2026-11-09",
+      "product_url": "https://example.org/demo/cohort",
+      "seats_left": 5,
+      "start_date": "2026-12-10",
+      "enrollment_open": true,
+      "cohort_confirmed": true
+    },
+    {
+      "sku": "SYN-consult",
+      "name": "Synthetic consulting session",
+      "availability_type": "consult_slots",
+      "status": "active",
+      "price": "200",
+      "unit_cost": "80",
+      "currency": "USD",
+      "last_verified": "2026-11-09",
+      "product_url": "https://example.org/demo/consult",
+      "open_slots": 0,
+      "slots_verified": true,
+      "response_time_hours": 12,
+      "response_sla_hours": 48,
+      "service_delivery_verified": true
+    }
+  ],
+  "synthetic_notice": "Entire catalog is synthetic, no real customer or supplier details."
+}

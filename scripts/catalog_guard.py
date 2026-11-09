@@ -25,6 +25,10 @@ def assess(product, purpose="conversion", min_margin_pct=0, today=None, max_age_
         raise ValueError("Margin floor must be a finite percentage between 0 and 100.")
     if type(max_age_days) is not int or max_age_days < 0:
         raise ValueError("Maximum data age must be a nonnegative integer.")
+    # Preserve the existing physical_stock behavior exactly for legacy catalogs.
+    # An absent discriminator means physical_stock, never "digital by guess".
+    if product.get("availability_type", "physical_stock") != "physical_stock":
+        return _assess_nonphysical(product, purpose, min_margin_pct, today, max_age_days)
     today = today or date.today()
     blocks, warnings, missing = [], [], []
     for field in ("sku", "name", "status", "currency", "fulfillment", "last_verified", "price", "unit_cost", "stock_policy"):
@@ -88,6 +92,151 @@ def assess(product, purpose="conversion", min_margin_pct=0, today=None, max_age_
             "reason": blocks[0] if blocks else "Commercial preflight passed.",
             "blocks": blocks, "warnings": warnings, "missing_fields": missing,
             "gross_margin_pct": margin_pct, "requires_human_approval": True}
+
+
+AVAILABILITY_TYPES = ("physical_stock", "digital_product", "cohort_seats", "consult_slots")
+
+def _parse_date(raw):
+    if not isinstance(raw, str):
+        return None
+    try:
+        d = date.fromisoformat(raw)
+        return d if d.isoformat() == raw else None
+    except ValueError:
+        return None
+
+def _assess_nonphysical(product, purpose, min_margin_pct, today, max_age_days):
+    """Fail-closed offline adapters. Source assertions are NOT live confirmations.
+
+    No remote inventory/booking check, no financial transaction or fulfilled
+    order. Only explicit owner-provided verified data can authorize a suggested
+    new-sales campaign. Human approval remains required after a green result.
+    """
+    today = today or date.today()
+    kind = product.get("availability_type")
+    blocks, warnings, missing = [], [], []
+    if kind not in AVAILABILITY_TYPES[1:]:
+        blocks.append("Unknown availability type; promotion blocked.")
+    for field in ("sku","name","status","currency","price","unit_cost","last_verified"):
+        if product.get(field) in (None, ""):
+            missing.append(field)
+    if not isinstance(product.get("sku"), str) or not product["sku"].strip():
+        blocks.append("Item identifier missing.")
+    if not isinstance(product.get("name"), str) or not product["name"].strip():
+        blocks.append("Item name missing.")
+    if product.get("status") not in VALID_STATUS:
+        blocks.append("Item status absent or unrecognized.")
+    elif product["status"] != "active":
+        blocks.append("Item is not active for new sales.")
+    if not isinstance(product.get("currency"), str) or not product["currency"].strip():
+        blocks.append("Currency unknown.")
+    price, cost = money(product.get("price")), money(product.get("unit_cost"))
+    margin = None
+    if price is None or price <= 0:
+        blocks.append("Sale price missing or invalid.")
+    if cost is None or cost < 0:
+        if purpose in ("conversion","promotion"):
+            blocks.append("Cost unknown; margin cannot be verified for a new-sales promotion.")
+        else:
+            warnings.append("Cost/margin unknown; avoid purchase claims.")
+    elif price is not None and price > 0:
+        margin = float((price-cost)/price*100)
+        if margin < float(min_margin_pct):
+            blocks.append("Gross margin below configured campaign floor.")
+    verified = _parse_date(product.get("last_verified"))
+    if verified is None:
+        blocks.append("Price and availability verification timestamp missing or invalid.")
+    elif verified > today:
+        blocks.append("Verification timestamp is in the future.")
+    elif (today-verified).days > max_age_days:
+        blocks.append("Price and availability verification is stale.")
+    if purpose in ("conversion","promotion") and not product.get("product_url"):
+        blocks.append("Sales destination not verified.")
+    if product.get("restricted_claims"):
+        blocks.append("Restricted/unverified claims require review.")
+
+    if kind == "digital_product":
+        mode = product.get("delivery_mode")
+        if mode not in ("automatic","manual","supplier"):
+            missing.append("delivery_mode")
+            blocks.append("Digital delivery mode unknown.")
+        if product.get("license_valid") is not True:
+            missing.append("license_valid")
+            blocks.append("Digital license or redemption validity is unverified.")
+        valid_until = product.get("license_valid_until")
+        if valid_until is not None:
+            expiry = _parse_date(valid_until)
+            if expiry is None:
+                blocks.append("Invalid license expiration date.")
+            elif expiry < today:
+                blocks.append("Digital license expired.")
+        if product.get("delivery_verified") is not True:
+            blocks.append("Digital fulfillment not verified.")
+        if mode == "automatic" and product.get("automation_operational") is not True:
+            blocks.append("Automatic digital delivery has not been verified operational.")
+        if mode == "manual" and product.get("manual_capacity_verified") is not True:
+            blocks.append("Manual digital fulfillment capacity unverified.")
+        if mode == "supplier" and (product.get("supplier_verified") is not True or
+                                  product.get("supplier_fulfillment_verified") is not True):
+            blocks.append("Supplier digital fulfillment not verified.")
+        if product.get("requires_region_check") is True and product.get("region_restrictions_verified") is not True:
+            blocks.append("Digital redemption region restrictions unverified.")
+    elif kind == "cohort_seats":
+        seats = product.get("seats_left")
+        if type(seats) is not int or seats < 0:
+            missing.append("seats_left")
+            blocks.append("Available cohort seats must be a nonnegative integer.")
+        elif seats == 0:
+            blocks.append("Cohort has no available seats.")
+        start = _parse_date(product.get("start_date"))
+        if start is None:
+            missing.append("start_date")
+            blocks.append("Cohort start date missing or invalid.")
+        elif start <= today:
+            blocks.append("Cohort has already started or is not in the future.")
+        end = product.get("enrollment_deadline")
+        if end is not None:
+            last = _parse_date(end)
+            if last is None or last < today:
+                blocks.append("Cohort enrollment deadline invalid or already passed.")
+            if last is not None and start is not None and last > start:
+                blocks.append("Enrollment closes after cohort start.")
+        if product.get("enrollment_open") is not True:
+            blocks.append("Cohort enrollment is not verified open.")
+        if product.get("cohort_confirmed") is not True:
+            blocks.append("Cohort schedule/delivery not confirmed.")
+    elif kind == "consult_slots":
+        slots = product.get("open_slots")
+        if type(slots) is not int or slots < 0:
+            missing.append("open_slots")
+            blocks.append("Open consultation slots must be a nonnegative integer.")
+        elif slots == 0:
+            blocks.append("No consultation appointment slots available.")
+        if product.get("slots_verified") is not True:
+            blocks.append("Consultation availability is unverified.")
+        response = product.get("response_time_hours")
+        if type(response) not in (int,float) or not math.isfinite(response) or response < 0:
+            missing.append("response_time_hours")
+            blocks.append("Response time must be a verified nonnegative number of hours.")
+        ceiling = product.get("response_sla_hours")
+        if ceiling is not None:
+            if type(ceiling) not in (int,float) or not math.isfinite(ceiling) or ceiling <= 0:
+                blocks.append("Configured response SLA is invalid.")
+            elif type(response) in (int,float) and math.isfinite(response) and response > ceiling:
+                blocks.append("Consultation response time exceeds the declared SLA.")
+        if product.get("service_delivery_verified") is not True:
+            blocks.append("Consultation delivery capacity unverified.")
+    return {
+        "sku":product.get("sku"), "name":product.get("name"),
+        "availability_type":kind,
+        "decision":"DO_NOT_PROMOTE" if blocks else "PROMOTE",
+        "reason":blocks[0] if blocks else "Offline availability preflight passed.",
+        "blocks":blocks, "warnings":warnings,
+        "missing_fields":sorted(set(missing)),
+        "gross_margin_pct":margin,
+        "requires_human_approval":True,
+        "data_source_note":"Owner-supplied assertions only; no live inventory, license or calendar verification.",
+    }
 
 def analyze(catalog, **kwargs):
     products = catalog.get("products")

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "0.8.0-dev-phase3",
+  "release": "0.8.0-dev-phase4",
   "updated_on": "2026-11-09",
   "status_values": [
     "implemented",
@@ -66,7 +66,12 @@
     "per_post_intake": "implemented",
     "per_post_durable_profile_updates": "implemented",
     "persian_editorial_checklist": "implemented",
-    "real_agent_preflight_behavior_eval": "not-implemented"
+    "real_agent_preflight_behavior_eval": "not-implemented",
+    "external_source_rights_gate": "implemented",
+    "availability_type_adapters": "implemented",
+    "live_media_rights_verification": "not-implemented",
+    "live_digital_license_verification": "not-implemented",
+    "live_calendar_booking_verification": "not-implemented"
   },
   "feature_flags": {
     "media_generation_enabled": false,
@@ -87,7 +92,9 @@
     "tagged_platform_knowledge_import": "Owner-provided original source copied unchanged; tags originate in that file and are not independent Meta fact-checks.",
     "knowledge_age_audit": "Offline date/tag parser and CI advisory implemented; unresolved tags require human review, automatic source refresh remains not-implemented.",
     "per_post_durable_profile_updates": "Only an explicit --save writes stable, whitelisted post_defaults to a provided private brand.md. Ephemeral post choices are not saved without affirmative selection.",
-    "persian_editorial_checklist": "Human-language checks only; automated performance scoring is unsupported for Persian."
+    "persian_editorial_checklist": "Human-language checks only; automated performance scoring is unsupported for Persian.",
+    "external_source_rights_gate": "Owner-asserted per-asset rights and watermark classification; research-only references excluded from publication; subtitles-only repost rejected. No legal or remote verification.",
+    "availability_type_adapters": "Offline physical_stock (legacy unchanged), digital_product, cohort_seats, consult_slots. Promotion means suggestion for human review, not a real sale; no live inventory/calendar API."
   },
   "module_status_scope": "Statuses describe actual implemented executable coverage. 'implemented' modules may be offline only; see per-module scope in SKILL.md."
 }

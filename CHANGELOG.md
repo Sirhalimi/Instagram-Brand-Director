@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0-dev-phase4 — 2026-11-09
+- Added explicit per-asset source-content rights audit to offline campaign triage: owned/licensed/permission/third_party, watermark, documented permission, research-only separation, subtitles-only repost rejection, and human review. Preserved general legacy rights_verified gate.
+- Generalized availability in catalog_guard to digital_product (validity, region and fulfillment checks), cohort_seats (capacity/start/enrollment), and consult_slots (open slots/response/verified delivery), while keeping untyped/physical_stock behavior unchanged.
+- Unknown types, zero capacity, stale prices, invalid licenses and unverified supply fail closed with DO_NOT_PROMOTE for new-sale campaigns.
+- Added synthetic catalog and media reference examples, regression tests and CLI smoke checks; both root and installed Skill scripts match exactly.
+- No third_party/ edits, no live rights/calendar/store checks, no network or credential access, no new external dependencies.
+
 ## 0.8.0-dev-phase3 — 2026-11-09
 - Added mandatory module-00 preflight for brand-specific strategy and format selection in the lean router and deterministic router probe. Avoids blocking pure copy or known sold-out-product safety rejection.
 - Replaced vague module statuses with an explicit 16-row implemented/spec-only/not-implemented table and matching machine-readable registry; live API features remain not implemented.

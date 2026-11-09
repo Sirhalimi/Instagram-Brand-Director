@@ -41,6 +41,11 @@ jobs:
           python3 skills/instagram-brand-director/scripts/post_intake.py --brand skills/instagram-brand-director/templates/brand.md --post examples/post-intake.sample.json > "$RUNNER_TEMP/post-intake.json"
           python3 -m scripts.review_gate examples/review-gate.sample.json > "$RUNNER_TEMP/review.json"
           python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"]); assert json.loads((p/"post-intake.json").read_text())["status"] == "NEEDS_INPUT"; assert json.loads((p/"review.json").read_text())["decision"] == "INSUFFICIENT_DATA"'
+      - name: Phase 4 offline rights and offer availability CLI smoke tests
+        run: |
+          python3 -m scripts.catalog_guard examples/catalog-availability.phase4.sample.json > "$RUNNER_TEMP/availability.json"
+          python3 -m scripts.campaign_decision examples/campaign-source-content.phase4.sample.json > "$RUNNER_TEMP/rights.json"
+          python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"]); a=json.loads((p/"availability.json").read_text()); b=json.loads((p/"rights.json").read_text()); assert a["products_reviewed"]==4 and a["promotable"]==3; assert b["decision"]=="NORMAL_REEL" and b["source_content_review"]["research_only_indexes"]==[0]'
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -62,6 +67,8 @@ jobs:
           test -s "$TARGET/scripts/knowledge_age.py"
           test -s "$TARGET/scripts/post_intake.py"
           test -s "$TARGET/scripts/review_gate.py"
+          test -s "$TARGET/scripts/catalog_guard.py"
+          test -s "$TARGET/scripts/campaign_decision.py"
           test -s "$TARGET/references/persian-review-checklist.md"
           test ! -e "$TARGET/.github"
           test ! -e "$TARGET/tests"

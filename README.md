@@ -1,6 +1,6 @@
 # Instagram Brand Director
 
-**Version: `0.8.0-dev-phase3` · 2026-11-09**
+**Version: `0.8.0-dev-phase4` · 2026-11-09**
 
 A bilingual (فارسی / English), modular, evidence-aware **Instagram Social Media & Marketing Director** Agent Skill. It gives one accountable next action for strategy, but responds directly with usable copy for lightweight requests. Third-party tools are reused where they are demonstrably useful; inventory/Trial safeguards are original and conservative.
 
@@ -151,6 +151,26 @@ For **generalized strategy/review conclusions**, `review_gate.py` uses the accou
 Persian output now has [a human review checklist](docs/PERSIAN_REVIEW_CHECKLIST.md) covering ZWNJ, formal/colloquial consistency, RTL overlays, hashtags, subtitles and evidence. English-only `hookscore.py` remains **unsupported for Persian**. No real brand data belongs in Git.
 
 **Phase 4 remains not-implemented:** third-party production-rights policy and generalized digital/service availability adapters have not been started in this phase.
+
+## Phase 4 of 5 — media rights and availability types
+
+The offline `scripts/campaign_decision.py` now accepts `source_content` once (either the brief root or `content`), with records `origin`, `has_visible_watermark`, `documented_permission`, optional `usage=research|publish`, and `subtitles_only_repost`. Third-party/licensed/watermarked media without documented rights is **not publishable**, even when the overall brief's `rights_verified` says true. Research-only TikTok/foreign-page sources can inform ideas but must not appear in the final creative; subtitle translation of somebody else's video is still a repost. Self-reported license flags require actual human examination, and copyright compliance does not itself prove Instagram recommendation originality.
+
+The catalog guard now dispatches on explicit `availability_type`:
+
+- `physical_stock` (default/legacy): unchanged physical stock/supplier/price/margin logic.
+- `digital_product`: verified delivery mode and operational fulfillment, license validity/expiry, verified redemption restrictions when required.
+- `cohort_seats`: integer available seats, future start, confirmed cohort, open enrollment, optionally deadline.
+- `consult_slots`: open verified slots, response time/SLA when specified, verified service delivery capacity.
+
+Every adapter also checks status, price, verified freshness, cost/margin and a valid sales destination. A zero-capacity, invalid, stale or unknown offer produces `DO_NOT_PROMOTE`. **No live stock/supplier/license/calendar connector is enabled**; a `PROMOTE` result is merely an offline candidate requiring human approval. Already-accepted paid orders are a separate obligation, not invalidated by future promotional safeguards.
+
+```bash
+python3 -m scripts.catalog_guard examples/catalog-availability.phase4.sample.json
+python3 -m scripts.campaign_decision examples/campaign-source-content.phase4.sample.json
+```
+
+See [Rights and Availability](docs/CONTENT_RIGHTS_AND_AVAILABILITY.md). Phase 5 LLM behavior fixtures and actual agent-response evaluation remain separate tasks.
 
 ## Reference projects
 

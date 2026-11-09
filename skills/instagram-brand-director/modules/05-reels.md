@@ -12,7 +12,7 @@ Requests concern reels creative production; do not load other modules unless the
 2. Write three genuinely different hook concepts; ensure first frame/on-screen text works without audio where relevant.
 3. For English: run copied upstream hookscore.py and beats.py only as editing heuristics; for Persian: run `python3 -m scripts.creative_quality hook --text ...`, no English score or view forecast.
 4. Create beat sheet: hook, stakes, main value, payoff, CTA, shot, on-screen text, spoken/audio, timing, accessibility captions and cover. If no camera: product shots, b-roll, animation or text-led Reel.
-5. Check rights, originality, accuracy, music licensing, accessibility and brand limits; route distribution choice to module 06.
+5. Inspect declared `source_content` with `scripts/campaign_decision.py` before finalizing a publishable Reel: outside/TikTok sources can be `research` only, not reused as-is. A translated-subtitle version of another creator's video is a repost. Reject unlicensed/watermarked publication assets, and build original footage/visuals. Check rights, originality, accuracy, music licensing, accessibility and brand limits; route distribution choice to module 06.
 
 ## Output
 Shootable Reel brief and script with one action-ready recommendation.
